@@ -1,0 +1,26 @@
+[
+	{
+		"coins": 1000,
+		"name": "Deinitia",
+		"color": "#FFC878",
+		"player": true,
+	},
+	{
+		"coins": 1000,
+		"name": "Valosepulca",
+		"color": "#646464",
+		"player": false,
+	},
+	{
+		"coins": 7500,
+		"name": "Deforma",
+		"color": "#FF0000",
+		"player": false,
+	},
+	{
+		"coins": 1200,
+		"name": "Invaria",
+		"color": "#00FF00",
+		"player": false,
+	}
+]

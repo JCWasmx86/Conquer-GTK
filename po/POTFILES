@@ -1,0 +1,6 @@
+data/io.github.jcwasmx86.Conquer.desktop.in
+data/io.github.jcwasmx86.Conquer.appdata.xml.in
+data/io.github.jcwasmx86.Conquer.gschema.xml
+src/main.vala
+src/window.vala
+src/window.ui

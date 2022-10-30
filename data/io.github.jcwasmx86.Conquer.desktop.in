@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=conquer
+Exec=conquer
+Icon=io.github.jcwasmx86.Conquer
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
