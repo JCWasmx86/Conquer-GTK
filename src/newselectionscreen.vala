@@ -51,6 +51,10 @@ namespace Conquer {
             var s = (Scenario)item;
             return new ScenarioEntry (s);
         }
+
+        internal void clear () {
+            this.search_bar.text = "";
+        }
     }
 
     public class ScenarioEntry : Adw.ActionRow {
@@ -58,7 +62,8 @@ namespace Conquer {
             this.title = s.name;
             this.activatable = true;
             this.activated.connect (() => {
-               warning ("FOO");
+                var app = (Conquer.Application)GLib.Application.get_default ();
+                app.start_game_real (s);
             });
         }
     }

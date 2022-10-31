@@ -70,7 +70,89 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         return true;
     }
 
-    public void load () {
+    public GameState load () {
+        var ret = new Conquer.GameState ();
+        ret.name = this.name;
+        var clans = new Clan[0];
+        try {
+            var parser = new Json.Parser ();
+            parser.load_from_data ((string) this.contents["players.json"].get_data (),
+                                                   this.contents["players.json"].length);
+            var node = parser.get_root ();
+            assert (node.get_node_type () == Json.NodeType.ARRAY);
+            var array = node.get_array ();
+            foreach (var n in array.get_elements ()) {
+                assert (n.get_node_type () == Json.NodeType.OBJECT);
+                var obj = n.get_object ();
+                var c = new Clan ();
+                c.coins = obj.get_int_member ("coins");
+                c.name = obj.get_string_member ("name");
+                c.color = obj.get_string_member ("color");
+                c.player = obj.get_boolean_member ("player");
+                clans += c;
+            }
+        } catch (Error e) {
+            error ("Whoops: %s", e.message);
+        }
+        var cities = new City[0];
+        try {
+            var parser = new Json.Parser ();
+            parser.load_from_data ((string) this.contents["cities.json"].get_data (),
+                                                   this.contents["cities.json"].length);
+            var node = parser.get_root ();
+            assert (node.get_node_type () == Json.NodeType.ARRAY);
+            var array = node.get_array ();
+            foreach (var n in array.get_elements ()) {
+                assert (n.get_node_type () == Json.NodeType.OBJECT);
+                var c = new Conquer.City ();
+                var obj = n.get_object ();
+                c.growth = obj.get_double_member ("growth");
+                c.name = obj.get_string_member ("name");
+                var data = this.contents[obj.get_string_member ("icon")];
+                c.icon_data = new GLib.Bytes.from_bytes (data, 0, data.length);
+                c.clan = clans[obj.get_int_member ("clan_id")];
+                c.people = obj.get_int_member ("people");
+                c.soldiers = obj.get_int_member ("soldiers");
+                c.x = obj.get_int_member ("x");
+                c.y = obj.get_int_member ("y");
+                c.defense = obj.get_int_member ("defense_bonus");
+                c.people = obj.get_int_member ("people");
+                var resources = obj.get_object_member ("resources");
+                foreach (var r in resources.get_members ()) {
+                    var val = resources.get_double_member (r);
+                    c.upgrades[(uint)Resource.from_string (r)].production = val;
+                }
+                cities += c;
+            }
+        } catch (Error e) {
+            error ("Whoops: %s", e.message);
+        }
+        ret.city_list = cities;
+        ret.clans = clans;
+        var graph = new CityGraph (cities);
+        try {
+            var parser = new Json.Parser ();
+            parser.load_from_data ((string) this.contents["map.json"].get_data (),
+                                                   this.contents["map.json"].length);
+            var node = parser.get_root ();
+            assert (node.get_node_type () == Json.NodeType.ARRAY);
+            var array = node.get_array ();
+            foreach (var n in array.get_elements ()) {
+                assert (n.get_node_type () == Json.NodeType.OBJECT);
+                var obj = n.get_object ();
+                var from = obj.get_int_member ("from");
+                var to = obj.get_int_member ("to");
+                var distance = obj.get_double_member ("distance");
+                graph.add_connection ((uint)from, (uint)to, distance);
+            }
+        } catch (Error e) {
+            error ("Whoops: %s", e.message);
+        }
+        ret.cities = graph;
+        var bg = this.contents["background.png"];
+        assert (bg != null);
+        ret.background_image_data = new GLib.Bytes.from_bytes (bg, 0, bg.length);
+        return ret;
     }
 }
 

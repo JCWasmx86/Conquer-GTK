@@ -2,6 +2,14 @@ conquer_lib_sources = [
     'model/scenario.vala',
     'model/scenarioloader.vala',
     'model/context.vala',
+    'model/gamestate.vala',
+    'model/citygraph.vala',
+    'model/clan.vala',
+    'model/city.vala',
+    'model/resource.vala',
+    'model/messagequeue.vala',
+    'model/message/initmessage.vala',
+    'model/message/message.vala',
 ]
 conquer_sources = [
     'main.vala',
@@ -9,6 +17,8 @@ conquer_sources = [
     'window.vala',
     'mainscreen.vala',
     'newselectionscreen.vala',
+    'screen.vala',
+    'map.vala',
 ]
 
 conquer_lib_deps = [

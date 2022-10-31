@@ -1,4 +1,4 @@
-/* scenario.vala
+/* messagequeue.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -18,9 +18,29 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 namespace Conquer {
-    public interface Scenario : Object {
-        public abstract string name { get; set; }
-        public abstract Icon? icon { get; set; default = null; }
-        public abstract GameState load();
+    public static MessageQueue QUEUE;
+
+    public class MessageQueue {
+        private GLib.List<MessageReceiver> listeners = new List<MessageReceiver>();
+        public static void init () {
+            QUEUE = new MessageQueue ();
+        }
+
+        public MessageQueue () {
+        }
+
+        public void listen (MessageReceiver receiver) {
+            this.listeners.append;
+        }
+
+        public void emit (Conquer.Message msg) {
+            info ("Emitting message of type %s", msg.get_type ().name ());
+            foreach (var m in this.listeners)
+                m.receive (msg);
+        }
+    }
+
+    public interface MessageReceiver : Object {
+        public abstract void receive (Conquer.Message msg);
     }
 }

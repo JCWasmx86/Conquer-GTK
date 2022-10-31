@@ -1,4 +1,4 @@
-/* scenario.vala
+/* screen.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,10 +17,15 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+
 namespace Conquer {
-    public interface Scenario : Object {
-        public abstract string name { get; set; }
-        public abstract Icon? icon { get; set; default = null; }
-        public abstract GameState load();
+    [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
+    public class Screen : Gtk.Box {
+        [GtkChild]
+        private new unowned Conquer.Map map;
+
+        internal void update (Conquer.GameState g) {
+            this.map.update (g);
+        }
     }
 }

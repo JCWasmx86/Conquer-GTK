@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerScreen" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="AdwViewSwitcherTitle" id="title">
+                <property name="stack">screen_stack</property>
+                <property name="hexpand">true</property>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwViewStack" id="screen_stack">
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">map</property>
+            <property name="title">Map</property>
+            <property name="child">
+              <object class="ConquerMap" id="map">
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">overview1</property>
+            <property name="title">Overview1</property>
+            <property name="child">
+              <object class="AdwStatusPage">
+                <property name="title">Welcome1!</property>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

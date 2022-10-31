@@ -1,4 +1,4 @@
-/* scenario.vala
+/* clan.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -16,11 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
- */
-namespace Conquer {
-    public interface Scenario : Object {
-        public abstract string name { get; set; }
-        public abstract Icon? icon { get; set; default = null; }
-        public abstract GameState load();
-    }
+  */
+
+public class Conquer.Clan : GLib.Object {
+    public uint64 coins { get; set; }
+    public string name { get; set; }
+    public string color { get; set; }
+    public bool player { get; set; }
+    public Strategy? strategy { get; set; }
+    // TODO: Upgrades for defense/attack
+}
+
+public interface Strategy : GLib.Object {
+    public abstract void play (Conquer.GameState state);
+    public abstract string uuid ();
 }

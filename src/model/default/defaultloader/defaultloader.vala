@@ -17,6 +17,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+
 public class Conquer.Default.ScenarioLoader : GLib.Object, Conquer.ScenarioLoader {
     public Scenario[] enumerate() {
         var directories = new string[] {

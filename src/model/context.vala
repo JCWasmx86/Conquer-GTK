@@ -34,6 +34,8 @@ namespace Conquer {
 				this.engine.try_load_plugin(plugin);
             foreach (var s in this.engine.loaded_plugins)
                 info ("Loaded plugin %s", s);
+            Conquer.MessageQueue.init ();
+            Conquer.QUEUE.emit (new InitMessage ());
         }
         private void add_search_path(string p) {
             info ("Adding search path %s", p);

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerMap" parent="GtkBox">
+    <property name="orientation">horizontal</property>
+    <child>
+      <object class="GtkBox" id="left_side">
+        <property name="orientation">vertical</property>
+        <property name="vexpand">true</property>
+        <property name="hexpand">true</property>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">true</property>
+            <property name="hexpand">true</property>
+            <child>
+              <object class="GtkDrawingArea" id="map_drawing_area">
+                <property name="vexpand">true</property>
+                <property name="hexpand">true</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStack" id="city_upgrade">
+            <property name="visible-child">empty_upgrade</property>
+            <property name="transition-type">crossfade</property>
+            <child>
+              <object class="AdwStatusPage" id="empty_upgrade">
+                <property name="title" translatable="yes">No city selected</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label">Select a city to upgrade it.</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStack" id="right_side">
+        <property name="visible-child">empty</property>
+        <property name="transition-type">crossfade</property>
+        <child>
+          <object class="AdwStatusPage" id="empty">
+            <property name="title" translatable="yes">No city selected</property>
+            <property name="child">
+              <object class="GtkLabel">
+                <property name="label">Select a city to show more information.</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <!-- TODO -->
+          <object class="GtkLabel" id="city_info">
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

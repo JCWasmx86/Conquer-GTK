@@ -27,6 +27,8 @@ namespace Conquer {
         private unowned Conquer.MainScreen main_screen;
         [GtkChild]
         private unowned Conquer.NewSelectionScreen selection_screen;
+        [GtkChild]
+        private unowned Conquer.Screen conquer_screen;
         private Context context;
 
         public Window (Gtk.Application app) {
@@ -39,6 +41,19 @@ namespace Conquer {
             var scenarios = this.context.find_scenarios ();
             this.main_stack.visible_child = this.selection_screen;
             this.selection_screen.update (scenarios);
+        }
+
+        internal void show_main () {
+            if (this.main_stack.visible_child == this.selection_screen)
+                this.selection_screen.clear ();
+            this.main_stack.visible_child = this.main_screen;
+        }
+
+        internal void start_game_real (Conquer.Scenario s) {
+            var g = s.load ();
+            this.selection_screen.clear ();
+            this.main_stack.visible_child = this.conquer_screen;
+            this.conquer_screen.update(g);
         }
     }
 }

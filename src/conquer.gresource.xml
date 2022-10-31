@@ -4,6 +4,8 @@
     <file preprocess="xml-stripblanks">window.ui</file>
     <file preprocess="xml-stripblanks">mainscreen.ui</file>
     <file preprocess="xml-stripblanks">newselectionscreen.ui</file>
+    <file preprocess="xml-stripblanks">conquerscreen.ui</file>
+    <file preprocess="xml-stripblanks">map.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
 </gresources>

@@ -1,4 +1,4 @@
-/* scenario.vala
+/* gamestate.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,10 +17,22 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-namespace Conquer {
-    public interface Scenario : Object {
-        public abstract string name { get; set; }
-        public abstract Icon? icon { get; set; default = null; }
-        public abstract GameState load();
+public class Conquer.GameState : Object {
+    public string name;
+    public CityGraph cities;
+    public City[] city_list;
+    public Clan[] clans;
+    public uint round;
+    public GLib.Bytes background_image_data;
+
+    public GameState () {
+        this.round = 1;
+    }
+
+    public virtual void one_round () {
+
+        foreach (var city in this.city_list) {
+            city.grow ();
+        }
     }
 }
