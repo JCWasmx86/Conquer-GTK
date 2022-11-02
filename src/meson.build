@@ -34,7 +34,7 @@ conquer_lib = static_library('conquerlib',
     install: true,
 )
 # Hack for https://github.com/mesonbuild/meson/issues/1229
-conquer_lib_build_dir = meson.current_build_dir()
+conquer_lib_build_dir = include_directories('.')
 
 subdir('model/default')
 
