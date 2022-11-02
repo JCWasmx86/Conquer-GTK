@@ -54,5 +54,14 @@ namespace Conquer {
             info ("Found %u scenarios", ret.length);
             return ret;
         }
+
+        public Strategy[] find_strategies () {
+            var ret = new Strategy[0];
+            strategies.@foreach((s, info, exten) => {
+               ret += (Strategy)exten;
+            });
+            info ("Found %u strategies", ret.length);
+            return ret;
+        }
     }
 }

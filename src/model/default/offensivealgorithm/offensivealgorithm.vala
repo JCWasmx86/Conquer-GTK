@@ -1,4 +1,4 @@
-/* defaultalgorithms.vala
+/* offensivealgorithm.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,8 +17,16 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+public class Conquer.Default.OffensiveStrategy : GLib.Object, Conquer.Strategy {
+    public void play (Conquer.Clan clan, Conquer.GameState state) {
+        // Do nothing
+    }
 
+    public string uuid () {
+        return "0b41ca43-3872-421c-9b14-95b16260b9aa";
+    }
+}
 public void peas_register_types(TypeModule module) {
     var obj = (Peas.ObjectModule) module;
-    obj.register_extension_type(typeof (Conquer.Strategy), typeof (Conquer.Default.NullStrategy));
+    obj.register_extension_type(typeof (Conquer.Strategy), typeof (Conquer.Default.OffensiveStrategy));
 }

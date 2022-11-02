@@ -70,7 +70,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         return true;
     }
 
-    public GameState load () {
+    public GameState load (Conquer.Strategy[] strategies) {
         var ret = new Conquer.GameState ();
         ret.name = this.name;
         var clans = new Clan[0];
@@ -89,6 +89,18 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 c.name = obj.get_string_member ("name");
                 c.color = obj.get_string_member ("color");
                 c.player = obj.get_boolean_member ("player");
+                var expected_uuid = obj.get_string_member ("strategy");
+                info ("Clan %s has strategy %s", c.name, expected_uuid);
+                foreach (var s in strategies) {
+                    if (s.uuid () == expected_uuid) {
+                        var t = s.get_type ();
+                        info ("Strategy for %s is a %s", c.name, t.name ());
+                        var new_strategy = GLib.Object.new (t, null);
+                        c.strategy = (Conquer.Strategy)new_strategy;
+                    }
+                }
+                if (c.strategy == null)
+                    info ("No strategy with UUID %s found for %s", c.name, expected_uuid);
                 clans += c;
             }
         } catch (Error e) {
@@ -115,7 +127,8 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 c.soldiers = obj.get_int_member ("soldiers");
                 c.x = obj.get_int_member ("x");
                 c.y = obj.get_int_member ("y");
-                c.defense = obj.get_int_member ("defense_bonus");
+                c.defense = obj.get_int_member ("defense");
+                c.defense_bonus = obj.get_double_member ("defense_bonus");
                 c.people = obj.get_int_member ("people");
                 var resources = obj.get_object_member ("resources");
                 foreach (var r in resources.get_members ()) {

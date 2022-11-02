@@ -31,6 +31,11 @@ public class Conquer.GameState : Object {
 
     public virtual void one_round () {
         info ("Playing round %u", this.round);
+        foreach (var clan in this.clans) {
+            if (clan.player || clan.strategy == null)
+                continue;
+            clan.strategy.play (clan, this);
+        }
         foreach (var city in this.city_list) {
             city.grow ();
         }

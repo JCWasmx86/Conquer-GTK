@@ -1,0 +1,7 @@
+[Plugin]
+Module=offensivealgorithm
+Name=Offensive algorithm
+Description=Provides the default offensive algorithm (UUID=0b41ca43-3872-421c-9b14-95b16260b9aa)
+Authors=JCWasmx86 <JCWasmx86@t-online.de>
+Copyright=Copyright © 2022 JCWasmx86
+Loader=C

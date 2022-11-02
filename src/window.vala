@@ -34,11 +34,11 @@ namespace Conquer {
         public Window (Gtk.Application app) {
             Object (application: app);
             this.main_stack.visible_child = this.main_screen;
-            this.context = new Context();
+            this.context = new Context ();
             this.maximize ();
         }
 
-        internal void start_game() {
+        internal void start_game () {
             var scenarios = this.context.find_scenarios ();
             this.main_stack.visible_child = this.selection_screen;
             this.selection_screen.update (scenarios);
@@ -51,10 +51,10 @@ namespace Conquer {
         }
 
         internal void start_game_real (Conquer.Scenario s) {
-            var g = s.load ();
+            var g = s.load (this.context.find_strategies ());
             this.selection_screen.clear ();
             this.main_stack.visible_child = this.conquer_screen;
-            this.conquer_screen.update(g);
+            this.conquer_screen.update (g);
         }
     }
 }

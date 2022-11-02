@@ -89,6 +89,6 @@ public class Conquer.Clan : GLib.Object {
 }
 
 public interface Conquer.Strategy : GLib.Object {
-    public abstract void play (Conquer.GameState state);
+    public abstract void play (Conquer.Clan clan, Conquer.GameState state);
     public abstract string uuid ();
 }

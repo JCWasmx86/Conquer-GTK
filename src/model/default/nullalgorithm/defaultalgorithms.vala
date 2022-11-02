@@ -1,4 +1,4 @@
-/* nullalgorithm.vala
+/* defaultalgorithms.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,12 +17,5 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-public class Conquer.Default.NullStrategy : GLib.Object, Conquer.Strategy {
-    public void play (Conquer.GameState state) {
-        // Do nothing
-    }
 
-    public string uuid () {
-        return "00000000-0000-0000-0000-000000000000";
-    }
-}
+
