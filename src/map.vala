@@ -33,6 +33,18 @@ namespace Conquer {
         }
         [GtkChild]
         private unowned Gtk.DrawingArea map_drawing_area;
+        [GtkChild]
+        private unowned Gtk.Stack city_upgrade;
+        [GtkChild]
+        private unowned Adw.StatusPage empty_upgrade;
+        [GtkChild]
+        private unowned Adw.StatusPage empty;
+        [GtkChild]
+        private unowned Conquer.CityActionScreen city_actions;
+        [GtkChild]
+        private unowned Conquer.CityInfo city_info;
+        [GtkChild]
+        private unowned Gtk.Stack right_side;
         private Conquer.GameState game_state;
         private Conquer.City? selected_city;
         private Conquer.City? start_city;
@@ -92,12 +104,18 @@ namespace Conquer {
                     }
                     selected_city = c;
                     this.map_drawing_area.queue_draw ();
+                    this.city_upgrade.visible_child = this.city_actions;
+                    this.right_side.visible_child = this.city_info;
+                    this.city_info.update (c);
                     return;
                 }
             }
             if (unselect) {
                 selected_city = null;
+                this.city_upgrade.visible_child = this.empty_upgrade;
+                this.right_side.visible_child = this.empty;
                 this.map_drawing_area.queue_draw ();
+                this.city_info.update (this.selected_city);
             }
         }
 
@@ -147,6 +165,17 @@ namespace Conquer {
                 cr.fill ();
             }
         }
+
+        internal void one_round () {
+            if (this.selected_city != null && !this.selected_city.clan.player) {
+                // Player lost the city
+                selected_city = null;
+                this.city_upgrade.visible_child = this.empty_upgrade;
+                this.right_side.visible_child = this.empty;
+                this.map_drawing_area.queue_draw ();
+            }
+            this.city_info.update (this.selected_city);
+        }
     }
 
     private class BytesReader {
@@ -174,3 +203,4 @@ namespace Conquer {
         }
     }
 }
+

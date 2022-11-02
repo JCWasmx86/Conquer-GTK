@@ -43,4 +43,8 @@ public enum Conquer.Resource {
         }
         return 0;
     }
+
+    public static uint hash_func (Resource r) {
+        return (uint)r;
+    }
 }

@@ -13,6 +13,14 @@
                 <property name="hexpand">true</property>
               </object>
             </property>
+            <child type="end">
+              <object class="GtkButton" id="next_round">
+                <property name="label">Next Round</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
           </object>
         </child>
       </object>
@@ -31,11 +39,22 @@
         </child>
         <child>
           <object class="AdwViewStackPage">
-            <property name="name">overview1</property>
-            <property name="title">Overview1</property>
+            <property name="name">event_view</property>
+            <property name="title">Events</property>
             <property name="child">
               <object class="AdwStatusPage">
                 <property name="title">Welcome1!</property>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">clan_view</property>
+            <property name="title">Clan</property>
+            <property name="child">
+              <object class="AdwStatusPage">
+                <property name="title">Welcome2!</property>
               </object>
             </property>
           </object>

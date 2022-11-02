@@ -1,4 +1,4 @@
-/* screen.vala
+/* cityactions.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,25 +17,7 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+    [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/cityactions.ui")]
+public class Conquer.CityActionScreen : Gtk.Box {
 
-namespace Conquer {
-    [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
-    public class Screen : Gtk.Box {
-        construct {
-            this.next_round.clicked.connect (() => {
-                this.game_state.one_round ();
-                this.map.one_round ();
-            });
-        }
-        private Conquer.GameState game_state;
-        [GtkChild]
-        private new unowned Conquer.Map map;
-        [GtkChild]
-        private unowned Gtk.Button next_round;
-
-        internal void update (Conquer.GameState g) {
-            this.game_state = g;
-            this.map.update (g);
-        }
-    }
 }

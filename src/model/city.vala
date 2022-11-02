@@ -41,10 +41,35 @@ public class Conquer.City : GLib.Object {
     }
 
     public void grow () {
-        // 1. Resources are mined
-        // 2. Resources are used
-        // 3. If not enough resources, first the number of soldiers is reduced
-        //    then the number of people
+        this.people = (uint64) (this.people * this.growth);
+        foreach (var upgrade in this.upgrades) {
+            var resource = upgrade.resource;
+            var amount_produced = this.people * upgrade.production;
+            this.clan.add_resource(resource, amount_produced);
+        }
+    }
+
+    public void use_resources () {
+        foreach (var upgrade in this.upgrades) {
+            var resource = upgrade.resource;
+            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt(upgrade.production);
+            this.clan.use_resource(resource, amount_used);
+        }
+    }
+
+    public double[] calculate_resource_netto () {
+        var ret = new double[9];
+        foreach (var upgrade in this.upgrades) {
+            var resource = upgrade.resource;
+            var amount_produced = this.people * upgrade.production;
+            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt(upgrade.production);
+            ret[resource] = amount_produced - amount_used;
+        }
+        return ret;
+    }
+
+    public void disband_random () {
+        this.soldiers = (uint64) (this.soldiers * new Rand ().double_range (0.85, 0.99));
     }
 }
 

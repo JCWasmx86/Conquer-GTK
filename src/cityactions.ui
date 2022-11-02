@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="ConquerCityActionScreen" parent="GtkBox">
+		<property name="orientation">horizontal</property>
+	  <property name="valign">center</property>
+	  <property name="halign">center</property>
+	  <property name="spacing">4</property>
+		<child>
+			<object class="GtkButton" id="recruit">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+	  <child>
+			<object class="GtkButton" id="disband">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+	  <child>
+			<object class="GtkButton" id="wheat">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="fish">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="wood">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="coal">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="meat">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="iron">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="textile">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="leather">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkButton" id="stone">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+	  <child>
+			<object class="GtkButton" id="defense_upgrade">
+			  <property name="vexpand">false</property>
+			  <property name="hexpand">false</property>
+			</object>
+		</child>
+	</template>
+</interface>

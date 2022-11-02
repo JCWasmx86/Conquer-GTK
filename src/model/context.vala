@@ -21,10 +21,12 @@ namespace Conquer {
     public class Context {
         private Peas.Engine engine;
         private Peas.ExtensionSet scenario_loaders;
+        private Peas.ExtensionSet strategies;
 
         public Context() {
             this.engine = Peas.Engine.get_default ();
             this.scenario_loaders = new Peas.ExtensionSet(this.engine, typeof (Conquer.ScenarioLoader));
+            this.strategies = new Peas.ExtensionSet(this.engine, typeof (Conquer.Strategy));
             this.engine.enable_loader("python3");
             this.add_search_path(Environment.get_user_data_dir () + "/conquer/plugins");
             this.add_search_path(Environment.get_home_dir () + "/.local/share/conquer/plugins");
@@ -45,7 +47,7 @@ namespace Conquer {
         public Scenario[] find_scenarios () {
             var ret = new Scenario[0];
             scenario_loaders.@foreach((s, info, exten) => {
-               var found = (exten as Conquer.ScenarioLoader).enumerate ();
+               var found = ((Conquer.ScenarioLoader)exten).enumerate ();
                 foreach (var sc in found)
                     ret += sc;
             });

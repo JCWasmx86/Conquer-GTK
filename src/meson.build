@@ -19,6 +19,8 @@ conquer_sources = [
     'newselectionscreen.vala',
     'screen.vala',
     'map.vala',
+    'cityactions.vala',
+    'cityinfo.vala',
 ]
 
 conquer_lib_deps = [
@@ -41,6 +43,7 @@ conquer_deps = [
     dependency('libadwaita-1'),
     dependency('gio-2.0'),
     dependency('libpeas-1.0'),
+    meson.get_compiler('c').find_library('m', required : false)
 ]
 
 conquer_sources += gnome.compile_resources(

@@ -35,6 +35,7 @@ namespace Conquer {
             Object (application: app);
             this.main_stack.visible_child = this.main_screen;
             this.context = new Context();
+            this.maximize ();
         }
 
         internal void start_game() {

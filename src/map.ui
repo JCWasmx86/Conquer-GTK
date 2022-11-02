@@ -20,6 +20,10 @@
           </object>
         </child>
         <child>
+          <object class="GtkSeparator">
+          </object>
+        </child>
+        <child>
           <object class="GtkStack" id="city_upgrade">
             <property name="visible-child">empty_upgrade</property>
             <property name="transition-type">crossfade</property>
@@ -33,8 +37,16 @@
                 </property>
               </object>
             </child>
+            <child>
+              <object class="ConquerCityActionScreen" id="city_actions">
+              </object>
+            </child>
           </object>
         </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparator">
       </object>
     </child>
     <child>
@@ -52,8 +64,7 @@
           </object>
         </child>
         <child>
-          <!-- TODO -->
-          <object class="GtkLabel" id="city_info">
+          <object class="ConquerCityInfo" id="city_info">
           </object>
         </child>
       </object>

@@ -1,0 +1,7 @@
+[Plugin]
+Module=defaultalgorithms
+Name=Default algorithms
+Description=Provides the default algorithms to use for different clans.
+Authors=JCWasmx86 <JCWasmx86@t-online.de>
+Copyright=Copyright © 2009 JCWasmx86
+Loader=C
