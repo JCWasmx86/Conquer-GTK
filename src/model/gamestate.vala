@@ -69,6 +69,7 @@ public class Conquer.GameState : Object {
         from.soldiers -= n;
         from.clan.coins -= (uint64)costs;
         to.soldiers += n;
+        Conquer.QUEUE.emit (new MoveMessage (from, to, n));
     }
 
     public virtual Conquer.AttackResult attack (City from, City to, uint64 n) requires (from != null) requires (to != null) requires (from != to) requires (n != 0) requires (this.cities.distance (from, to) > 0) {
@@ -81,24 +82,25 @@ public class Conquer.GameState : Object {
         info ("Attacking %s from %s with %llu soldiers (Power %lf vs %lf)", to.name, from.name, n, attacking_power, defense_power);
         from.soldiers -= n;
         from.clan.coins -= (uint64)costs;
+        var result = Conquer.AttackResult.FAIL;
         if (difference > 0) {
             if (difference > to.defense) {
                 // We got the city
                 to.soldiers = (uint64) difference;
                 to.clan = from.clan;
                 info ("City got conquered");
-                return Conquer.AttackResult.SUCCESS;
+                result = Conquer.AttackResult.SUCCESS;
             } else {
                 to.soldiers = 0;
                 info ("All enemy soldiers were killed, but the city couldn't be conquered");
-                return Conquer.AttackResult.FAIL;
             }
         } else {
             var cleaned_diff = - (difference / to.defense_bonus);
             to.soldiers = (uint64) cleaned_diff;
             info ("Attack failed");
-            return Conquer.AttackResult.FAIL;
         }
+        Conquer.QUEUE.emit (new AttackMessage (from, to, n, result));
+        return result;
     }
 }
 

@@ -59,4 +59,40 @@ public class Conquer.CityGraph : GLib.Object {
     public double get_weight (uint from, uint to) requires (from < this.cities.length) requires (to < this.cities.length) {
         return this.weights[from, to];
     }
+
+    public City[] cities_of_clan (Clan clan) {
+        var ret = new City[0];
+        foreach (var c in this.cities) {
+            if (clan == c.clan)
+                ret += c;
+        }
+        return ret;
+    }
+
+    public City[] reachable_enemy_cities (Clan clan, City[] own_cities) {
+        var ret = new City[0];
+        for (var i = 0; i < this.cities.length; i++) {
+            if (this.cities[i].clan == clan)
+                continue;
+            foreach (var c in own_cities) {
+                if (this.distance (c, this.cities[i]) > 0) {
+                    ret += this.cities[i];
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public City[] adjacent_cities (Clan clan, City middle) {
+        var ret = new City[0];
+        for (var i = 0; i < this.cities.length; i++) {
+            if (middle == this.cities[i])
+                continue;
+            if (this.distance (this.cities[i], middle) > 0 && this.cities[i].clan == clan) {
+                ret += this.cities[i];
+            }
+        }
+        return ret;
+    }
 }

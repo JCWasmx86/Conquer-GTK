@@ -1,4 +1,4 @@
-/* cityactions.vala
+/* attackmessage.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -17,7 +17,16 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-[GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/cityactions.ui")]
-public class Conquer.CityActionScreen : Gtk.Box {
-
-}
+public class Conquer.AttackMessage : Conquer.Message {
+    public Conquer.City from { get; private set; }
+    public Conquer.City to { get; private set; }
+    public uint64 num { get; private set; }
+    public Conquer.AttackResult result { get; private set; }
+    public AttackMessage (City from, City to, uint64 n, Conquer.AttackResult result) {
+        base ();
+        this.from = from;
+        this.to = to;
+        this.num = n;
+        this.result = result;
+    }
+} 

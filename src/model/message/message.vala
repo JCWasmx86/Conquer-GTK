@@ -18,5 +18,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public abstract class Conquer.Message : GLib.Object {
-    public DateTime timestamp;
+    public DateTime timestamp { get; set; }
+
+    protected Message () {
+        this.timestamp = new GLib.DateTime.now_local ();
+    }
 }

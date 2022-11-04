@@ -20,7 +20,7 @@
 public class Conquer.City : GLib.Object {
     public double growth { get; set; }
     public string name { get; set; }
-    public GLib.Bytes   icon_data { get; set; }
+    public GLib.Bytes icon_data { get; set; }
     public Clan clan { get; set; }
     public uint64 people { get; set; }
     public uint64 soldiers { get; set; }
@@ -31,49 +31,75 @@ public class Conquer.City : GLib.Object {
     public uint64 defense_level { get; set; default = 1; }
     public ResourceUpgrade[] upgrades;
 
-    public City() {
+    public City () {
         this.upgrades = new ResourceUpgrade[9];
         for (var i = 0; i < this.upgrades.length; i++) {
             this.upgrades[i] = new ResourceUpgrade ();
-            this.upgrades[i].resource = (Conquer.Resource)i;
+            this.upgrades[i].resource = (Conquer.Resource) i;
             this.upgrades[i].level = 1;
         }
     }
 
-    public void grow () {
+    public virtual void grow () {
         this.people = (uint64) (this.people * this.growth);
         foreach (var upgrade in this.upgrades) {
             var resource = upgrade.resource;
             var amount_produced = this.people * upgrade.production;
-            this.clan.add_resource(resource, amount_produced);
+            this.clan.add_resource (resource, amount_produced);
         }
     }
 
-    public void use_resources () {
+    public virtual void use_resources () {
         foreach (var upgrade in this.upgrades) {
             var resource = upgrade.resource;
-            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt(upgrade.production);
-            this.clan.use_resource(resource, amount_used);
+            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt (upgrade.production);
+            this.clan.use_resource (resource, amount_used);
         }
     }
 
-    public double[] calculate_resource_netto () {
+    public virtual uint64 maximum_recruitable_soldiers (bool stay_neutral) {
+        var n = uint64.MAX;
+        foreach (var upgrade in this.upgrades) {
+            var amount_produced = this.people * upgrade.production;
+            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt (upgrade.production);
+            var diff = amount_produced - amount_used;
+            if (diff < 0 && stay_neutral) {
+                return 0;
+            }
+            var res = diff / (1.1 * GLib.Math.sqrt (upgrade.production));
+            if (res <= 0)
+                return 0;
+            n = uint64.min (n, (uint64) res);
+        }
+        var coins = this.clan.coins;
+        n = uint64.min (n, coins / 50);
+
+        return uint64.min (n, this.people);
+    }
+
+    public virtual double[] calculate_resource_netto () {
         var ret = new double[9];
         foreach (var upgrade in this.upgrades) {
             var resource = upgrade.resource;
             var amount_produced = this.people * upgrade.production;
-            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt(upgrade.production);
+            var amount_used = this.soldiers * 1.1 * GLib.Math.sqrt (upgrade.production);
             ret[resource] = amount_produced - amount_used;
         }
         return ret;
     }
 
-    public void disband_random () {
+    public virtual void disband_random () {
         this.soldiers = (uint64) (this.soldiers * new Rand ().double_range (0.85, 0.99));
+    }
+
+    public virtual void recruit (uint64 n) requires (n <= this.people) requires (this.clan.coins > n * 50) {
+        this.people -= n;
+        this.soldiers += n;
+        this.clan.coins -= (n * 50);
     }
 }
 
-public class Conquer.ResourceUpgrade  : Object {
+public class Conquer.ResourceUpgrade : Object {
     public Conquer.Resource resource;
     public uint64 level;
     public double production;

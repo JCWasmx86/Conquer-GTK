@@ -252,12 +252,12 @@ namespace Conquer {
         }
 
         internal void one_round () {
+            this.map_drawing_area.queue_draw ();
             if (this.selected_city != null && !this.selected_city.clan.player) {
                 // Player lost the city
                 selected_city = null;
                 this.city_upgrade.visible_child = this.empty_upgrade;
                 this.right_side.visible_child = this.empty;
-                this.map_drawing_area.queue_draw ();
             }
             this.city_info.update (this.selected_city);
         }
