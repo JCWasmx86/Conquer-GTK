@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public class Conquer.CityGraph : GLib.Object {
-    private unowned City[] cities;
+    private City[] cities;
     public double[, ] weights;
 
     public CityGraph (City[] cities) {
@@ -36,6 +36,24 @@ public class Conquer.CityGraph : GLib.Object {
                                 requires (to < this.cities.length) {
         this.weights[from, to] = weight;
         this.weights[to, from] = weight;
+    }
+
+    public bool direct_connection (City? from, City? to) requires (from != null) requires (to != null) requires (from != to) {
+        return this.distance (from, to) > 0;
+    }
+
+    public double distance (City? from, City? to) requires (from != null) requires (to != null) requires (from != to) {
+        var idx0 = -1;
+        var idx1 = -1;
+        for (var i = 0; i < cities.length; i++) {
+            if (from == cities[i])
+                idx0 = i;
+            if (to == cities[i])
+                idx1 = i;
+        }
+        assert (idx0 != -1);
+        assert (idx1 != -1);
+        return this.weights[idx0, idx1];
     }
 
     public double get_weight (uint from, uint to) requires (from < this.cities.length) requires (to < this.cities.length) {

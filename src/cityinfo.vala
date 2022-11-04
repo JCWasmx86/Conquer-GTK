@@ -25,8 +25,6 @@ namespace Conquer {
             this.city_info_list = new Gtk.TreeView ();
             this.kr = new Gtk.CellRendererText ();
             this.vr = new Gtk.CellRendererText ();
-            // TODO: How to get markup rendered in cell renderer?
-            this.vr.markup ="<span foreground=\"blue\">foo</span>";
             this.city_info_list.insert_column_with_attributes (-1, "Key", this.kr, "text", 0, null);
             this.city_info_list.insert_column_with_data_func (-1, "Value", this.vr, (tc, cr, tm, iter) => {
                 string str;

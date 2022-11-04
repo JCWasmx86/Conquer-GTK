@@ -45,6 +45,63 @@ public class Conquer.GameState : Object {
         foreach (var clan in this.clans) {
             clan.disband_soldiers (this);
         }
+        foreach (var city in this.city_list) {
+            city.clan.coins += city.people;
+        }
         this.round++;
     }
+
+    public virtual uint64 maximum_number_of_soliders_to_move (City from, City to) {
+        var distance = this.cities.distance (from, to);
+        if (distance <= 0)
+            return 0;
+        var costs_per_soldier = distance * 1.2;
+        var amount_for_all = from.soldiers * costs_per_soldier;
+        if (amount_for_all <= from.clan.coins)
+            return from.soldiers;
+        return (uint64) (from.clan.coins / costs_per_soldier);
+    }
+
+    public virtual void move (City from, City to, uint64 n) requires (from != null) requires (to != null) requires (from != to) requires (n != 0) requires (this.cities.distance (from, to) > 0) {
+        var distance = this.cities.distance (from, to);
+        var costs = distance * 1.2 * n;
+        assert (costs <= from.clan.coins);
+        from.soldiers -= n;
+        from.clan.coins -= (uint64)costs;
+        to.soldiers += n;
+    }
+
+    public virtual Conquer.AttackResult attack (City from, City to, uint64 n) requires (from != null) requires (to != null) requires (from != to) requires (n != 0) requires (this.cities.distance (from, to) > 0) {
+        var distance = this.cities.distance (from, to);
+        var costs = distance * 1.2 * n;
+        assert (costs <= from.clan.coins);
+        var attacking_power = (double)n;
+        var defense_power = to.soldiers * to.defense_bonus;
+        var difference = attacking_power - defense_power;
+        info ("Attacking %s from %s with %llu soldiers (Power %lf vs %lf)", to.name, from.name, n, attacking_power, defense_power);
+        from.soldiers -= n;
+        from.clan.coins -= (uint64)costs;
+        if (difference > 0) {
+            if (difference > to.defense) {
+                // We got the city
+                to.soldiers = (uint64) difference;
+                to.clan = from.clan;
+                info ("City got conquered");
+                return Conquer.AttackResult.SUCCESS;
+            } else {
+                to.soldiers = 0;
+                info ("All enemy soldiers were killed, but the city couldn't be conquered");
+                return Conquer.AttackResult.FAIL;
+            }
+        } else {
+            var cleaned_diff = - (difference / to.defense_bonus);
+            to.soldiers = (uint64) cleaned_diff;
+            info ("Attack failed");
+            return Conquer.AttackResult.FAIL;
+        }
+    }
+}
+
+public enum Conquer.AttackResult {
+    SUCCESS, FAIL;
 }

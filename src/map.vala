@@ -72,15 +72,100 @@ namespace Conquer {
         private void drag_end (double offset_x, double offset_y) {
             if (this.start_city != null) {
                 var end_city = this.find_city (start_x + offset_x, start_y + offset_y);
-                if (this.start_city != end_city)
+                if (this.start_city != end_city && this.start_city != null && this.start_city.clan.player && end_city != null) {
                     info ("Drag from %s to %s", this.start_city.name, end_city.name);
+                    var has_direct_connection = this.game_state.cities.direct_connection (this.start_city, end_city);
+                    if (!has_direct_connection) {
+                        var dia = new Adw.MessageDialog (((Adw.Application)GLib.Application.get_default ()).active_window, "Error", "Can't move troops between non-adjacent cities");
+                        dia.add_response ("ok", "_Ok");
+                        dia.response.connect (r => {
+                            dia.destroy ();
+                        });
+                        dia.present ();
+                    } else {
+                        var is_attack = this.start_city.clan != end_city.clan;
+                        var window = new Adw.Window ();
+                        var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+                        var bar = new Adw.HeaderBar ();
+                        bar.centering_policy = Adw.CenteringPolicy.STRICT;
+                        bar.title_widget = new Adw.WindowTitle (is_attack ? "Attack city" : "Move soldiers", "From %s".printf (this.start_city.name));
+                        bar.show_end_title_buttons = true;
+                        content.append (bar);
+                        var clamp = new Adw.Clamp ();
+                        var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+                        var max = this.game_state.maximum_number_of_soliders_to_move (start_city, end_city);
+                        var scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, max == 0 ? 1 : max, 1);
+                        scale.sensitive = max != 0;
+                        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
+                        var suggested = new Gtk.Button.with_label (is_attack ? "Attack" : "Move");
+                        suggested.hexpand = true;
+                        suggested.sensitive = false;
+                        suggested.get_style_context ().add_class ("suggested-action");
+                        var abort = new Gtk.Button.with_label ("Cancel");
+                        abort.hexpand = true;
+                        scale.value_changed.connect (() => {
+                            suggested.sensitive = scale.get_value () != 0;
+                        });
+                        abort.get_style_context ().add_class ("destructive-action");
+                        button_box.append (abort);
+                        button_box.append (suggested);
+                        button_box.hexpand = true;
+                        scale.draw_value = true;
+                        scale.digits = 0;
+                        box.append (scale);
+                        box.append (button_box);
+                        clamp.maximum_size = 360;
+                        clamp.child = box;
+                        content.append (clamp);
+                        abort.clicked.connect (() => {
+                           window.destroy ();
+                        });
+                        var sc = this.start_city;
+                        suggested.clicked.connect (() => {
+                            if (is_attack) {
+                                var result = this.game_state.attack (sc, end_city, (uint64)scale.get_value ());
+                                var new_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+                                ((Adw.WindowTitle)bar.title_widget).title = "Result";
+                                ((Adw.WindowTitle)bar.title_widget).subtitle = "";
+                                new_box.append (new Gtk.Label (result == Conquer.AttackResult.SUCCESS ? "You conquered %s".printf (end_city.name) : "Your attack failed"));
+                                if (result == Conquer.AttackResult.SUCCESS) {
+                                    new_box.append (new Gtk.Label ("%llu soldiers survived".printf (end_city.soldiers)));
+                                }
+                                var btn = new Gtk.Button.with_label ("Close");
+                                btn.get_style_context ().add_class ("suggested-action");
+                                btn.hexpand = true;
+                                new_box.append (btn);
+                                btn.clicked.connect (() => {
+                                   window.destroy ();
+                                });
+                                clamp.child = new_box;
+                            } else {
+                                this.game_state.move (sc, end_city, (uint64)scale.get_value ());
+                                window.destroy ();
+                            }
+                            this.update_visible ();
+                        });
+                        window.content = content;
+                        window.resizable = false;
+                        window.present ();
+                    }
+                }
             }
             this.start_city = null;
             this.start_x = -1;
             this.start_y = -1;
         }
 
-        private City? find_city (double x, double y) {
+        private void update_visible () {
+            Idle.add (() => {
+                // Nothing else has to be redrawn currently, as
+                // the info and so on are deselected on drag-end.
+                this.map_drawing_area.queue_draw ();
+                return Source.REMOVE;
+            }, Priority.HIGH);
+        }
+
+        private City ? find_city (double x, double y) {
             foreach (var c in this.game_state.city_list) {
                 var map_surface = new BytesReader (c.icon_data).read_surface ();
                 var x_matches = x <= c.x + map_surface.get_width () + 20 && x >= c.x - 20;
@@ -203,4 +288,3 @@ namespace Conquer {
         }
     }
 }
-
