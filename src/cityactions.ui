@@ -21,12 +21,14 @@
 			<object class="GtkButton" id="wheat">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">wheat-symbolic</property>
 			</object>
 		</child>
 		<child>
 			<object class="GtkButton" id="fish">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">fish-symbolic</property>
 			</object>
 		</child>
 		<child>
@@ -45,6 +47,7 @@
 			<object class="GtkButton" id="meat">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">meat-symbolic</property>
 			</object>
 		</child>
 		<child>
