@@ -18,30 +18,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public enum Conquer.Resource {
-    WHEAT, FISH, WOOD, COAL, MEAT, IRON, TEXTILE, LEATHER, STONE;
+    WOOD, FOOD, IRON, STONE;
 
     public static Conquer.Resource from_string (string str) {
         switch (str) {
-            case "wheat":
-                return Resource.WHEAT;
-            case "fish":
-                return Resource.FISH;
             case "wood":
                 return Resource.WOOD;
-            case "coal":
-                return Resource.COAL;
             case "meat":
-                return Resource.MEAT;
+                return Resource.FOOD;
             case "iron":
                 return Resource.IRON;
-            case "textile":
-                return Resource.TEXTILE;
-            case "leather":
-                return Resource.LEATHER;
             case "stone":
                 return Resource.STONE;
         }
         return 0;
+    }
+
+    public static uint num () {
+        return 4;
     }
 
     public static uint hash_func (Resource r) {

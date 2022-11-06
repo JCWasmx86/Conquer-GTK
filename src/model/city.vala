@@ -32,7 +32,7 @@ public class Conquer.City : GLib.Object {
     public ResourceUpgrade[] upgrades;
 
     public City () {
-        this.upgrades = new ResourceUpgrade[9];
+        this.upgrades = new ResourceUpgrade[Resource.num ()];
         for (var i = 0; i < this.upgrades.length; i++) {
             this.upgrades[i] = new ResourceUpgrade ();
             this.upgrades[i].resource = (Conquer.Resource) i;
@@ -85,7 +85,7 @@ public class Conquer.City : GLib.Object {
     }
 
     public virtual double[] calculate_resource_netto () {
-        var ret = new double[9];
+        var ret = new double[Resource.num ()];
         foreach (var upgrade in this.upgrades) {
             var resource = upgrade.resource;
             var amount_produced = this.people * upgrade.production;

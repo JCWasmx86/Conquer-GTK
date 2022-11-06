@@ -29,10 +29,10 @@ public class Conquer.Clan : GLib.Object {
 
     construct {
         this.resources = new GLib.HashTable<Conquer.Resource, double?>(Conquer.Resource.hash_func, null);
-        for (var i = 0; i < 9; i++) {
+        for (var i = 0; i < Resource.num (); i++) {
             this.resources[i] = 0;
         }
-        this.uses = new double[9];
+        this.uses = new double[Resource.num ()];
     }
 
     public virtual void add_resource (Resource r, double amount) {
@@ -59,7 +59,7 @@ public class Conquer.Clan : GLib.Object {
             var j = 0;
             uint64 disbanded_number = 0;
             while (!positive && j < 100000) {
-                var new_array = new double[9];
+                var new_array = new double[Resource.num ()];
                 var disbanded = false;
                 foreach (var c in cities) {
                     if (c.clan != this)
@@ -71,7 +71,7 @@ public class Conquer.Clan : GLib.Object {
                         disbanded = true;
                     }
                     var total = c.calculate_resource_netto ();
-                    for (var i = 0; i < 9; i++)
+                    for (var i = 0; i < Resource.num (); i++)
                         new_array[i] += total[i];
                 }
                 var has_to_continue = false;
@@ -83,7 +83,7 @@ public class Conquer.Clan : GLib.Object {
             }
             info ("[%s] Disbanded %llu soldiers", this.name, disbanded_number);
         }
-        this.uses = new double[9];
+        this.uses = new double[Resource.num ()];
     }
     // TODO: Upgrades for defense/attack
 }

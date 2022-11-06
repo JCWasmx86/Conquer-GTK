@@ -58,7 +58,7 @@ namespace Conquer {
             this.model.append (out iter);
             this.model.@set (iter, 0, "Defense Bonus", 1, "%.2lf%%".printf (c.defense_bonus * 100 - 100), -1);
             var amount = c.calculate_resource_netto ();
-            for (var i = 0; i < 9; i++) {
+            for (var i = 0; i < Resource.num (); i++) {
                 this.model.append (out iter);
                 this.model.@set (iter, 0, ((Resource)i).to_string (), 1, this.colorify("%.2lf".printf (amount[i])), -1);
             }

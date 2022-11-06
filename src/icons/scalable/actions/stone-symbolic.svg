@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.0px"
+   height="16.0px"
+   viewBox="0 0 16.0 16.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="stone-symbolic.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1830"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="30.808274"
+     inkscape:cx="6.8001213"
+     inkscape:cy="8.7314206"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2316" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1825" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="fill:#222222;fill-opacity:1;stroke-width:1.19701"
+       id="path2790"
+       ry="3.1327641"
+       rx="5.0170493"
+       cy="8.3987293"
+       cx="3.6229393"
+       transform="matrix(0.88516753,-0.46527244,0.39739343,0.91764833,0,0)" />
+    <path
+       style="fill:#222222;fill-opacity:1"
+       id="path4873"
+       sodipodi:type="arc"
+       sodipodi:cx="6.0040307"
+       sodipodi:cy="13.798446"
+       sodipodi:rx="5.2728453"
+       sodipodi:ry="3.043077"
+       sodipodi:start="0"
+       sodipodi:end="6.2794302"
+       sodipodi:arc-type="slice"
+       d="M 11.276876,13.798446 A 5.2728453,3.043077 0 0 1 6.0089807,16.841521 5.2728453,3.043077 0 0 1 0.73119473,13.804159 5.2728453,3.043077 0 0 1 5.9891806,10.755381 5.2728453,3.043077 0 0 1 11.276839,13.787019 l -5.2728083,0.01143 z"
+       transform="rotate(-16.126985)" />
+  </g>
+</svg>

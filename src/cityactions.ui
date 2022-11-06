@@ -20,17 +20,10 @@
 			</object>
 		</child>
 	  <child>
-			<object class="GtkButton" id="wheat">
+			<object class="GtkButton" id="food">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">wheat-symbolic</property>
-			</object>
-		</child>
-		<child>
-			<object class="GtkButton" id="fish">
-			  <property name="vexpand">false</property>
-			  <property name="hexpand">false</property>
-			  <property name="icon-name">fish-symbolic</property>
 			</object>
 		</child>
 		<child>
@@ -40,40 +33,16 @@
 			</object>
 		</child>
 		<child>
-			<object class="GtkButton" id="coal">
-			  <property name="vexpand">false</property>
-			  <property name="hexpand">false</property>
-			</object>
-		</child>
-		<child>
-			<object class="GtkButton" id="meat">
-			  <property name="vexpand">false</property>
-			  <property name="hexpand">false</property>
-			  <property name="icon-name">meat-symbolic</property>
-			</object>
-		</child>
-		<child>
 			<object class="GtkButton" id="iron">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			</object>
 		</child>
-		<child>
-			<object class="GtkButton" id="textile">
-			  <property name="vexpand">false</property>
-			  <property name="hexpand">false</property>
-			</object>
-		</child>
-		<child>
-			<object class="GtkButton" id="leather">
-			  <property name="vexpand">false</property>
-			  <property name="hexpand">false</property>
-			</object>
-		</child>
-		<child>
+	  <child>
 			<object class="GtkButton" id="stone">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">stone-symbolic</property>
 			</object>
 		</child>
 	  <child>
