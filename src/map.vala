@@ -30,6 +30,7 @@ namespace Conquer {
             gd.drag_begin.connect (this.drag_begin);
             gd.drag_end.connect (this.drag_end);
             this.map_drawing_area.add_controller (gd);
+            this.city_actions.update_state.connect (this.one_round);
         }
         [GtkChild]
         private unowned Gtk.DrawingArea map_drawing_area;
@@ -192,6 +193,7 @@ namespace Conquer {
                     this.city_upgrade.visible_child = this.city_actions;
                     this.right_side.visible_child = this.city_info;
                     this.city_info.update (c);
+                    this.city_actions.update (this.game_state, this.selected_city);
                     return;
                 }
             }
@@ -201,6 +203,7 @@ namespace Conquer {
                 this.right_side.visible_child = this.empty;
                 this.map_drawing_area.queue_draw ();
                 this.city_info.update (this.selected_city);
+                this.city_actions.update (this.game_state, this.selected_city);
             }
         }
 
@@ -260,6 +263,7 @@ namespace Conquer {
                 this.right_side.visible_child = this.empty;
             }
             this.city_info.update (this.selected_city);
+            this.city_actions.update (this.game_state, this.selected_city);
         }
     }
 

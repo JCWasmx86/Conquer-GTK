@@ -45,7 +45,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
                     if (netto[i] >= 0)
                         break;
                 }
-                if (netto[i] < 0 && state.round <= 5) {
+                if (netto[i] < 0 && state.round >= 5) {
                     while (netto[i] <= 0) {
                         var n_soldiers = c.soldiers / 3;
                         c.disband (n_soldiers);

@@ -57,7 +57,14 @@ public class Conquer.City : GLib.Object {
         }
     }
 
+    public virtual uint64 costs_for_recruiting (uint64 n) {
+        return n * 50;
+    }
+
     public virtual uint64 maximum_recruitable_soldiers (bool stay_neutral) {
+        if (!stay_neutral) {
+            return uint64.min (this.people, this.clan.coins / 50);
+        }
         var n = uint64.MAX;
         foreach (var upgrade in this.upgrades) {
             var amount_produced = this.people * upgrade.production;
@@ -92,7 +99,7 @@ public class Conquer.City : GLib.Object {
         this.soldiers = (uint64) (this.soldiers * new Rand ().double_range (0.85, 0.99));
     }
 
-    public virtual void recruit (uint64 n) requires (n <= this.people) requires (this.clan.coins > n * 50) {
+    public virtual void recruit (uint64 n) requires (n <= this.people) requires (this.clan.coins >= n * 50) {
         this.people -= n;
         this.soldiers += n;
         this.clan.coins -= (n * 50);
