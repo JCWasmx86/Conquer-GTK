@@ -125,6 +125,23 @@ public class Conquer.City : GLib.Object {
         u.level++;
         u.production = new_value;
     }
+
+    public virtual uint64 costs_for_defense_upgrade () {
+        return (uint64) ((this.defense_level + 1) * 600 + Math.pow (this.defense_level + 1, 4.5));
+    }
+
+    public virtual uint64 upgraded_defense_strength () {
+        var factor = 1.01 + (Math.pow (Math.fabs (0.1 * Math.sin(this.defense_level + 1)), 1.2));
+        return (uint64)(this.defense * factor);
+    }
+
+    public virtual void upgrade_defense () {
+        var costs = this.costs_for_defense_upgrade ();
+        assert (costs <= this.clan.coins);
+        this.clan.coins -= costs;
+        this.defense = this.upgraded_defense_strength ();
+        this.defense_level++;
+    }
 }
 
 public class Conquer.ResourceUpgrade : Object {

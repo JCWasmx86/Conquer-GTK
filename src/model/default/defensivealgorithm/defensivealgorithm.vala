@@ -61,10 +61,15 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
             var border_cities = state.cities.border_cities (clan);
             info ("Have %llu cities, but only %llu are border cities", own_cities.length, border_cities.length);
             foreach (var c in border_cities) {
-                var n = c.maximum_recruitable_soldiers (true);
-                var real_amount = (uint64)(n * 0.8);
-                info ("[Defensive] Could recruit %llu soldiers in %s, but will only recruit %llu", n, c.name, real_amount);
-                c.recruit (real_amount);
+                if (GLib.Random.next_double () > 0.75) {
+                    var n = c.maximum_recruitable_soldiers (true);
+                    var real_amount = (uint64)(n * 0.8);
+                    info ("[Defensive] Could recruit %llu soldiers in %s, but will only recruit %llu", n, c.name, real_amount);
+                    c.recruit (real_amount);
+                } else {
+                    while (c.costs_for_defense_upgrade () <= clan.coins)
+                        c.upgrade_defense ();
+                }
             }
         }
         if (GLib.Random.next_double () < 0.85) {
