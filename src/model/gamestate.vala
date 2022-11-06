@@ -67,7 +67,7 @@ public class Conquer.GameState : Object {
         var costs = distance * 1.2 * n;
         assert (costs <= from.clan.coins);
         from.soldiers -= n;
-        from.clan.coins -= (uint64)costs;
+        from.clan.coins -= (uint64) costs;
         to.soldiers += n;
         Conquer.QUEUE.emit (new MoveMessage (from, to, n));
     }
@@ -76,12 +76,12 @@ public class Conquer.GameState : Object {
         var distance = this.cities.distance (from, to);
         var costs = distance * 1.2 * n;
         assert (costs <= from.clan.coins);
-        var attacking_power = (double)n;
+        var attacking_power = (double) n;
         var defense_power = to.soldiers * to.defense_bonus;
         var difference = attacking_power - defense_power;
         info ("Attacking %s from %s with %llu soldiers (Power %lf vs %lf)", to.name, from.name, n, attacking_power, defense_power);
         from.soldiers -= n;
-        from.clan.coins -= (uint64)costs;
+        from.clan.coins -= (uint64) costs;
         var result = Conquer.AttackResult.FAIL;
         if (difference > 0) {
             if (difference > to.defense) {
@@ -89,13 +89,14 @@ public class Conquer.GameState : Object {
                 to.soldiers = (uint64) difference;
                 to.clan = from.clan;
                 info ("City got conquered");
+                to.people = (uint64) (to.people * GLib.Random.double_range (0.75, 0.95));
                 result = Conquer.AttackResult.SUCCESS;
             } else {
                 to.soldiers = 0;
                 info ("All enemy soldiers were killed, but the city couldn't be conquered");
             }
         } else {
-            var cleaned_diff = - (difference / to.defense_bonus);
+            var cleaned_diff = -(difference / to.defense_bonus);
             to.soldiers = (uint64) cleaned_diff;
             info ("Attack failed");
         }

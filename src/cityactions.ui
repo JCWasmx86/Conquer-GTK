@@ -9,12 +9,14 @@
 			<object class="GtkButton" id="recruit">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">plus-large-symbolic</property>
 			</object>
 		</child>
 	  <child>
 			<object class="GtkButton" id="disband">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">minus-large-symbolic</property>
 			</object>
 		</child>
 	  <child>

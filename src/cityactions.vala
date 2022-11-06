@@ -19,5 +19,20 @@
  */
 [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/cityactions.ui")]
 public class Conquer.CityActionScreen : Gtk.Box {
+    construct {
+        this.recruit.clicked.connect (() => {
+            this.change_soldiers (true);
+        });
+        this.disband.clicked.connect (() => {
+            this.change_soldiers (false);
+        });
+    }
+    [GtkChild]
+    private unowned Gtk.Button recruit;
+    [GtkChild]
+    private unowned Gtk.Button disband;
 
+    private void change_soldiers (bool recruit) {
+
+    }
 }

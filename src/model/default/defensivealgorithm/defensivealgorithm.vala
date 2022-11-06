@@ -20,8 +20,9 @@
 public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
     public void play (Conquer.Clan clan, Conquer.GameState state) {
         var own_cities = state.cities.cities_of_clan (clan);
-        info ("[Defensive] Have %d cities", own_cities.length);
+        info ("[Defensive] %s: Have %d cities", clan.name, own_cities.length);
         var all_are_neutral = true;
+        var n_negative = 0;
         foreach (var c in own_cities) {
             var netto = c.calculate_resource_netto ();
             var is_neutral = true;
@@ -29,13 +30,37 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
                 is_neutral &= r >= 0;
             info ("[Defensive] %s has neutral: %s", c.name, is_neutral.to_string ());
             all_are_neutral &= is_neutral;
-            // TODO: Update defense if is_neutral
             if (is_neutral)
                 continue;
+            n_negative++;
+            for (var i = 0; i < netto.length; i++) {
+                var val = netto[i];
+                if (val >= 0)
+                    continue;
+                var costs = c.costs_for_upgrade (i);
+                while (costs <= clan.coins) {
+                    c.upgrade (i);
+                    costs = c.costs_for_upgrade (i);
+                    netto = c.calculate_resource_netto ();
+                    if (netto[i] >= 0)
+                        break;
+                }
+                if (netto[i] < 0 && state.round <= 5) {
+                    while (netto[i] <= 0) {
+                        var n_soldiers = c.soldiers / 3;
+                        c.disband (n_soldiers);
+                        netto = c.calculate_resource_netto ();
+                        if (netto[i] >= 0)
+                            break;
+                    }
+                }
+            }
         }
         info ("[Defensive] All are neutral: %s", all_are_neutral.to_string ());
-        if (all_are_neutral) {
-            foreach (var c in own_cities) {
+        if (all_are_neutral || (n_negative == 1 && own_cities.length > 1)) {
+            var border_cities = state.cities.border_cities (clan);
+            info ("Have %llu cities, but only %llu are border cities", own_cities.length, border_cities.length);
+            foreach (var c in border_cities) {
                 var n = c.maximum_recruitable_soldiers (true);
                 var real_amount = (uint64)(n * 0.8);
                 info ("[Defensive] Could recruit %llu soldiers in %s, but will only recruit %llu", n, c.name, real_amount);
@@ -65,9 +90,10 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
             info ("[Defensive] Enemy city %s", ec.name);
             foreach (var c in neighbors) {
                 var max_num = state.maximum_number_of_soliders_to_move (c, ec);
-                info ("[Defensive] %s -> %s: %llu", c.name, ec.name, max_num);
                 var real_num = (uint64)(max_num * 0.8);
-                state.attack (c, ec, real_num);
+                if (real_num != 0)
+                    if (state.attack (c, ec, real_num) == Conquer.AttackResult.SUCCESS)
+                        break;
             }
         }
     }

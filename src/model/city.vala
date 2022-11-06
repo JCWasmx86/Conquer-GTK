@@ -97,6 +97,27 @@ public class Conquer.City : GLib.Object {
         this.soldiers += n;
         this.clan.coins -= (n * 50);
     }
+
+    public virtual void disband (uint64 n) requires (n <= this.soldiers) {
+        this.people += n;
+        this.soldiers -= n;
+    }
+
+    public uint64 costs_for_upgrade (Resource r) {
+        var u = this.upgrades[r];
+        return (uint64) ((u.level + 1) * 500 + Math.pow (u.level + 1, 3.5));
+    }
+
+    public virtual void upgrade (Resource r) {
+        var u = this.upgrades[r];
+        var costs = this.costs_for_upgrade (r);
+        assert (costs <= this.clan.coins);
+        var x = u.production;
+        var new_value = x * (1 + (Math.fabs (Math.sin (0.2 * u.level) * 0.3) + 0.1));
+        this.clan.coins -= (uint64)costs;
+        u.level++;
+        u.production = new_value;
+    }
 }
 
 public class Conquer.ResourceUpgrade : Object {

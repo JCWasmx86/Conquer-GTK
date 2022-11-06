@@ -2,6 +2,8 @@
 <gresources>
   <gresource prefix="/io/github/jcwasmx86/Conquer">
     <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/minus-large-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/plus-large-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/meat-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/wheat-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/fish-symbolic.svg</file>
@@ -14,5 +16,7 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
 </gresources>
+
+
 
 
