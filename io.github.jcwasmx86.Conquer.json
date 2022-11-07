@@ -32,6 +32,21 @@
     ],
     "modules" : [
     	{
+	    "name" : "music",
+	    "buildsystem" : "simple",
+	    "build-commands": [
+	    	"mkdir -p ${FLATPAK_DEST}/share/conquer/music",
+	    	"cp *.ogg ${FLATPAK_DEST}/share/conquer/music"
+	    ],
+	    "sources" : [
+	    	{
+	    	    "type" : "archive",
+	    	    "url" : "https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/music.zip",
+	    	    "sha256" : "bdfbf6063ceb99f937e7a081b3219e4d8238b016b1236d22c6c48827e525f5db"
+	    	}
+	    ]
+    	},
+    	{
             "name" : "libpeas",
             "buildsystem" : "meson",
             "cleanup" : [
@@ -42,8 +57,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libpeas.git",
-                    "branch" : "master"
+                    "url" : "https://gitlab.gnome.org/GNOME/libpeas.git"
                 }
             ]
         },
@@ -54,7 +68,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/user/Projects"
+                    "url" : "https://github.com/JCWasmx86/Conquer-Vala"
                 }
             ]
         }
