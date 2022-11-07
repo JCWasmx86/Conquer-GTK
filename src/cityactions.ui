@@ -5,11 +5,14 @@
 	  <property name="valign">center</property>
 	  <property name="halign">center</property>
 	  <property name="spacing">4</property>
+	  <property name="homogeneous">true</property>
 		<child>
 			<object class="GtkButton" id="recruit">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">plus-large-symbolic</property>
+			  <property name="width-request">32</property>
+			  <property name="height-request">32</property>
 			</object>
 		</child>
 	  <child>
@@ -30,12 +33,14 @@
 			<object class="GtkButton" id="wood">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">wood-symbolic</property>
 			</object>
 		</child>
 		<child>
 			<object class="GtkButton" id="iron">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">iron-symbolic</property>
 			</object>
 		</child>
 	  <child>
@@ -49,6 +54,7 @@
 			<object class="GtkButton" id="defense_upgrade">
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
+			  <property name="icon-name">shield-symbolic</property>
 			</object>
 		</child>
 	</template>

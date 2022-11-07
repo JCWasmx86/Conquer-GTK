@@ -56,14 +56,44 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
                 }
             }
         }
+        var inner_cities = state.cities.inner_cities (clan);
+        var border_cities = state.cities.border_cities (clan);
+        foreach (var inner in inner_cities) {
+            var moved = false;
+            foreach (var outer in border_cities) {
+                if (!state.cities.direct_connection (inner, outer))
+                    continue;
+                var amount_to_move = state.maximum_number_of_soliders_to_move (inner, outer);
+                if (amount_to_move == 0)
+                    continue;
+                state.move (inner, outer, amount_to_move);
+                info ("[Defensive] Moving %llu troops from %s to %s", amount_to_move, inner.name, outer.name);
+                moved = true;
+            }
+            if (!moved) {
+                while (!moved) {
+                    var idx = GLib.Random.next_int () % inner_cities.length;
+                    if (inner == inner_cities[idx])
+                        continue;
+                    var c = inner_cities[idx];
+                    if (!state.cities.direct_connection (inner, c))
+                        continue;
+                    var amount_to_move = state.maximum_number_of_soliders_to_move (inner, c);
+                    if (amount_to_move == 0)
+                        break;
+                    state.move (inner, c, amount_to_move);
+                    info ("[Defensive] Moving %llu troops from %s to %s", amount_to_move, inner.name, c.name);
+                    moved = true;
+                }
+            }
+        }
         info ("[Defensive] All are neutral: %s", all_are_neutral.to_string ());
         if (all_are_neutral || (n_negative == 1 && own_cities.length > 1)) {
-            var border_cities = state.cities.border_cities (clan);
             info ("Have %llu cities, but only %llu are border cities", own_cities.length, border_cities.length);
             foreach (var c in border_cities) {
                 if (GLib.Random.next_double () > 0.75) {
                     var n = c.maximum_recruitable_soldiers (true);
-                    var real_amount = (uint64)(n * 0.8);
+                    var real_amount = (uint64) (n * 0.8);
                     info ("[Defensive] Could recruit %llu soldiers in %s, but will only recruit %llu", n, c.name, real_amount);
                     c.recruit (real_amount);
                 } else {
@@ -85,7 +115,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
         }
         foreach (var ec in enemy_cities) {
             var neighbors = state.cities.adjacent_cities (clan, ec);
-            GLib.qsort_with_data<City> (neighbors, sizeof(City), (a,b) => {
+            GLib.qsort_with_data<City> (neighbors, sizeof (City), (a, b) => {
                 assert (a != null);
                 assert (b != null);
                 if (a.soldiers == b.soldiers)
@@ -95,7 +125,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
             info ("[Defensive] Enemy city %s", ec.name);
             foreach (var c in neighbors) {
                 var max_num = state.maximum_number_of_soliders_to_move (c, ec);
-                var real_num = (uint64)(max_num * 0.8);
+                var real_num = (uint64) (max_num * 0.8);
                 if (real_num != 0)
                     if (state.attack (c, ec, real_num) == Conquer.AttackResult.SUCCESS)
                         break;
@@ -107,7 +137,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
         return "f9adeac4-95a5-46e8-805e-69473d719f23";
     }
 }
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
-    obj.register_extension_type(typeof (Conquer.Strategy), typeof (Conquer.Default.DefensiveStrategy));
+    obj.register_extension_type (typeof (Conquer.Strategy), typeof (Conquer.Default.DefensiveStrategy));
 }

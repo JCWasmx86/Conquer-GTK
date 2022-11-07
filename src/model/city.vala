@@ -115,12 +115,17 @@ public class Conquer.City : GLib.Object {
         return (uint64) ((u.level + 1) * 500 + Math.pow (u.level + 1, 3.5));
     }
 
+    public virtual double upgraded_production (Resource r) {
+        var u = this.upgrades[r];
+        var x = u.production;
+        return x * (1 + (Math.fabs (Math.sin (0.2 * u.level) * 0.3) + 0.1));
+    }
+
     public virtual void upgrade (Resource r) {
         var u = this.upgrades[r];
         var costs = this.costs_for_upgrade (r);
         assert (costs <= this.clan.coins);
-        var x = u.production;
-        var new_value = x * (1 + (Math.fabs (Math.sin (0.2 * u.level) * 0.3) + 0.1));
+        var new_value = this.upgraded_production (r);
         this.clan.coins -= (uint64)costs;
         u.level++;
         u.production = new_value;

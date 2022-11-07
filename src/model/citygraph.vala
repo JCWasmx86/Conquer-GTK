@@ -115,4 +115,28 @@ public class Conquer.CityGraph : GLib.Object {
         }
         return ret;
     }
+
+    public City[] inner_cities (Clan clan) {
+        var ret = new City[0];
+        for (var i = 0; i < this.cities.length; i++) {
+            var c = this.cities[i];
+            if (c.clan != clan)
+                continue;
+            var borders = false;
+            for (var j = 0; j < this.cities.length; j++) {
+                if (i == j)
+                    continue;
+                if (this.weights[i, j] > 0) {
+                    if (this.cities[j].clan != clan) {
+                        borders = true;
+                        break;
+                    }
+                }
+            }
+            if (!borders) {
+                ret += c;
+            }
+        }
+        return ret;
+    }
 }

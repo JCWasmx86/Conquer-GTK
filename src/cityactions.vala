@@ -29,6 +29,18 @@ public class Conquer.CityActionScreen : Gtk.Box {
         this.defense_upgrade.clicked.connect (() => {
             this.upgrade_defense ();
         });
+        this.food.clicked.connect (() => {
+            this.upgrade (Resource.FOOD);
+        });
+        this.wood.clicked.connect (() => {
+            this.upgrade (Resource.WOOD);
+        });
+        this.iron.clicked.connect (() => {
+            this.upgrade (Resource.IRON);
+        });
+        this.stone.clicked.connect (() => {
+            this.upgrade (Resource.IRON);
+        });
     }
     private GameState state;
     private City? city;
@@ -38,6 +50,60 @@ public class Conquer.CityActionScreen : Gtk.Box {
     private unowned Gtk.Button disband;
     [GtkChild]
     private unowned Gtk.Button defense_upgrade;
+    [GtkChild]
+    private unowned Gtk.Button food;
+    [GtkChild]
+    private unowned Gtk.Button wood;
+    [GtkChild]
+    private unowned Gtk.Button iron;
+    [GtkChild]
+    private unowned Gtk.Button stone;
+
+    private void upgrade (Resource r) {
+        assert (city != null);
+        var window = new Adw.Window ();
+        var bar = new Adw.HeaderBar ();
+        bar.title_widget = new Adw.WindowTitle ("Upgrade %s".printf (r.to_string ()), "");
+        var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+        child.append (bar);
+        var coins = this.city.costs_for_upgrade (r);
+        var costs = new Gtk.Label ("Costs: %llu coins".printf (coins));
+        child.append (costs);
+        var new_production = this.city.upgraded_production (r);
+        var prod = new Gtk.Label ("New production: %.2lf (+%.2lf)".printf (new_production, new_production - this.city.upgrades[r].production));
+        child.append (prod);
+        var max = new Gtk.CheckButton.with_label ("Upgrade as far as possible");
+        child.append (max);
+        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
+        var suggested = new Gtk.Button.with_label ("Upgrade");
+        suggested.hexpand = true;
+        suggested.sensitive = coins <= this.city.clan.coins;
+        suggested.get_style_context ().add_class ("suggested-action");
+        var abort = new Gtk.Button.with_label ("Cancel");
+        abort.hexpand = true;
+        button_box.append (abort);
+        button_box.append (suggested);
+        button_box.hexpand = true;
+        child.append (button_box);
+        var clamp = new Adw.Clamp ();
+        clamp.maximum_size = 360;
+        clamp.child = child;
+        window.content = clamp;
+        window.resizable = false;
+        window.show ();
+        suggested.clicked.connect (() => {
+            while (this.city.costs_for_upgrade (r) <= this.city.clan.coins) {
+                this.city.upgrade (r);
+                if (!max.active)
+                    break;
+            }
+            this.update_state ();
+            window.destroy ();
+        });
+        abort.clicked.connect (() => {
+            window.destroy ();
+        });
+    }
 
     private void upgrade_defense () {
         assert (city != null);

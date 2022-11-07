@@ -24,7 +24,7 @@ public enum Conquer.Resource {
         switch (str) {
             case "wood":
                 return Resource.WOOD;
-            case "meat":
+            case "food":
                 return Resource.FOOD;
             case "iron":
                 return Resource.IRON;

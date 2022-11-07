@@ -31,6 +31,7 @@
           <object class="AdwViewStackPage">
             <property name="name">map</property>
             <property name="title">Map</property>
+            <property name="icon-name">compass-symbolic</property>
             <property name="child">
               <object class="ConquerMap" id="map">
               </object>
