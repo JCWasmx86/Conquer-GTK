@@ -89,7 +89,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
         }
         info ("[Defensive] All are neutral: %s", all_are_neutral.to_string ());
         if (all_are_neutral || (n_negative == 1 && own_cities.length > 1)) {
-            info ("Have %llu cities, but only %llu are border cities", own_cities.length, border_cities.length);
+            info ("[Defensive] Have %llu cities, but only %llu are border cities", own_cities.length, border_cities.length);
             foreach (var c in border_cities) {
                 if (GLib.Random.next_double () > 0.75) {
                     var n = c.maximum_recruitable_soldiers (true);

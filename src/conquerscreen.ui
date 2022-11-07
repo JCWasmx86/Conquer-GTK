@@ -67,6 +67,44 @@
             </property>
           </object>
         </child>
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">stats</property>
+            <property name="title">Statistics</property>
+            <property name="icon-name">function-exponential-symbolic</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="AdwCarousel" id="carousel">
+                    <property name="vexpand">True</property>
+                    <property name="hexpand">True</property>
+                    <child>
+                      <object class="GtkLabel" id="total_power">
+                        <property name="label">Total Power</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="military_power">
+                        <property name="label">Military Power</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="economic_power">
+                        <property name="label">Economic Power</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwCarouselIndicatorLines">
+                    <property name="carousel">carousel</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
       </object>
     </child>
   </template>
