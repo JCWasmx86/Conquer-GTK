@@ -25,3 +25,6 @@ as far as it makes sense.
 
 ## Removed stuff
 - Windows support
+
+## License
+Everything is licensed as GPLv3+.
