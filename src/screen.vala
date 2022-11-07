@@ -27,7 +27,36 @@ namespace Conquer {
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();
+                this.total_power.update ();
+                this.economic_power.update ();
+                this.economic_power.update ();
             });
+            this.total_power.title.label = "Total Power";
+            this.economic_power.title.label = "Economic Power";
+            this.military_power.title.label = "Military Power";
+            this.economic_power.calc = (g, c) => {
+                var cities = g.cities.cities_of_clan (c);
+                var d = 0.0;
+                foreach (var city in cities) {
+                    d += city.people;
+                    var vals = city.calculate_resource_netto ();
+                    foreach (var v in vals)
+                        d += v;
+                }
+                return d < 0 ? 0 : d;
+            };
+            this.military_power.calc = (g, c) => {
+                var cities = g.cities.cities_of_clan (c);
+                var d = 0.0;
+                foreach (var city in cities) {
+                    d += city.soldiers * city.defense_bonus;
+                    d += city.defense;
+                }
+                return d;
+            };
+            this.total_power.calc = (g, c) => {
+                return this.military_power.calc (g, c) + this.economic_power.calc (g, c);
+            };
         }
         private Conquer.GameState game_state;
         [GtkChild]
@@ -37,10 +66,25 @@ namespace Conquer {
         // TODO: Let this be a listbox/listview?
         [GtkChild]
         private unowned Gtk.TextView event_view;
+        [GtkChild]
+        private unowned Conquer.Diagram total_power;
+        [GtkChild]
+        private unowned Conquer.Diagram economic_power;
+        [GtkChild]
+        private unowned Conquer.Diagram military_power;
 
         internal void update (Conquer.GameState g) {
             this.game_state = g;
+            this.total_power.init (g);
+             this.military_power.init (g);
+             this.economic_power.init (g);
+            this.total_power.state = g;
+            this.military_power.state = g;
+            this.economic_power.state = g;
             this.map.update (g);
+            this.total_power.update ();
+            this.economic_power.update ();
+            this.economic_power.update ();
         }
 
         public void receive (Conquer.Message msg) {

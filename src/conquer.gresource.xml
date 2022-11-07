@@ -21,6 +21,7 @@
     <file preprocess="xml-stripblanks">cityactions.ui</file>
     <file preprocess="xml-stripblanks">cityinfo.ui</file>
     <file preprocess="xml-stripblanks">map.ui</file>
+    <file preprocess="xml-stripblanks">diagram.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
   </gresource>
 </gresources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerDiagram" parent="GtkBox">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="title">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="area">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkFlowBox" id="box">
+            <property name="orientation">horizontal</property>
+            <property name="homogeneous">true</property>
+            <property name="hexpand">true</property>
+            <property name="vexpand">false</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+
+

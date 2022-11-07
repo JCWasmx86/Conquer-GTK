@@ -80,18 +80,15 @@
                     <property name="vexpand">True</property>
                     <property name="hexpand">True</property>
                     <child>
-                      <object class="GtkLabel" id="total_power">
-                        <property name="label">Total Power</property>
+                      <object class="ConquerDiagram" id="total_power">
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="military_power">
-                        <property name="label">Military Power</property>
+                      <object class="ConquerDiagram" id="military_power">
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="economic_power">
-                        <property name="label">Economic Power</property>
+                      <object class="ConquerDiagram" id="economic_power">
                       </object>
                     </child>
                   </object>
