@@ -18,23 +18,24 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 namespace Conquer {
-    public static MessageQueue QUEUE;
+    public static MessageQueue? QUEUE;
 
     public class MessageQueue {
         private GLib.List<MessageReceiver> listeners = new List<MessageReceiver>();
         public static void init () {
-            QUEUE = new MessageQueue ();
+            if (QUEUE == null)
+                QUEUE = new MessageQueue ();
         }
 
         public MessageQueue () {
         }
 
-        public void listen (MessageReceiver receiver) {
-            this.listeners.append;
+         public void listen (MessageReceiver receiver) {
+            this.listeners.append (receiver);
         }
 
         public void emit (Conquer.Message msg) {
-            info ("Emitting message of type %s", msg.get_type ().name ());
+            info ("Emitting message of type %s to %llu listeners", msg.get_type ().name (), this.listeners.length ());
             foreach (var m in this.listeners)
                 m.receive (msg);
         }

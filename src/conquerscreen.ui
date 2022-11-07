@@ -42,9 +42,15 @@
           <object class="AdwViewStackPage">
             <property name="name">event_view</property>
             <property name="title">Events</property>
+            <property name="icon-name">timer-sand-symbolic</property>
             <property name="child">
-              <object class="AdwStatusPage">
-                <property name="title">Welcome1!</property>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkTextView" id="event_view">
+                <property name="editable">false</property>
+                <property name="cursor-visible">false</property>
+              </object>
+                </child>
               </object>
             </property>
           </object>

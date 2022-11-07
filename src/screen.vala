@@ -20,8 +20,10 @@
 
 namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
-    public class Screen : Gtk.Box {
+    public class Screen : Gtk.Box, Conquer.MessageReceiver {
         construct {
+            Conquer.MessageQueue.init ();
+            Conquer.QUEUE.listen (this);
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();
@@ -32,10 +34,31 @@ namespace Conquer {
         private new unowned Conquer.Map map;
         [GtkChild]
         private unowned Gtk.Button next_round;
+        // TODO: Let this be a listbox/listview?
+        [GtkChild]
+        private unowned Gtk.TextView event_view;
 
         internal void update (Conquer.GameState g) {
             this.game_state = g;
             this.map.update (g);
+        }
+
+        public void receive (Conquer.Message msg) {
+            // TODO: Add colors
+            if (msg is Conquer.InitMessage) {
+                this.event_view.buffer.text = "";
+            } else if (msg is Conquer.AttackMessage) {
+                var am = (Conquer.AttackMessage)msg;
+                Gtk.TextIter iter;
+                this.event_view.buffer.get_end_iter (out iter);
+                var str = am.result == AttackResult.FAIL ? "failed." : "conquered it.";
+                this.event_view.buffer.insert_interactive (ref iter, "[Attack] %s (%s) attackes %s (%s) and %s\n".printf (am.from.name, am.from.clan.name, am.to.name, am.to.clan.name, str), -1, true);
+            } else if (msg is Conquer.MoveMessage) {
+                var mm = (Conquer.MoveMessage)msg;
+                Gtk.TextIter iter;
+                this.event_view.buffer.get_end_iter (out iter);
+                this.event_view.buffer.insert_interactive (ref iter, "[Move] %s moves troops from %s to %s\n".printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
+            }
         }
     }
 }

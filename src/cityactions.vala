@@ -90,6 +90,7 @@ public class Conquer.CityActionScreen : Gtk.Box {
         clamp.child = child;
         window.content = clamp;
         window.resizable = false;
+        window.modal = true;
         window.show ();
         suggested.clicked.connect (() => {
             while (this.city.costs_for_upgrade (r) <= this.city.clan.coins) {
