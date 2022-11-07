@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/github/jcwasmx86/Conquer">
     <file preprocess="xml-stripblanks">window.ui</file>
+    <file preprocess="xml-stripblanks">icons/scalable/actions/people-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/timer-sand-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/compass-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/minus-large-symbolic.svg</file>

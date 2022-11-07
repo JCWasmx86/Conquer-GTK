@@ -31,6 +31,14 @@ namespace Conquer {
             gd.drag_end.connect (this.drag_end);
             this.map_drawing_area.add_controller (gd);
             this.city_actions.update_state.connect (this.one_round);
+            this.map_drawing_area.has_tooltip = true;
+            this.map_drawing_area.query_tooltip.connect ((x, y, kb, tooltip) => {
+                var city = this.find_city (x, y);
+                if (city == null)
+                    return false;
+                tooltip.set_text ("%s (%s)".printf (city.name, city.clan.name));
+                return true;
+            });
         }
         [GtkChild]
         private unowned Gtk.DrawingArea map_drawing_area;

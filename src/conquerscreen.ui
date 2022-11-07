@@ -47,9 +47,9 @@
               <object class="GtkScrolledWindow">
                 <child>
                   <object class="GtkTextView" id="event_view">
-                <property name="editable">false</property>
-                <property name="cursor-visible">false</property>
-              </object>
+                    <property name="editable">false</property>
+                    <property name="cursor-visible">false</property>
+                  </object>
                 </child>
               </object>
             </property>
@@ -59,6 +59,7 @@
           <object class="AdwViewStackPage">
             <property name="name">clan_view</property>
             <property name="title">Clan</property>
+            <property name="icon-name">people-symbolic</property>
             <property name="child">
               <object class="AdwStatusPage">
                 <property name="title">Welcome2!</property>
