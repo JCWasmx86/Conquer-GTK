@@ -272,7 +272,9 @@ namespace Conquer {
             }
             this.city_info.update (this.selected_city);
             this.city_actions.update (this.game_state, this.selected_city);
+            this.updated ();
         }
+        internal signal void updated ();
     }
 
     private class BytesReader {

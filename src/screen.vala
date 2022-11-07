@@ -57,6 +57,11 @@ namespace Conquer {
             this.total_power.calc = (g, c) => {
                 return this.military_power.calc (g, c) + this.economic_power.calc (g, c);
             };
+            this.map.updated.connect (() => {
+                this.total_power.update ();
+                this.economic_power.update ();
+                this.economic_power.update ();
+            });
         }
         private Conquer.GameState game_state;
         [GtkChild]
@@ -76,8 +81,8 @@ namespace Conquer {
         internal void update (Conquer.GameState g) {
             this.game_state = g;
             this.total_power.init (g);
-             this.military_power.init (g);
-             this.economic_power.init (g);
+            this.military_power.init (g);
+            this.economic_power.init (g);
             this.total_power.state = g;
             this.military_power.state = g;
             this.economic_power.state = g;
