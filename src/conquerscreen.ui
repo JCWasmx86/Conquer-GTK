@@ -21,6 +21,11 @@
                 </style>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkLabel" id="coins">
+                <property name="label">Foo</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

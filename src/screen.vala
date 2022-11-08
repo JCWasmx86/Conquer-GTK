@@ -61,6 +61,10 @@ namespace Conquer {
                 this.total_power.update ();
                 this.economic_power.update ();
                 this.economic_power.update ();
+                foreach (var c in this.game_state.clans) {
+                    if (c.player)
+                        this.coins.label = "Coins: %llu".printf (c.coins);
+                }
             });
         }
         private Conquer.GameState game_state;
@@ -68,6 +72,8 @@ namespace Conquer {
         private new unowned Conquer.Map map;
         [GtkChild]
         private unowned Gtk.Button next_round;
+        [GtkChild]
+        private unowned Gtk.Label coins;
         // TODO: Let this be a listbox/listview?
         [GtkChild]
         private unowned Gtk.TextView event_view;
@@ -90,6 +96,10 @@ namespace Conquer {
             this.total_power.update ();
             this.economic_power.update ();
             this.economic_power.update ();
+            foreach (var c in g.clans) {
+                if (c.player)
+                    this.coins.label = "Coins: %llu".printf (c.coins);
+            }
         }
 
         public void receive (Conquer.Message msg) {
