@@ -126,7 +126,7 @@ namespace Conquer {
         private void upgrade (bool attack) {
             var window = new Adw.Window ();
             var bar = new Adw.HeaderBar ();
-            bar.title_widget = new Adw.WindowTitle ("Upgrade defense", "");
+            bar.title_widget = new Adw.WindowTitle ("Upgrade %s".printf (attack ? "Attack" : "Defense"), "");
             var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
             child.append (bar);
             var coins = attack ? this.clan.costs_for_attack_upgrade () : this.clan.costs_for_defense_upgrade ();

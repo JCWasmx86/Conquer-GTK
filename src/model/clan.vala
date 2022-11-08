@@ -94,7 +94,7 @@ public class Conquer.Clan : GLib.Object {
     }
 
     public virtual uint64 costs_for_defense_upgrade () {
-        return (uint64) (Math.pow (this.attack_level + 1, 2.5) + 1250 + (1250 * this.attack_level + 1));
+        return (uint64) (Math.pow (this.defense_level + 1, 2.5) + 1250 + (1250 * this.defense_level + 1));
     }
 
     public virtual double upgraded_attack_strength () {
