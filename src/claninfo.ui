@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerClanInfo" parent="GtkBox">
+    <property name="orientation">horizontal</property>
+    <property name="vexpand">true</property>
+    <property name="hexpand">true</property>
+    <property name="spacing">4</property>
+    <property name="homogeneous">true</property>
+    <child>
+      <object class="GtkBox" id="left_side">
+        <property name="orientation">vertical</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkButton" id="upgrade_attack">
+            <property name="label">Upgrade Attack</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="upgrade_defense">
+            <property name="label">Upgrade Defense</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparator">
+        <property name="hexpand">false</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow">
+        <child>
+          <object class="GtkBox" id="right_side">
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

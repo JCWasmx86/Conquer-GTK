@@ -27,6 +27,7 @@ namespace Conquer {
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();
+                this.clan_view.update (this.game_state);
                 this.total_power.update ();
                 this.economic_power.update ();
                 this.economic_power.update ();
@@ -61,6 +62,17 @@ namespace Conquer {
                 this.total_power.update ();
                 this.economic_power.update ();
                 this.economic_power.update ();
+                this.clan_view.update (this.game_state);
+                foreach (var c in this.game_state.clans) {
+                    if (c.player)
+                        this.coins.label = "Coins: %llu".printf (c.coins);
+                }
+            });
+            this.clan_view.update_state.connect (() => {
+                this.total_power.update ();
+                this.economic_power.update ();
+                this.economic_power.update ();
+                this.clan_view.update (this.game_state);
                 foreach (var c in this.game_state.clans) {
                     if (c.player)
                         this.coins.label = "Coins: %llu".printf (c.coins);
@@ -83,6 +95,8 @@ namespace Conquer {
         private unowned Conquer.Diagram economic_power;
         [GtkChild]
         private unowned Conquer.Diagram military_power;
+        [GtkChild]
+        private unowned Conquer.ClanInfo clan_view;
 
         internal void update (Conquer.GameState g) {
             this.game_state = g;
@@ -96,6 +110,7 @@ namespace Conquer {
             this.total_power.update ();
             this.economic_power.update ();
             this.economic_power.update ();
+            this.clan_view.update (g);
             foreach (var c in g.clans) {
                 if (c.player)
                     this.coins.label = "Coins: %llu".printf (c.coins);

@@ -23,7 +23,8 @@ conquer_sources = [
     'map.vala',
     'cityactions.vala',
     'cityinfo.vala',
-    'diagram.vala'
+    'diagram.vala',
+    'claninfo.vala'
 ]
 
 conquer_lib_deps = [

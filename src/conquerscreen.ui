@@ -45,6 +45,17 @@
         </child>
         <child>
           <object class="AdwViewStackPage">
+            <property name="name">clan_view</property>
+            <property name="title">Clan</property>
+            <property name="icon-name">people-symbolic</property>
+            <property name="child">
+              <object class="ConquerClanInfo" id="clan_view">
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwViewStackPage">
             <property name="name">event_view</property>
             <property name="title">Events</property>
             <property name="icon-name">timer-sand-symbolic</property>
@@ -56,18 +67,6 @@
                     <property name="cursor-visible">false</property>
                   </object>
                 </child>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="AdwViewStackPage">
-            <property name="name">clan_view</property>
-            <property name="title">Clan</property>
-            <property name="icon-name">people-symbolic</property>
-            <property name="child">
-              <object class="AdwStatusPage">
-                <property name="title">Welcome2!</property>
               </object>
             </property>
           </object>

@@ -26,6 +26,10 @@ public class Conquer.Clan : GLib.Object {
     public Strategy? strategy { get; set; }
     public GLib.HashTable<Conquer.Resource, double?> resources { get; set; }
     protected double[] uses;
+    public double defense_strength { get; set; default = 1; }
+    public double attack_strength { get; set; default = 1; }
+    public uint64 defense_level { get; set; default = 1; }
+    public uint64 attack_level { get; set; default = 1; }
 
     construct {
         this.resources = new GLib.HashTable<Conquer.Resource, double?>(Conquer.Resource.hash_func, null);
@@ -85,7 +89,37 @@ public class Conquer.Clan : GLib.Object {
         }
         this.uses = new double[Resource.num ()];
     }
-    // TODO: Upgrades for defense/attack
+    public virtual uint64 costs_for_attack_upgrade () {
+        return (uint64) (Math.pow (this.attack_level + 1, 2.5) + 1500 + (1500 * this.attack_level + 1));
+    }
+
+    public virtual uint64 costs_for_defense_upgrade () {
+        return (uint64) (Math.pow (this.attack_level + 1, 2.5) + 1250 + (1250 * this.attack_level + 1));
+    }
+
+    public virtual double upgraded_attack_strength () {
+        return this.attack_strength + 0.02;
+    }
+
+    public virtual double upgraded_defense_strength () {
+        return this.defense_strength + 0.02;
+    }
+
+    public virtual void upgrade_defense () {
+        var costs = this.costs_for_defense_upgrade ();
+        assert (costs <= this.coins);
+        this.coins -= costs;
+        this.defense_strength = this.upgraded_defense_strength ();
+        this.defense_level++;
+    }
+
+    public virtual void upgrade_attack () {
+        var costs = this.costs_for_attack_upgrade ();
+        assert (costs <= this.coins);
+        this.coins -= costs;
+        this.attack_strength = this.upgraded_attack_strength ();
+        this.attack_level++;
+    }
 }
 
 public interface Conquer.Strategy : GLib.Object {
