@@ -19,6 +19,7 @@
  */
 
 int main (string[] args) {
+    Gst.init (ref args);
     var app = new Conquer.Application ();
     return app.run (args);
 }
