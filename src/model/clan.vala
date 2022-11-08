@@ -43,7 +43,7 @@ public class Conquer.Clan : GLib.Object {
     }
 
     public virtual void use_resource (Resource r, double amount) {
-        this.resources[r] = this.resources[r] - amount;
+        this.resources[r] = amount > this.resources[r] ? 0 : (this.resources[r] - amount);
         if (this.resources[r] < 0)
             this.resources[r] = 0;
         this.uses[r] -= amount;
