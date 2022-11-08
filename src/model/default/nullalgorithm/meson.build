@@ -1,7 +1,5 @@
 install_data('nullalgorithm.plugin', install_dir: plugin_install_dir)
-nullalgorithm_sources = [
-    'nullalgorithm.vala'
-]
+nullalgorithm_sources = ['nullalgorithm.vala']
 shared_module(
     'nullalgorithm',
     nullalgorithm_sources,

@@ -1,7 +1,5 @@
 install_data('offensivealgorithm.plugin', install_dir: plugin_install_dir)
-offensivealgorithm_sources = [
-    'offensivealgorithm.vala'
-]
+offensivealgorithm_sources = ['offensivealgorithm.vala']
 shared_module(
     'offensivealgorithm',
     offensivealgorithm_sources,

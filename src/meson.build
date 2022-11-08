@@ -25,7 +25,7 @@ conquer_sources = [
     'cityactions.vala',
     'cityinfo.vala',
     'diagram.vala',
-    'claninfo.vala'
+    'claninfo.vala',
 ]
 
 conquer_lib_deps = [
@@ -33,7 +33,8 @@ conquer_lib_deps = [
     dependency('libpeas-1.0'),
 ]
 
-conquer_lib = static_library('conquerlib',
+conquer_lib = static_library(
+    'conquerlib',
     conquer_lib_sources,
     dependencies: conquer_lib_deps,
     install: true,
@@ -49,7 +50,7 @@ conquer_deps = [
     dependency('gio-2.0'),
     dependency('libpeas-1.0'),
     dependency('gstreamer-1.0'),
-    meson.get_compiler('c').find_library('m', required : false)
+    meson.get_compiler('c').find_library('m', required: false),
 ]
 
 conquer_sources += gnome.compile_resources(

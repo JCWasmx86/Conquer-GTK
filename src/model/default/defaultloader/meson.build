@@ -6,7 +6,9 @@ defaultloader_sources = [
 shared_module(
     'defaultloader',
     defaultloader_sources,
-    dependencies: conquer_lib_deps + dependency('libarchive') + dependency('json-glib-1.0'),
+    dependencies: conquer_lib_deps + dependency('libarchive') + dependency(
+        'json-glib-1.0',
+    ),
     link_with: conquer_lib,
     install_dir: plugin_install_dir,
     include_directories: conquer_lib_build_dir,

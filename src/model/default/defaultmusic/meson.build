@@ -1,7 +1,5 @@
 install_data('defaultmusic.plugin', install_dir: plugin_install_dir)
-defaultmusic_sources = [
-    'defaultmusic.vala'
-]
+defaultmusic_sources = ['defaultmusic.vala']
 shared_module(
     'defaultmusic',
     defaultmusic_sources,

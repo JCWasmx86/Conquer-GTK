@@ -1,7 +1,5 @@
 install_data('defensivealgorithm.plugin', install_dir: plugin_install_dir)
-defensivealgorithm_sources = [
-    'defensivealgorithm.vala'
-]
+defensivealgorithm_sources = ['defensivealgorithm.vala']
 shared_module(
     'defensivealgorithm',
     defensivealgorithm_sources,
