@@ -57,14 +57,19 @@ namespace Conquer {
 
         internal void update (Conquer.GameState g) {
             this.model.clear ();
-            Conquer.Clan clan = null;
+            var child = this.right_side.get_first_child ();
+            while (child != null) {
+                this.right_side.remove (child);
+                child = this.right_side.get_first_child ();
+            }
+            Conquer.Clan ccc = null;
             foreach (var c in g.clans) {
                 if (c.player) {
-                    clan = c;
+                    ccc = c;
                     break;
                 }
             }
-            this.clan = clan;
+            this.clan = ccc;
             assert (clan != null);
             Gtk.TreeIter iter;
             this.model.append (out iter);
@@ -77,8 +82,22 @@ namespace Conquer {
                 n_soldiers += c.soldiers;
                 n_people += c.people;
                 var prods = c.calculate_resource_netto ();
-                for (var i = 0; i < prods.length; i++)
+                var is_negative = false;
+                for (var i = 0; i < prods.length; i++) {
                     production[i] += prods[i];
+                    is_negative |= prods[i] < 0;
+                }
+                var row = new Adw.ActionRow ();
+                row.title = c.name;
+                var pic = new Gtk.Label ("");
+                pic.set_markup ("<big>%s</big>".printf (is_negative ? "🔴" : "🟢"));
+                if (is_negative) {
+                    pic.tooltip_text = "This city uses more resources than it produces";
+                } else {
+                    pic.tooltip_text = "This city uses produces resources than it uses";
+                }
+                row.add_suffix (pic);
+                this.right_side.append (row);
             }
             this.model.append (out iter);
             this.model.@set (iter, 0, "Cities", 1, "%u".printf (cities.length), -1);
