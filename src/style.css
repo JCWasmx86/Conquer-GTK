@@ -1,0 +1,5 @@
+.action-button {
+  padding: 4px;
+  -gtk-icon-size: 60px;
+  min-height: 64px;
+}

@@ -11,8 +11,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">plus-large-symbolic</property>
-			  <property name="width-request">32</property>
-			  <property name="height-request">32</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 	  <child>
@@ -20,6 +24,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">minus-large-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 	  <child>
@@ -27,6 +37,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">wheat-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 		<child>
@@ -34,6 +50,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">wood-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 		<child>
@@ -41,6 +63,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">iron-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 	  <child>
@@ -48,6 +76,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">stone-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 	  <child>
@@ -55,6 +89,12 @@
 			  <property name="vexpand">false</property>
 			  <property name="hexpand">false</property>
 			  <property name="icon-name">shield-symbolic</property>
+			  <property name="width-request">64</property>
+			  <property name="height-request">64</property>
+			  <style>
+			    <class name="card"/>
+          <class name="action-button"/>
+			  </style>
 			</object>
 		</child>
 	</template>
