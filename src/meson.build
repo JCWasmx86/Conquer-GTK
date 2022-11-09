@@ -53,11 +53,7 @@ conquer_deps = [
     meson.get_compiler('c').find_library('m', required: false),
 ]
 
-conquer_sources += gnome.compile_resources(
-    'conquer-resources',
-    'conquer.gresource.xml',
-    c_name: 'conquer',
-)
+conquer_sources += conquer_resources
 
 executable(
     'conquer',
