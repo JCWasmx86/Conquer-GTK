@@ -15,7 +15,7 @@
             </property>
             <child type="end">
               <object class="GtkButton" id="next_round">
-                <property name="label">Next Round</property>
+                <property name="label" translatable="true">Next Round</property>
                 <style>
                   <class name="suggested-action"/>
                 </style>
@@ -23,7 +23,7 @@
             </child>
             <child type="end">
               <object class="GtkLabel" id="coins">
-                <property name="label">Foo</property>
+                <property name="label"></property>
               </object>
             </child>
           </object>
@@ -35,7 +35,7 @@
         <child>
           <object class="AdwViewStackPage">
             <property name="name">map</property>
-            <property name="title">Map</property>
+            <property name="title" translatable="true">Map</property>
             <property name="icon-name">compass-symbolic</property>
             <property name="child">
               <object class="ConquerMap" id="map">
@@ -46,7 +46,7 @@
         <child>
           <object class="AdwViewStackPage">
             <property name="name">clan_view</property>
-            <property name="title">Clan</property>
+            <property name="title" translatable="true">Clan</property>
             <property name="icon-name">people-symbolic</property>
             <property name="child">
               <object class="ConquerClanInfo" id="clan_view">
@@ -57,7 +57,7 @@
         <child>
           <object class="AdwViewStackPage">
             <property name="name">event_view</property>
-            <property name="title">Events</property>
+            <property name="title" translatable="true">Events</property>
             <property name="icon-name">timer-sand-symbolic</property>
             <property name="child">
               <object class="GtkScrolledWindow">
@@ -74,7 +74,7 @@
         <child>
           <object class="AdwViewStackPage">
             <property name="name">stats</property>
-            <property name="title">Statistics</property>
+            <property name="title" translatable="true">Statistics</property>
             <property name="icon-name">function-exponential-symbolic</property>
             <property name="child">
               <object class="GtkBox">

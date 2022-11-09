@@ -32,7 +32,7 @@
                 <property name="title" translatable="yes">No city selected</property>
                 <property name="child">
                   <object class="GtkLabel">
-                    <property name="label">Select a city to upgrade it.</property>
+                    <property name="label" translatable="true">Select a city to upgrade it.</property>
                   </object>
                 </property>
               </object>
@@ -58,7 +58,7 @@
             <property name="title" translatable="yes">No city selected</property>
             <property name="child">
               <object class="GtkLabel">
-                <property name="label">Select a city to show more information.</property>
+                <property name="label" translatable="true">Select a city to show more information.</property>
               </object>
             </property>
           </object>

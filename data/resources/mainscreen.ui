@@ -57,8 +57,7 @@
                                     <style>
                                       <class name="pill"/>
                                     </style>
-                                    <property name="label" translatable="true">_Start game</property>
-                                    <property name="use-underline">true</property>
+                                    <property name="label" translatable="true">Start game</property>
                                     <property name="action-name">app.start-game</property>
                                   </object>
                                 </child>
@@ -67,8 +66,7 @@
                                     <style>
                                       <class name="pill"/>
                                     </style>
-                                    <property name="label" translatable="true">_Load game</property>
-                                    <property name="use-underline">true</property>
+                                    <property name="label" translatable="true">Load game</property>
                                     <property name="action-name">app.load-game</property>
                                   </object>
                                 </child>

@@ -3,4 +3,8 @@ data/io.github.jcwasmx86.Conquer.appdata.xml.in
 data/io.github.jcwasmx86.Conquer.gschema.xml
 src/main.vala
 src/window.vala
-src/window.ui
+data/resources/claninfo.ui
+data/resources/conquerscreen.ui
+data/resources/mainscreen.ui
+data/resources/map.ui
+data/resources/window.ui

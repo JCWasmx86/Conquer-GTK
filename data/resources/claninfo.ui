@@ -12,12 +12,12 @@
         <property name="halign">center</property>
         <child>
           <object class="GtkButton" id="upgrade_attack">
-            <property name="label">Upgrade Attack</property>
+            <property name="label" translatable="true">Upgrade Attack</property>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="upgrade_defense">
-            <property name="label">Upgrade Defense</property>
+            <property name="label" translatable="true">Upgrade Defense</property>
           </object>
         </child>
       </object>
