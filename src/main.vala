@@ -19,6 +19,11 @@
  */
 
 int main (string[] args) {
+    Intl.setlocale ();
+    var langpack_dir = Path.build_filename ("/app/share/locale");
+    Intl.bindtextdomain ("conquer", langpack_dir);
+    Intl.bind_textdomain_codeset ("conquer", "UTF-8");
+    Intl.textdomain ("conquer");
     Gst.init (ref args);
     var app = new Conquer.Application ();
     return app.run (args);
