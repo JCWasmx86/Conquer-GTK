@@ -127,9 +127,9 @@ namespace Conquer {
                 this.event_view.buffer.get_end_iter (out iter);
                 var msgstr = "";
                 if (am.result == AttackResult.FAIL)
-                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and failed.");
+                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and failed.\n");
                 else
-                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and conquered it.");
+                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and conquered it.\n");
                 this.event_view.buffer.insert_interactive (ref iter, msgstr.printf (am.from.name, am.from.clan.name, am.to.name, am.to.clan.name), -1, true);
             } else if (msg is Conquer.MoveMessage) {
                 var mm = (Conquer.MoveMessage)msg;
