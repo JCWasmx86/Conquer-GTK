@@ -61,7 +61,20 @@ namespace Conquer {
         }
 
         private void on_preferences_action () {
-            message ("app.preferences action activated");
+            var window = new Adw.Window ();
+            var bar = new Adw.HeaderBar ();
+            bar.title_widget = new Adw.WindowTitle(_("Preferences"), "");
+            var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+            var leaflet = new Adw.Leaflet ();
+            box.append (bar);
+            box.append (leaflet);
+            var stack = new Gtk.Stack ();
+            var sidebar = new Gtk.StackSidebar ();
+            sidebar.stack = stack;
+            leaflet.append (sidebar);
+            leaflet.append (stack);
+            window.content = box;
+            window.present ();
         }
 
         private void start_game () {
