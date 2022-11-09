@@ -46,17 +46,17 @@ namespace Conquer {
                 return;
             Gtk.TreeIter iter;
             this.model.append (out iter);
-            this.model.@set (iter, 0, "Name", 1, c.name, -1);
+            this.model.@set (iter, 0, _("Name"), 1, c.name, -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, "People", 1, "%llu".printf (c.people), -1);
+            this.model.@set (iter, 0, _("People"), 1, "%llu".printf (c.people), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, "Soldiers", 1, "%llu".printf (c.soldiers), -1);
+            this.model.@set (iter, 0, _("Soldiers"), 1, "%llu".printf (c.soldiers), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, "Growth", 1, this.colorify("%.2lf%%".printf ((c.growth * 100) - 100)), -1);
+            this.model.@set (iter, 0, _("Growth"), 1, this.colorify("%.2lf%%".printf ((c.growth * 100) - 100)), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, "Defense", 1, "%llu".printf (c.defense), -1);
+            this.model.@set (iter, 0, _("Defense"), 1, "%llu".printf (c.defense), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, "Defense Bonus", 1, "%.2lf%%".printf (c.defense_bonus * 100 - 100), -1);
+            this.model.@set (iter, 0, _("Defense Bonus"), 1, "%.2lf%%".printf (c.defense_bonus * 100 - 100), -1);
             var amount = c.calculate_resource_netto ();
             for (var i = 0; i < Resource.num (); i++) {
                 this.model.append (out iter);

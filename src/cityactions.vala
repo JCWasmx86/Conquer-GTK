@@ -67,19 +67,19 @@ public class Conquer.CityActionScreen : Gtk.Box {
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
         var coins = this.city.costs_for_upgrade (r);
-        var costs = new Gtk.Label ("Costs: %llu coins".printf (coins));
+        var costs = new Gtk.Label (_("Costs: %llu coins").printf (coins));
         child.append (costs);
         var new_production = this.city.upgraded_production (r);
-        var prod = new Gtk.Label ("New production: %.2lf (+%.2lf)".printf (new_production, new_production - this.city.upgrades[r].production));
+        var prod = new Gtk.Label (_("New production: %.2lf (+%.2lf)").printf (new_production, new_production - this.city.upgrades[r].production));
         child.append (prod);
-        var max = new Gtk.CheckButton.with_label ("Upgrade as far as possible");
+        var max = new Gtk.CheckButton.with_label (_("Upgrade as far as possible"));
         child.append (max);
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
-        var suggested = new Gtk.Button.with_label ("Upgrade");
+        var suggested = new Gtk.Button.with_label (_("Upgrade"));
         suggested.hexpand = true;
         suggested.sensitive = coins <= this.city.clan.coins;
         suggested.get_style_context ().add_class ("suggested-action");
-        var abort = new Gtk.Button.with_label ("Cancel");
+        var abort = new Gtk.Button.with_label (_("Cancel"));
         abort.hexpand = true;
         button_box.append (abort);
         button_box.append (suggested);
@@ -110,23 +110,23 @@ public class Conquer.CityActionScreen : Gtk.Box {
         assert (city != null);
         var window = new Adw.Window ();
         var bar = new Adw.HeaderBar ();
-        bar.title_widget = new Adw.WindowTitle ("Upgrade defense", "");
+        bar.title_widget = new Adw.WindowTitle (_("Upgrade defense"), "");
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
         var coins = this.city.costs_for_defense_upgrade ();
-        var costs = new Gtk.Label ("Costs: %llu coins".printf (coins));
+        var costs = new Gtk.Label (_("Costs: %llu coins").printf (coins));
         child.append (costs);
         var new_strength = this.city.upgraded_defense_strength ();
-        var strength = new Gtk.Label ("New defense strength: %llu (+%llu)".printf (new_strength, new_strength - this.city.defense));
+        var strength = new Gtk.Label (_("New defense strength: %llu (+%llu)").printf (new_strength, new_strength - this.city.defense));
         child.append (strength);
-        var max = new Gtk.CheckButton.with_label ("Upgrade as far as possible");
+        var max = new Gtk.CheckButton.with_label (_("Upgrade as far as possible"));
         child.append (max);
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
-        var suggested = new Gtk.Button.with_label ("Upgrade");
+        var suggested = new Gtk.Button.with_label (_("Upgrade"));
         suggested.hexpand = true;
         suggested.sensitive = coins <= this.city.clan.coins;
         suggested.get_style_context ().add_class ("suggested-action");
-        var abort = new Gtk.Button.with_label ("Cancel");
+        var abort = new Gtk.Button.with_label (_("Cancel"));
         abort.hexpand = true;
         button_box.append (abort);
         button_box.append (suggested);
@@ -156,10 +156,15 @@ public class Conquer.CityActionScreen : Gtk.Box {
         assert (city != null);
         var window = new Adw.Window ();
         var bar = new Adw.HeaderBar ();
-        bar.title_widget = new Adw.WindowTitle (recruit ? "Recruit soldiers" : "Disband soldiers", "");
+        bar.title_widget = new Adw.WindowTitle (recruit ? _("Recruit soldiers") : _("Disband soldiers"), "");
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
-        var label = new Gtk.Label ("How many soldiers do you want to " + (recruit ? "recruit" : "disband") + "?");
+        var str = "";
+        if (recruit)
+            str = _("How many soliders do you want to recruit?");
+        else
+            str = _("How many soldiers do you want to disband?");
+        var label = new Gtk.Label (str);
         child.append (label);
         var max = recruit ? this.city.maximum_recruitable_soldiers (false) : this.city.soldiers;
         var scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, max == 0 ? 1 : max, 1);
@@ -168,11 +173,11 @@ public class Conquer.CityActionScreen : Gtk.Box {
         scale.digits = 0;
         child.append (scale);
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
-        var suggested = new Gtk.Button.with_label (recruit ? "Recruit" : "Disband");
+        var suggested = new Gtk.Button.with_label (recruit ? _("Recruit") : _("Disband"));
         suggested.hexpand = true;
         suggested.sensitive = false;
         suggested.get_style_context ().add_class ("suggested-action");
-        var abort = new Gtk.Button.with_label ("Cancel");
+        var abort = new Gtk.Button.with_label (_("Cancel"));
         abort.hexpand = true;
         scale.value_changed.connect (() => {
             suggested.sensitive = scale.get_value () != 0;
@@ -182,9 +187,9 @@ public class Conquer.CityActionScreen : Gtk.Box {
         button_box.append (suggested);
         button_box.hexpand = true;
         if (recruit) {
-            var lbl = new Gtk.Label ("Costs: 0 coins");
+            var lbl = new Gtk.Label (_("Costs: 0 coins"));
             scale.value_changed.connect (() => {
-                lbl.set_text ("Costs: %llu coins".printf (this.city.costs_for_recruiting ((uint64) scale.get_value ())));
+                lbl.set_text (_("Costs: %llu coins").printf (this.city.costs_for_recruiting ((uint64) scale.get_value ())));
             });
             child.append (lbl);
         }

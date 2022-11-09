@@ -8,3 +8,8 @@ data/resources/conquerscreen.ui
 data/resources/mainscreen.ui
 data/resources/map.ui
 data/resources/window.ui
+src/cityactions.vala
+src/cityinfo.vala
+src/claninfo.vala
+src/map.vala
+src/screen.vala

@@ -32,9 +32,9 @@ namespace Conquer {
                 this.economic_power.update ();
                 this.economic_power.update ();
             });
-            this.total_power.title.label = "Total Power";
-            this.economic_power.title.label = "Economic Power";
-            this.military_power.title.label = "Military Power";
+            this.total_power.title.label = _("Total Power");
+            this.economic_power.title.label = _("Economic Power");
+            this.military_power.title.label = _("Military Power");
             this.economic_power.calc = (g, c) => {
                 var cities = g.cities.cities_of_clan (c);
                 var d = 0.0;
@@ -65,7 +65,7 @@ namespace Conquer {
                 this.clan_view.update (this.game_state);
                 foreach (var c in this.game_state.clans) {
                     if (c.player)
-                        this.coins.label = "Coins: %llu".printf (c.coins);
+                        this.coins.label = _("Coins: %llu").printf (c.coins);
                 }
             });
             this.clan_view.update_state.connect (() => {
@@ -75,7 +75,7 @@ namespace Conquer {
                 this.clan_view.update (this.game_state);
                 foreach (var c in this.game_state.clans) {
                     if (c.player)
-                        this.coins.label = "Coins: %llu".printf (c.coins);
+                        this.coins.label = _("Coins: %llu").printf (c.coins);
                 }
             });
         }
@@ -113,7 +113,7 @@ namespace Conquer {
             this.clan_view.update (g);
             foreach (var c in g.clans) {
                 if (c.player)
-                    this.coins.label = "Coins: %llu".printf (c.coins);
+                    this.coins.label = _("Coins: %llu").printf (c.coins);
             }
         }
 
@@ -125,13 +125,17 @@ namespace Conquer {
                 var am = (Conquer.AttackMessage)msg;
                 Gtk.TextIter iter;
                 this.event_view.buffer.get_end_iter (out iter);
-                var str = am.result == AttackResult.FAIL ? "failed." : "conquered it.";
-                this.event_view.buffer.insert_interactive (ref iter, "[Attack] %s (%s) attackes %s (%s) and %s\n".printf (am.from.name, am.from.clan.name, am.to.name, am.to.clan.name, str), -1, true);
+                var msgstr = "";
+                if (am.result == AttackResult.FAIL)
+                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and failed.");
+                else
+                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and conquered it.");
+                this.event_view.buffer.insert_interactive (ref iter, msgstr.printf (am.from.name, am.from.clan.name, am.to.name, am.to.clan.name), -1, true);
             } else if (msg is Conquer.MoveMessage) {
                 var mm = (Conquer.MoveMessage)msg;
                 Gtk.TextIter iter;
                 this.event_view.buffer.get_end_iter (out iter);
-                this.event_view.buffer.insert_interactive (ref iter, "[Move] %s moves troops from %s to %s\n".printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
+                this.event_view.buffer.insert_interactive (ref iter, _("[Move] %s moves troops from %s to %s\n").printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
             }
         }
     }

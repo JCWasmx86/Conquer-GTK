@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: conquer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-09 09:14+0100\n"
+"POT-Creation-Date: 2022-11-09 09:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,11 +33,11 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
-#: data/resources/claninfo.ui:15
+#: data/resources/claninfo.ui:15 src/claninfo.vala:129
 msgid "Upgrade Attack"
 msgstr ""
 
-#: data/resources/claninfo.ui:20
+#: data/resources/claninfo.ui:20 src/claninfo.vala:129
 msgid "Upgrade Defense"
 msgstr ""
 
@@ -91,4 +91,202 @@ msgstr ""
 
 #: data/resources/window.ui:67
 msgid "_About Conquer"
+msgstr ""
+
+#: src/cityactions.vala:70 src/cityactions.vala:117 src/cityactions.vala:192
+#: src/claninfo.vala:134
+#, c-format
+msgid "Costs: %llu coins"
+msgstr ""
+
+#: src/cityactions.vala:73
+#, c-format
+msgid "New production: %.2lf (+%.2lf)"
+msgstr ""
+
+#: src/cityactions.vala:75 src/cityactions.vala:122 src/claninfo.vala:145
+msgid "Upgrade as far as possible"
+msgstr ""
+
+#: src/cityactions.vala:78 src/cityactions.vala:125 src/claninfo.vala:148
+msgid "Upgrade"
+msgstr ""
+
+#: src/cityactions.vala:82 src/cityactions.vala:129 src/cityactions.vala:180
+#: src/claninfo.vala:152 src/map.vala:113
+msgid "Cancel"
+msgstr ""
+
+#: src/cityactions.vala:113
+msgid "Upgrade defense"
+msgstr ""
+
+#: src/cityactions.vala:120
+#, c-format
+msgid "New defense strength: %llu (+%llu)"
+msgstr ""
+
+#: src/cityactions.vala:159
+msgid "Recruit soldiers"
+msgstr ""
+
+#: src/cityactions.vala:159
+msgid "Disband soldiers"
+msgstr ""
+
+#: src/cityactions.vala:164
+msgid "How many soliders do you want to recruit?"
+msgstr ""
+
+#: src/cityactions.vala:166
+msgid "How many soldiers do you want to disband?"
+msgstr ""
+
+#: src/cityactions.vala:176
+msgid "Recruit"
+msgstr ""
+
+#: src/cityactions.vala:176
+msgid "Disband"
+msgstr ""
+
+#: src/cityactions.vala:190
+msgid "Costs: 0 coins"
+msgstr ""
+
+#: src/cityinfo.vala:49 src/claninfo.vala:76
+msgid "Name"
+msgstr ""
+
+#: src/cityinfo.vala:51 src/claninfo.vala:105
+msgid "People"
+msgstr ""
+
+#: src/cityinfo.vala:53 src/claninfo.vala:107
+msgid "Soldiers"
+msgstr ""
+
+#: src/cityinfo.vala:55
+msgid "Growth"
+msgstr ""
+
+#: src/cityinfo.vala:57
+msgid "Defense"
+msgstr ""
+
+#: src/cityinfo.vala:59 src/claninfo.vala:111
+msgid "Defense Bonus"
+msgstr ""
+
+#: src/claninfo.vala:95
+msgid "This city uses more resources than it produces"
+msgstr ""
+
+#: src/claninfo.vala:97
+msgid "This city uses produces resources than it uses"
+msgstr ""
+
+#: src/claninfo.vala:103
+msgid "Cities"
+msgstr ""
+
+#: src/claninfo.vala:109
+msgid "Attack Bonus"
+msgstr ""
+
+#: src/claninfo.vala:140
+#, c-format
+msgid "New attack bonus: %.2lf%% (+%.2f%%)"
+msgstr ""
+
+#: src/claninfo.vala:142
+#, c-format
+msgid "New defense bonus: %.2lf%% (+%.2f%%)"
+msgstr ""
+
+#: src/map.vala:88
+msgid "Error"
+msgstr ""
+
+#: src/map.vala:88
+msgid "Can't move troops between non-adjacent cities"
+msgstr ""
+
+#: src/map.vala:89
+msgid "_Ok"
+msgstr ""
+
+#: src/map.vala:100
+msgid "Attack city"
+msgstr ""
+
+#: src/map.vala:100
+msgid "Move soldiers"
+msgstr ""
+
+#: src/map.vala:100
+#, c-format
+msgid "From %s"
+msgstr ""
+
+#: src/map.vala:109
+msgid "Attack"
+msgstr ""
+
+#: src/map.vala:109
+msgid "Move"
+msgstr ""
+
+#: src/map.vala:137
+msgid "Result"
+msgstr ""
+
+#: src/map.vala:139
+#, c-format
+msgid "You conquered %s"
+msgstr ""
+
+#: src/map.vala:139
+msgid "Your attack failed"
+msgstr ""
+
+#: src/map.vala:141
+#, c-format
+msgid "%llu soldiers survived"
+msgstr ""
+
+#: src/map.vala:143
+msgid "Close"
+msgstr ""
+
+#: src/screen.vala:35
+msgid "Total Power"
+msgstr ""
+
+#: src/screen.vala:36
+msgid "Economic Power"
+msgstr ""
+
+#: src/screen.vala:37
+msgid "Military Power"
+msgstr ""
+
+#: src/screen.vala:68 src/screen.vala:78 src/screen.vala:116
+#, c-format
+msgid "Coins: %llu"
+msgstr ""
+
+#: src/screen.vala:130
+#, c-format
+msgid "[Attack] %s (%s) attackes %s (%s) and failed."
+msgstr ""
+
+#: src/screen.vala:132
+#, c-format
+msgid "[Attack] %s (%s) attackes %s (%s) and conquered it."
+msgstr ""
+
+#: src/screen.vala:138
+#, c-format
+msgid "[Move] %s moves troops from %s to %s\n"
 msgstr ""

@@ -60,5 +60,6 @@ executable(
     conquer_sources,
     dependencies: conquer_deps,
     link_with: conquer_lib,
+    c_args: '-DGETTEXT_PACKAGE="conquer"',
     install: true,
 )
