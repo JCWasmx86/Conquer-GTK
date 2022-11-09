@@ -13,6 +13,7 @@ conquer_lib_sources = [
     'model/message/attackmessage.vala',
     'model/message/movemessage.vala',
     'model/message/startgamemessage.vala',
+    'model/saver.vala',
 ]
 conquer_sources = [
     'main.vala',
