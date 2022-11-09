@@ -165,6 +165,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         var bg = this.contents["background.png"];
         assert (bg != null);
         ret.background_image_data = new GLib.Bytes.from_bytes (bg, 0, bg.length);
+        ret.uuid = "84d37b4b-0d3c-4061-a0a5-468c37b125cd";
         return ret;
     }
 }
