@@ -19,22 +19,47 @@
  */
 public interface Conquer.Configuration : GLib.Object {
     public abstract string name { get; set; }
-    public abstract Conquer.ConfigurationItem[] config();
+    public abstract GLib.Array<Conquer.ConfigurationItem> configs { get; set; default = new GLib.Array<Conquer.ConfigurationItem> (); }
 }
 
 public abstract class Conquer.ConfigurationItem : GLib.Object {
     public string name { get; set; }
+    public string id { get; set; }
     public string description { get; set; }
 }
 public class Conquer.IntegerConfigurationItem : Conquer.ConfigurationItem {
     public int64 @value { get; set; }
     public int64 min { get; set; default = int64.MAX; }
     public int64 max { get; set; default = int64.MAX; }
+
+    public IntegerConfigurationItem (string name, string id, string description, int64 min, int64 max, int64 @default) {
+        this.name = name;
+        this.id = id;
+        this.description = description;
+        this.min = min;
+        this.max = max;
+        this.@value = @default;
+    }
 }
 
 public class Conquer.StringConfigurationItem : Conquer.ConfigurationItem {
     public string @value { get; set; }
+
+    public StringConfigurationItem (string name, string id, string description, string @default = "") {
+        this.name = name;
+        this.id = id;
+        this.description = description;
+        this.@value = @default;
+    }
 }
+
 public class Conquer.BoolConfigurationItem : Conquer.ConfigurationItem {
     public bool @value { get; set; }
+
+    public BoolConfigurationItem (string name, string id, string description, bool @default = false) {
+        this.name = name;
+        this.id = id;
+        this.description = description;
+        this.@value = @default;
+    }
 }

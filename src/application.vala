@@ -65,16 +65,29 @@ namespace Conquer {
             var bar = new Adw.HeaderBar ();
             bar.title_widget = new Adw.WindowTitle(_("Preferences"), "");
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-            var leaflet = new Adw.Leaflet ();
             box.append (bar);
-            box.append (leaflet);
+            var main = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
             var stack = new Gtk.Stack ();
+            stack.transition_type = Gtk.StackTransitionType.SLIDE_UP_DOWN;
+            stack.hexpand = true;
+            stack.vexpand = true;
             var sidebar = new Gtk.StackSidebar ();
             sidebar.stack = stack;
-            leaflet.append (sidebar);
-            leaflet.append (stack);
+            sidebar.vexpand = true;
+            var configs = ((Conquer.Window) this.active_window).context.find_configs ();
+            foreach (var c in configs) {
+                var name = c.name;
+                var widget = new Conquer.ConfigWidget (c);
+                stack.add_titled (widget, name, name);
+            }
+            main.append (sidebar);
+            main.append (stack);
+            sidebar.stack = stack;
+            box.append (main);
+            box.vexpand = true;
             window.content = box;
             window.present ();
+            window.set_size_request (600, 400);
         }
 
         private void start_game () {

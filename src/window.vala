@@ -29,7 +29,7 @@ namespace Conquer {
         private unowned Conquer.NewSelectionScreen selection_screen;
         [GtkChild]
         private unowned Conquer.Screen conquer_screen;
-        private Context context;
+        internal Context context;
 
         public Window (Gtk.Application app) {
             Object (application: app);

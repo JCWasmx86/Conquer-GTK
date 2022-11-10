@@ -22,11 +22,13 @@ namespace Conquer {
         private Peas.Engine engine;
         private Peas.ExtensionSet scenario_loaders;
         private Peas.ExtensionSet strategies;
+        private Peas.ExtensionSet configs;
 
         public Context() {
             this.engine = Peas.Engine.get_default ();
             this.scenario_loaders = new Peas.ExtensionSet(this.engine, typeof (Conquer.ScenarioLoader));
             this.strategies = new Peas.ExtensionSet(this.engine, typeof (Conquer.Strategy));
+            this.configs = new Peas.ExtensionSet(this.engine, typeof (Conquer.Configuration));
             this.engine.enable_loader("python3");
             this.add_search_path(Environment.get_user_data_dir () + "/conquer/plugins");
             this.add_search_path(Environment.get_home_dir () + "/.local/share/conquer/plugins");
@@ -61,6 +63,14 @@ namespace Conquer {
                ret += (Strategy)exten;
             });
             info ("Found %u strategies", ret.length);
+            return ret;
+        }
+        public Configuration[] find_configs () {
+            var ret = new Configuration[0];
+            configs.@foreach((s, info, exten) => {
+               ret += (Conquer.Configuration)exten;
+            });
+            info ("Found %u configs", ret.length);
             return ret;
         }
     }

@@ -85,7 +85,26 @@ namespace Conquer.Default {
         }
     }
 }
+
+public class Conquer.Default.MusicConfig : GLib.Object, Conquer.Configuration {
+    public string name { get; set; }
+    public GLib.Array<Conquer.ConfigurationItem> configs { get; set; default = new GLib.Array<Conquer.ConfigurationItem> (); }
+    construct {
+        this.name = "Sound";
+        Conquer.ConfigurationItem c = new Conquer.BoolConfigurationItem ("Play music", "play.music", "Whether to play music", true);
+        this.configs.append_val ((!)c);
+        c = new Conquer.IntegerConfigurationItem ("Music Volume", "play.music.volume", "Volume of the music", 0, 100, 100);
+        this.configs.append_val ((!)c);
+        c = new Conquer.BoolConfigurationItem ("Play sound effects", "play.soundeffects", "Whether to play soundeffects", true);
+        this.configs.append_val ((!)c);
+        c = new Conquer.IntegerConfigurationItem ("Sound Effect Volume", "play.soundeffects.volume", "Volume of the soundeffects", 0, 100, 100);
+        this.configs.append_val ((!)c);
+    }
+}
+
 public void peas_register_types (TypeModule module) {
     assert (Thread.supported ());
+    var obj = (Peas.ObjectModule) module;
+    obj.register_extension_type (typeof (Conquer.Configuration), typeof (Conquer.Default.MusicConfig));
     Conquer.QUEUE.listen (new Conquer.Default.MusicListener ());
 }

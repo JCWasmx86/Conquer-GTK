@@ -22,7 +22,7 @@ namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
     public class Screen : Gtk.Box, Conquer.MessageReceiver {
         construct {
-            this.install_action ("conquer.save-game", null, (w, a, p) => {
+            this.install_action ("conquer.save-game", null, (w, a) => {
 
             });
             Conquer.MessageQueue.init ();

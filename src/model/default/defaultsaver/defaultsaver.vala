@@ -17,7 +17,17 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+public class Conquer.Default.SaverConfig : GLib.Object, Conquer.Configuration {
+    public string name { get; set; }
+    public GLib.Array<Conquer.ConfigurationItem> configs { get; set; default = new GLib.Array<Conquer.ConfigurationItem> (); }
+    construct {
+        this.name = "Settings";
+        var c = new Conquer.StringConfigurationItem ("Storage location for saved games", "storage.location", "Where to store the saved games.", Environment.get_user_data_dir () + "/conquer/saves");
+        this.configs.append_val ((!) c);
+    }
+}
 
 public void peas_register_types (TypeModule module) {
-    assert (Thread.supported ());
+    var obj = (Peas.ObjectModule) module;
+    obj.register_extension_type (typeof (Conquer.Configuration), typeof (Conquer.Default.SaverConfig));
 }
