@@ -21,6 +21,7 @@ namespace Conquer.Default {
     public class MusicListener : GLib.Object, Conquer.MessageReceiver {
         private GameState state;
         private bool play;
+        private dynamic Gst.Element? music_play;
 
         public MusicListener () {
             this.play = false;
@@ -38,6 +39,7 @@ namespace Conquer.Default {
             while (this.play) {
                 var loop = new MainLoop ();
                 dynamic Gst.Element play = Gst.ElementFactory.make ("playbin", "play");
+                this.music_play = play;
                 play.uri = this.find_random ();
                 info ("URI: %s", play.uri);
                 var bus = play.get_bus ();
@@ -58,6 +60,7 @@ namespace Conquer.Default {
                 });
                 play.set_state (Gst.State.PLAYING);
                 loop.run ();
+                this.music_play = null;
                 // Sleep max 60 seconds, so it sounds better
                 Thread.usleep ((ulong)(Random.next_double () * 60 * (1000 * 1000)));
             }

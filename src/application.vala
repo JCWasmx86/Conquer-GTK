@@ -34,6 +34,8 @@ namespace Conquer {
             };
             this.add_action_entries (action_entries, this);
             this.set_accels_for_action ("app.quit", { "<primary>q" });
+            this.set_accels_for_action ("conquer.save-game", { "<primary>s" });
+            this.set_accels_for_action ("app.preferences", { "<primary>p" });
         }
 
         public override void activate () {
