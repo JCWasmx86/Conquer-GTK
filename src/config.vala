@@ -23,17 +23,21 @@ public class Conquer.ConfigWidget : Gtk.Box {
         this.orientation = Gtk.Orientation.VERTICAL;
         this.spacing = 2;
         this.rows = new ConfigurationRow[0];
+        this.register (c);
+    }
+
+    public void register (Conquer.Configuration c) {
         foreach (var row in c.configs) {
             if (row is Conquer.BoolConfigurationItem) {
-                var r = new Conquer.BooleanConfigurationRow (row.name, row.description, ((Conquer.BoolConfigurationItem)row).value);
+                var r = new Conquer.BooleanConfigurationRow (row.name, row.description, ((Conquer.BoolConfigurationItem) row).value);
                 this.rows += r;
                 this.append (r);
             } else if (row is Conquer.StringConfigurationItem) {
-                var r = new Conquer.StringConfigurationRow (row.name, row.description, ((Conquer.StringConfigurationItem)row).value);
+                var r = new Conquer.StringConfigurationRow (row.name, row.description, ((Conquer.StringConfigurationItem) row).value);
                 this.rows += r;
                 this.append (r);
             } else if (row is Conquer.IntegerConfigurationItem) {
-                var ici = ((Conquer.IntegerConfigurationItem)row);
+                var ici = ((Conquer.IntegerConfigurationItem) row);
                 var r = new Conquer.IntConfigurationRow (row.name, row.description, ici.value, ici.min, ici.max);
                 this.rows += r;
                 this.append (r);
