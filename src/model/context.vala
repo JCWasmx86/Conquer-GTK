@@ -19,37 +19,48 @@
  */
 namespace Conquer {
     public class Context {
+        public Conquer.ConfigLoader config_loader;
+        private Configuration[] ? restored_configs;
         private Peas.Engine engine;
         private Peas.ExtensionSet scenario_loaders;
         private Peas.ExtensionSet strategies;
         private Peas.ExtensionSet configs;
 
-        public Context() {
+        public Context (Conquer.ConfigLoader loader) {
             this.engine = Peas.Engine.get_default ();
-            this.scenario_loaders = new Peas.ExtensionSet(this.engine, typeof (Conquer.ScenarioLoader));
-            this.strategies = new Peas.ExtensionSet(this.engine, typeof (Conquer.Strategy));
-            this.configs = new Peas.ExtensionSet(this.engine, typeof (Conquer.Configuration));
-            this.engine.enable_loader("python3");
-            this.add_search_path(Environment.get_user_data_dir () + "/conquer/plugins");
-            this.add_search_path(Environment.get_home_dir () + "/.local/share/conquer/plugins");
-            foreach(var path in Environment.get_system_data_dirs())
-                this.add_search_path(path + "/conquer/plugins");
-            foreach (var plugin in this.engine.get_plugin_list())
-				this.engine.try_load_plugin(plugin);
+            this.scenario_loaders = new Peas.ExtensionSet (this.engine, typeof (Conquer.ScenarioLoader));
+            this.strategies = new Peas.ExtensionSet (this.engine, typeof (Conquer.Strategy));
+            this.configs = new Peas.ExtensionSet (this.engine, typeof (Conquer.Configuration));
+            this.engine.enable_loader ("python3");
+            this.add_search_path (Environment.get_user_data_dir () + "/conquer/plugins");
+            this.add_search_path (Environment.get_home_dir () + "/.local/share/conquer/plugins");
+            foreach (var path in Environment.get_system_data_dirs ())
+                this.add_search_path (path + "/conquer/plugins");
+            foreach (var plugin in this.engine.get_plugin_list ())
+                this.engine.try_load_plugin (plugin);
             foreach (var s in this.engine.loaded_plugins)
                 info ("Loaded plugin %s", s);
+            this.config_loader = loader;
             Conquer.MessageQueue.init ();
             Conquer.QUEUE.emit (new InitMessage ());
         }
-        private void add_search_path(string p) {
+
+        public void init () {
+            var loaded = this.config_loader.load ();
+            if (loaded != null) {
+                Conquer.QUEUE.emit (new ConfigurationLoadedMessage (loaded));
+            }
+        }
+
+        private void add_search_path (string p) {
             info ("Adding search path %s", p);
             this.engine.add_search_path (p, null);
         }
 
         public Scenario[] find_scenarios () {
             var ret = new Scenario[0];
-            scenario_loaders.@foreach((s, info, exten) => {
-               var found = ((Conquer.ScenarioLoader)exten).enumerate ();
+            scenario_loaders.@foreach ((s, info, exten) => {
+                var found = ((Conquer.ScenarioLoader) exten).enumerate ();
                 foreach (var sc in found)
                     ret += sc;
             });
@@ -59,19 +70,45 @@ namespace Conquer {
 
         public Strategy[] find_strategies () {
             var ret = new Strategy[0];
-            strategies.@foreach((s, info, exten) => {
-               ret += (Strategy)exten;
+            strategies.@foreach ((s, info, exten) => {
+                ret += (Strategy) exten;
             });
             info ("Found %u strategies", ret.length);
             return ret;
         }
+
         public Configuration[] find_configs () {
             var ret = new Configuration[0];
-            configs.@foreach((s, info, exten) => {
-               ret += (Conquer.Configuration)exten;
+            this.restored_configs = this.config_loader.load ();
+            configs.@foreach ((s, info, exten) => {
+                var c = (Conquer.Configuration) exten;
+                ret += c;
             });
+            if (restored_configs != null) {
+                info ("Patching configs to match the saved ones");
+                foreach (var r in ret) {
+                    foreach (var c in restored_configs) {
+                        if (r.id == c.id) {
+                        }
+                    }
+                }
+            } else {
+                this.restored_configs = ret;
+            }
             info ("Found %u configs", ret.length);
             return ret;
+        }
+
+        public void emit_changed (Configuration changed) {
+            Conquer.QUEUE.emit (new Conquer.ConfigurationUpdatedMessage (changed));
+            if (this.restored_configs != null) {
+                for (var i = 0; i < this.restored_configs.length; i++)
+                    if (this.restored_configs[i].id == changed.id) {
+                        this.restored_configs[i] = changed;
+                        break;
+                    }
+                this.config_loader.get_saver ().save (this.restored_configs);
+            }
         }
     }
 }

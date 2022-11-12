@@ -14,8 +14,10 @@ conquer_lib_sources = [
     'model/message/movemessage.vala',
     'model/message/startgamemessage.vala',
     'model/message/configurationupdatedmessage.vala',
+    'model/message/configloadedmessage.vala',
     'model/saver.vala',
     'model/config.vala',
+    'model/configloader.vala',
 ]
 conquer_sources = [
     'main.vala',
@@ -35,6 +37,8 @@ conquer_sources = [
 conquer_lib_deps = [
     dependency('gio-2.0'),
     dependency('libpeas-1.0'),
+    dependency('zlib'),
+    dependency('json-glib-1.0'),
 ]
 
 conquer_lib = static_library(

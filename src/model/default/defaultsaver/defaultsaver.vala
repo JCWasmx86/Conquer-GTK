@@ -19,9 +19,11 @@
  */
 public class Conquer.Default.SaverConfig : GLib.Object, Conquer.Configuration {
     public string name { get; set; }
+    public string id { get; set; }
     public GLib.Array<Conquer.ConfigurationItem> configs { get; set; default = new GLib.Array<Conquer.ConfigurationItem> (); }
     construct {
-        this.name = "Settings";
+        this.name = "General";
+        this.id = "general";
         var c = new Conquer.StringConfigurationItem ("Storage location for saved games", "storage.location", "Where to store the saved games.", Environment.get_user_data_dir () + "/conquer/saves");
         this.configs.append_val ((!) c);
     }

@@ -19,6 +19,7 @@
  */
 public interface Conquer.Configuration : GLib.Object {
     public abstract string name { get; set; }
+    public abstract string id { get; set; }
     public abstract GLib.Array<Conquer.ConfigurationItem> configs { get; set; default = new GLib.Array<Conquer.ConfigurationItem> (); }
 }
 

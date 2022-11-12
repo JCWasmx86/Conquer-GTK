@@ -34,7 +34,8 @@ namespace Conquer {
         public Window (Gtk.Application app) {
             Object (application: app);
             this.main_stack.visible_child = this.main_screen;
-            this.context = new Context ();
+            this.context = new Context (new Conquer.DefaultConfigLoader ());
+            this.context.init ();
             this.maximize ();
         }
 

@@ -79,10 +79,10 @@ namespace Conquer {
             var configs = ((Conquer.Window) this.active_window).context.find_configs ();
             foreach (var c in configs) {
                 var name = c.name;
-                var w = stack.get_child_by_name (name);
+                var w = stack.get_child_by_name (c.id);
                 if (w == null) {
-                    var widget = new Conquer.ConfigWidget (c);
-                    stack.add_titled (widget, name, name);
+                    var widget = new Conquer.ConfigWidget (c, ((Conquer.Window) this.active_window).context);
+                    stack.add_titled (widget, c.id, name);
                 } else {
                     ((Conquer.ConfigWidget)w).register (c);
                 }
