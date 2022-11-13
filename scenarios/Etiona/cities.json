@@ -36,7 +36,7 @@
 		}
 	},
 	{
-		"growth": 1.08,
+		"growth": 1.023,
 		"icon": "moscow.png",
 		"name": "Holamorta",
 		"clan_id": 1,
@@ -54,7 +54,7 @@
 		}
 	},
 	{
-		"growth": 1.2,
+		"growth": 1.02,
 		"icon": "medieval.png",
 		"name": "Initia de aqa",
 		"clan_id": 1,

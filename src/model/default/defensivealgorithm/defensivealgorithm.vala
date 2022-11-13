@@ -46,7 +46,7 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
                         break;
                 }
                 if (netto[i] < 0 && state.round >= 5) {
-                    while (netto[i] <= 0) {
+                    while (netto[i] <= 0 && c.soldiers >= 3) {
                         var n_soldiers = c.soldiers / 3;
                         c.disband (n_soldiers);
                         netto = c.calculate_resource_netto ();
@@ -70,12 +70,17 @@ public class Conquer.Default.DefensiveStrategy : GLib.Object, Conquer.Strategy {
                 info ("[Defensive] Moving %llu troops from %s to %s", amount_to_move, inner.name, outer.name);
                 moved = true;
             }
-            if (!moved) {
+            if (!moved && border_cities.length != 0) {
+                var cnter = 0;
                 while (!moved) {
-                    var idx = GLib.Random.next_int () % inner_cities.length;
-                    if (inner == inner_cities[idx])
+                    cnter++;
+                    if (cnter == 150)
+                        break;
+                    var idx = GLib.Random.next_int () % border_cities.length;
+                    if (inner == border_cities[idx]) {
                         continue;
-                    var c = inner_cities[idx];
+                    }
+                    var c = border_cities[idx];
                     if (!state.cities.direct_connection (inner, c))
                         continue;
                     var amount_to_move = state.maximum_number_of_soliders_to_move (inner, c);
