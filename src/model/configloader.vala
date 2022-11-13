@@ -29,9 +29,64 @@ namespace Conquer {
 
     public class DefaultConfigSaver : GLib.Object, ConfigSaver {
         public async void save (Configuration[] config) {
-            info ("Saving....");
+            var obj = new Json.Object ();
+            obj.set_int_member ("version", 1);
+            var configs_object = new Json.Object ();
+            foreach (var c in config) {
+                var objname = c.id;
+                var result = new Json.Object ();
+                var arr = new Json.Array ();
+                foreach (var cc in c.configs) {
+                    var o = new Json.Object ();
+                    o.set_string_member ("name", cc.name);
+                    o.set_string_member ("id", cc.id);
+                    o.set_string_member ("description", cc.description);
+                    var id = 0;
+                    if (cc is StringConfigurationItem) {
+                        o.set_string_member ("value", ((Conquer.StringConfigurationItem)cc).value);
+                    } else if (cc is IntegerConfigurationItem) {
+                        id = 1;
+                        o.set_int_member ("value", ((Conquer.IntegerConfigurationItem)cc).value);
+                        o.set_int_member ("min", ((Conquer.IntegerConfigurationItem)cc).min);
+                        o.set_int_member ("max", ((Conquer.IntegerConfigurationItem)cc).max);
+                    } else if (cc is BoolConfigurationItem) {
+                        id = 2;
+                        o.set_boolean_member ("value", ((Conquer.BoolConfigurationItem)cc).value);
+                    }
+                    o.set_int_member ("type", id);
+                    var n = new Json.Node (Json.NodeType.OBJECT);
+                    n.init_object (o);
+                    arr.add_element (n);
+                }
+                result.set_array_member ("configs", arr);
+                configs_object.set_object_member (objname, result);
+            }
+            obj.set_object_member ("configs", configs_object);
+            var n = new Json.Node (Json.NodeType.OBJECT);
+            n.init_object (obj);
+            var as_string = Json.to_string (n, false) + "\0";
+            var dest = new uint8[as_string.data.length];
+            ulong dest_length = as_string.data.length;
+            ZLib.Utility.compress (dest, ref dest_length, as_string.data);
+            var basedir = Environment.get_user_data_dir () + "/conquer/config";
+            var file = File.new_for_path (basedir);
+            try {
+                file.make_directory_with_parents ();
+            } catch (Error e) {
+
+            }
+            var cfgfile = file.get_child ("maincfg.bin");
+            try {
+                var ios = cfgfile.replace_readwrite (null, false, GLib.FileCreateFlags.REPLACE_DESTINATION);
+                var os = ios.output_stream;
+                dest.resize ((int)dest_length);
+                os.write (dest);
+            } catch (Error e) {
+                warning (">> Unable to save config: %s", e.message);
+            }
         }
     }
+
     public class DefaultConfigLoader : GLib.Object, ConfigLoader {
         public Conquer.ConfigSaver get_saver () {
             return new DefaultConfigSaver ();
@@ -56,10 +111,11 @@ namespace Conquer {
                 dis.read_all (data, out datalen);
                 var decompressedlen = datalen * 100;
                 info ("Saved config has %zu bytes, allocating %zu bytes for decompressed data", datalen, decompressedlen);
-                var decompressed = new uint8[decompressedlen];
+                var decompressed = new uint8[decompressedlen + 1];
                 ZLib.Utility.uncompress (decompressed, ref decompressedlen, data);
+                decompressed[decompressedlen] = 0;
                 var parser = new Json.Parser ();
-                parser.load_from_data ((string)decompressed, (ssize_t)datalen);
+                parser.load_from_data ((string)decompressed, (ssize_t)decompressedlen);
                 var root = parser.get_root ();
                 if (root.get_node_type () != Json.NodeType.OBJECT)
                     return null;
