@@ -19,7 +19,7 @@
  */
 namespace Conquer.Default {
     public class MusicListener : GLib.Object, Conquer.MessageReceiver {
-        private GameState state;
+        private GameState? state;
         private bool play;
         private MainLoop? loop;
         private dynamic Gst.Element? music_element;
@@ -27,6 +27,7 @@ namespace Conquer.Default {
 
         public MusicListener () {
             this.play = true;
+            this.state = null;
             this.volume = 1.0;
         }
 
@@ -45,8 +46,10 @@ namespace Conquer.Default {
                             var val = ((Conquer.BoolConfigurationItem) ci).value;
                             if (val != this.play) {
                                 if (val) {
-                                    this.play = true;
-                                    new Thread<void> ("music", this.play_music);
+                                    if (this.state != null) {
+                                        this.play = true;
+                                        new Thread<void> ("music", this.play_music);
+                                    }
                                 } else if (this.loop != null) {
                                     this.play = false;
                                     this.loop.get_context ().invoke (() => {
