@@ -86,9 +86,17 @@ namespace Conquer {
             });
             if (restored_configs != null) {
                 info ("Patching configs to match the saved ones");
+                // TODO: This is beyond stupid
                 foreach (var r in ret) {
                     foreach (var c in restored_configs) {
                         if (r.id == c.id) {
+                            for (var i = 0; i < r.configs.length; i++) {
+                                for (var j = 0; j < c.configs.length; j++) {
+                                    if (r.configs.index (i).id == c.configs.index(j).id) {
+                                        r.configs.index (i).assign (c.configs.index(j));
+                                    }
+                                }
+                            }
                         }
                     }
                 }

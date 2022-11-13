@@ -27,6 +27,7 @@ public abstract class Conquer.ConfigurationItem : GLib.Object {
     public string name { get; set; }
     public string id { get; set; }
     public string description { get; set; }
+    public abstract void assign (Conquer.ConfigurationItem assign);
 }
 public class Conquer.IntegerConfigurationItem : Conquer.ConfigurationItem {
     public int64 @value { get; set; }
@@ -41,6 +42,17 @@ public class Conquer.IntegerConfigurationItem : Conquer.ConfigurationItem {
         this.max = max;
         this.@value = @default;
     }
+
+    public override void assign (Conquer.ConfigurationItem assign) {
+        if (assign is IntegerConfigurationItem) {
+            var ici = (IntegerConfigurationItem)assign;
+            this.value = ici.value;
+            this.min = ici.min;
+            this.max = ici.max;
+        } else {
+            critical ("Can't reassign %s", this.id);
+        }
+    }
 }
 
 public class Conquer.StringConfigurationItem : Conquer.ConfigurationItem {
@@ -52,6 +64,15 @@ public class Conquer.StringConfigurationItem : Conquer.ConfigurationItem {
         this.description = description;
         this.@value = @default;
     }
+
+    public override void assign (Conquer.ConfigurationItem assign) {
+        if (assign is StringConfigurationItem) {
+            var sci = (StringConfigurationItem)assign;
+            this.value = sci.value;
+        } else {
+            critical ("Can't reassign %s", this.id);
+        }
+    }
 }
 
 public class Conquer.BoolConfigurationItem : Conquer.ConfigurationItem {
@@ -62,5 +83,14 @@ public class Conquer.BoolConfigurationItem : Conquer.ConfigurationItem {
         this.id = id;
         this.description = description;
         this.@value = @default;
+    }
+
+    public override void assign (Conquer.ConfigurationItem assign) {
+        if (assign is BoolConfigurationItem) {
+            var bci = (BoolConfigurationItem)assign;
+            this.value = bci.value;
+        } else {
+            critical ("Can't reassign %s", this.id);
+        }
     }
 }

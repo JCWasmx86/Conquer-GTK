@@ -78,6 +78,19 @@ namespace Conquer.Default {
                         }
                     }
                 }
+            } else if (msg is Conquer.ConfigurationLoadedMessage) {
+                var cfgs = ((ConfigurationLoadedMessage)msg).config;
+                foreach (var c in cfgs) {
+                    if (c.id != "sound")
+                        continue;
+                    foreach (var ci in c.configs) {
+                        if (ci.id == "play.music") {
+                            this.play = ((Conquer.BoolConfigurationItem) ci).value;
+                        } else if (ci.id == "play.music.volume") {
+                            this.volume = ((Conquer.IntegerConfigurationItem) ci).value / 100.0;
+                        }
+                    }
+                }
             }
             // TODO: Handle attack messages where the player
             // is the attacker
