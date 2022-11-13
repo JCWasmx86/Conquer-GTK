@@ -25,3 +25,7 @@ custom_target(
     install: true,
     install_dir: scenario_install_dir,
 )
+
+foreach json_file : json_files
+    test('test_belenos_' + json_file, json_glib_format, args: files(json_file))
+endforeach
