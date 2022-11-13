@@ -26,15 +26,17 @@ namespace Conquer.Default {
         private double volume;
 
         public MusicListener () {
-            this.play = false;
+            this.play = true;
             this.volume = 1.0;
         }
 
         public void receive (Conquer.Message msg) {
             if (msg is Conquer.StartGameMessage) {
                 this.state = ((Conquer.StartGameMessage) msg).state;
-                this.play = true;
-                new Thread<void> ("music", this.play_music);
+                if (this.play) {
+                    this.play = true;
+                    new Thread<void> ("music", this.play_music);
+                }
             } else if (msg is Conquer.ConfigurationUpdatedMessage) {
                 var cc = ((Conquer.ConfigurationUpdatedMessage) msg).config;
                 if (cc.id == "sound") {
@@ -53,6 +55,8 @@ namespace Conquer.Default {
                                         this.loop.quit ();
                                         return Source.REMOVE;
                                     }, Priority.HIGH);
+                                } else {
+                                    this.play = false;
                                 }
                             }
                         } else if (ci.id == "play.music.volume") {
