@@ -10,3 +10,4 @@ json_files = [
 ]
 subdir('Belenos')
 subdir('Etiona')
+subdir('Freedo')

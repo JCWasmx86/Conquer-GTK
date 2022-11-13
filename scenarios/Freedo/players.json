@@ -1,0 +1,37 @@
+[
+	{
+		"coins": 4500,
+		"name": "Rhomortina",
+		"color": "#FFFFC8",
+		"player": true,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	},
+	{
+		"coins": 3500,
+		"name": "Epsilamda",
+		"color": "#FF0000",
+		"player": false,
+		"strategy": "0b41ca43-3872-421c-9b14-95b16260b9aa"
+	},
+	{
+		"coins": 1200,
+		"name": "Medianes",
+		"color": "#00FF00",
+		"player": false,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	},
+	{
+		"coins": 1200,
+		"name": "Initia e finitia",
+		"color": "#0000FF",
+		"player": false,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	},
+	{
+		"coins": 2500,
+		"name": "Denargo",
+		"color": "#FFFF00",
+		"player": false,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	}
+]
