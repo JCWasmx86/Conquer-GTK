@@ -1,0 +1,62 @@
+[
+	{
+		"from" : 0,
+		"to" : 1,
+		"distance" : 4.5
+	},
+	{
+		"from" : 0,
+		"to" : 2,
+		"distance" : 4.5
+	},
+	{
+		"from" : 2,
+		"to" : 3,
+		"distance" : 3.7
+	},
+	{
+		"from" : 1,
+		"to" : 2,
+		"distance" : 2.1
+	},
+	{
+		"from" : 1,
+		"to" : 3,
+		"distance" : 2.1
+	},
+	{
+		"from" : 0,
+		"to" : 5,
+		"distance" : 8.9
+	},
+	{
+		"from" : 4,
+		"to" : 5,
+		"distance" : 3.4
+	},
+	{
+		"from" : 1,
+		"to" : 6,
+		"distance" : 9.9
+	},
+	{
+		"from" : 5,
+		"to" : 6,
+		"distance" : 4.5
+	},
+	{
+		"from" : 6,
+		"to" : 7,
+		"distance" : 5.8
+	},
+	{
+		"from" : 7,
+		"to" : 8,
+		"distance" : 4.5
+	},
+	{
+		"from" : 0,
+		"to" : 3,
+		"distance" : 4.5
+	}
+]

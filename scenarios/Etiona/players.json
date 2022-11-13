@@ -1,0 +1,30 @@
+[
+	{
+		"coins": 2300,
+		"name": "Y Alpha",
+		"color": "#326432",
+		"player": true,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	},
+	{
+		"coins": 1200,
+		"name": "Valoinitia",
+		"color": "#0000FF",
+		"player": false,
+		"strategy": "0b41ca43-3872-421c-9b14-95b16260b9aa"
+	},
+	{
+		"coins": 3500,
+		"name": "Los alpha",
+		"color": "#00FF00",
+		"player": false,
+		"strategy": "f9adeac4-95a5-46e8-805e-69473d719f23"
+	},
+	{
+		"coins": 1200,
+		"name": "Deomega",
+		"color": "#FFoooo",
+		"player": false,
+		"strategy": "0b41ca43-3872-421c-9b14-95b16260b9aa"
+	}
+]
