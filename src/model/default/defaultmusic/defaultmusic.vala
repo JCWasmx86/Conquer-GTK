@@ -21,7 +21,7 @@ namespace Conquer.Default {
     public class MusicListener : GLib.Object, Conquer.MessageReceiver {
         private GameState state;
         private bool play;
-        private MainLoop loop;
+        private MainLoop? loop;
         private dynamic Gst.Element? music_element;
         private double volume;
 
@@ -29,32 +29,45 @@ namespace Conquer.Default {
             this.play = false;
             this.volume = 1.0;
         }
+
         public void receive (Conquer.Message msg) {
             if (msg is Conquer.StartGameMessage) {
-                this.state = ((Conquer.StartGameMessage)msg).state;
+                this.state = ((Conquer.StartGameMessage) msg).state;
                 this.play = true;
                 new Thread<void> ("music", this.play_music);
             } else if (msg is Conquer.ConfigurationUpdatedMessage) {
-                var cc = ((Conquer.ConfigurationUpdatedMessage)msg).config;
+                var cc = ((Conquer.ConfigurationUpdatedMessage) msg).config;
                 if (cc.id == "sound") {
                     foreach (var ci in cc.configs) {
                         if (ci.id == "play.music") {
-                            var val = ((Conquer.BoolConfigurationItem)ci).value;
+                            var val = ((Conquer.BoolConfigurationItem) ci).value;
                             if (val != this.play) {
                                 if (val) {
                                     this.play = true;
                                     new Thread<void> ("music", this.play_music);
-                                } else {
+                                } else if (this.loop != null) {
                                     this.play = false;
-                                    if (this.music_element != null)
-                                        this.music_element.set_state (Gst.State.NULL);
+                                    this.loop.get_context ().invoke (() => {
+                                        if (this.music_element != null)
+                                            this.music_element.set_state (Gst.State.NULL);
+                                        this.loop.quit ();
+                                        return Source.REMOVE;
+                                    }, Priority.HIGH);
                                 }
                             }
                         } else if (ci.id == "play.music.volume") {
-                            var amount = ((Conquer.IntegerConfigurationItem)ci).value;
+                            var amount = ((Conquer.IntegerConfigurationItem) ci).value;
                             this.volume = amount / 100.0;
-                            if (this.music_element != null)
-                                this.music_element.volume = this.volume;
+                            if (this.loop != null) {
+                                this.loop.get_context ().invoke (() => {
+                                    if (this.music_element != null)
+                                        this.music_element.volume = this.volume;
+                                    return Source.REMOVE;
+                                }, Priority.HIGH);
+                            } else {
+                                if (this.music_element != null)
+                                    this.music_element.volume = this.volume;
+                            }
                         }
                     }
                 }
@@ -62,6 +75,7 @@ namespace Conquer.Default {
             // TODO: Handle attack messages where the player
             // is the attacker
         }
+
         public void play_music () {
             while (this.play) {
                 this.loop = new MainLoop ();
@@ -83,23 +97,31 @@ namespace Conquer.Default {
                         loop.quit ();
                     } else if (m.type == Gst.MessageType.EOS) {
                         loop.quit ();
-                    } else if (m.type == Gst.MessageType.STATE_CHANGED) {
-                        Gst.State oldstate;
-                        Gst.State newstate;
-                        Gst.State pending;
-                        m.parse_state_changed (out oldstate, out newstate, out pending);
-                        info ("State changed: %s->%s:%s", oldstate.to_string (), newstate.to_string (), pending.to_string ());
                     }
                     return true;
                 });
                 play.set_state (Gst.State.PLAYING);
                 loop.run ();
+                play.set_state (Gst.State.NULL);
                 this.loop = null;
                 this.music_element = null;
-                // Sleep max 60 seconds, so it sounds better
-                Thread.usleep ((ulong)(Random.next_double () * 60 * (1000 * 1000)));
+                if (!this.play)
+                    break;
+                var start_time = new DateTime.now_utc ().to_unix ();
+                var end_time = start_time + ((ulong) (Random.next_double () * 60 * (1000 * 1000)));
+                while (new DateTime.now_utc ().to_unix () <= end_time) {
+                    Thread.yield ();
+                    if (!this.play) {
+                        return;
+                    }
+                    // Sleep for 0.02 seconds
+                    // to avoid bugs that two pieces of music
+                    // play concurrently
+                    Thread.usleep (20000);
+                }
             }
         }
+
         string find_random () {
             var base_path = "/app/share/conquer/music";
             var paths = new string[0];
@@ -132,13 +154,13 @@ public class Conquer.Default.MusicConfig : GLib.Object, Conquer.Configuration {
         this.name = "Sound";
         this.id = "sound";
         Conquer.ConfigurationItem c = new Conquer.BoolConfigurationItem ("Play music", "play.music", "Whether to play music", true);
-        this.configs.append_val ((!)c);
+        this.configs.append_val ((!) c);
         c = new Conquer.IntegerConfigurationItem ("Music Volume", "play.music.volume", "Volume of the music", 0, 100, 100);
-        this.configs.append_val ((!)c);
+        this.configs.append_val ((!) c);
         c = new Conquer.BoolConfigurationItem ("Play sound effects", "play.soundeffects", "Whether to play soundeffects", true);
-        this.configs.append_val ((!)c);
+        this.configs.append_val ((!) c);
         c = new Conquer.IntegerConfigurationItem ("Sound Effect Volume", "play.soundeffects.volume", "Volume of the soundeffects", 0, 100, 100);
-        this.configs.append_val ((!)c);
+        this.configs.append_val ((!) c);
     }
 }
 
