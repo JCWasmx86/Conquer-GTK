@@ -24,6 +24,7 @@ public class Conquer.GameState : Object {
     public Clan[] clans;
     public uint round;
     public GLib.Bytes background_image_data;
+    public string guid;
     public string uuid;
 
     public GameState () {
