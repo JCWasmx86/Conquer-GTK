@@ -33,3 +33,9 @@ CREATE TABLE IF NOT EXISTS movement (
 	attack INT,
 	success INT
 ) STRICT;
+
+CREATE TABLE IF NOT EXISTS result (
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	rounds INT,
+	result INT
+) STRICT;
