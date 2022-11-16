@@ -48,6 +48,9 @@
             <child>
               <object class="ConquerScreen" id="conquer_screen"/>
             </child>
+            <child>
+              <object class="ConquerStatistics" id="statistics"/>
+            </child>
           </object>
         </child>
       </object>

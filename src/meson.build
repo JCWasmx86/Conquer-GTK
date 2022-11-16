@@ -34,6 +34,7 @@ conquer_sources = [
     'claninfo.vala',
     'config.vala',
     'databaselistener.vala',
+    'statistics.vala',
 ]
 
 conquer_lib_deps = [

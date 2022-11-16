@@ -31,6 +31,7 @@ namespace Conquer {
                 { "quit", this.quit },
                 { "start-game", this.start_game },
                 { "show-main", this.show_main },
+                { "statistics", this.show_statistics },
             };
             this.add_action_entries (action_entries, this);
             this.set_accels_for_action ("app.quit", { "<primary>q" });
@@ -96,6 +97,10 @@ namespace Conquer {
             window.content = box;
             window.present ();
             window.set_size_request (600, 400);
+        }
+
+        private void show_statistics () {
+            ((Conquer.Window) this.active_window).show_statistics ();
         }
 
         private void start_game () {

@@ -34,6 +34,8 @@ namespace Conquer {
         private unowned Conquer.NewSelectionScreen selection_screen;
         [GtkChild]
         private unowned Conquer.Screen conquer_screen;
+        [GtkChild]
+        private unowned Conquer.Statistics statistics;
         internal Context context;
         internal DatabaseListener listener;
 
@@ -55,6 +57,11 @@ namespace Conquer {
             if (this.main_stack.visible_child == this.selection_screen)
                 this.selection_screen.clear ();
             this.main_stack.visible_child = this.main_screen;
+        }
+
+        internal void show_statistics () {
+            this.main_stack.visible_child = this.statistics;
+            this.statistics.update (this.listener);
         }
 
         internal void start_game_real (Conquer.Scenario s) {

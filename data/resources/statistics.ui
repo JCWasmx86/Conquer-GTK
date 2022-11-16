@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerStatistics" parent="GtkBox">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar">
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title">Conquer</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton" id="back_button">
+                <property name="action-name">app.show-main</property>
+                <property name="visible" bind-source="back_button" bind-property="sensitive" bind-flags="sync-create"/>
+                <property name="icon-name">go-previous-symbolic</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">primary_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="propagate-natural-height">True</property>
+            <property name="vexpand">true</property>
+            <property name="hexpand">true</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="AdwClamp">
+                    <property name="maximum-size">440</property>
+                    <property name="tightening-threshold">340</property>
+                    <property name="margin-top">0</property>
+                    <property name="margin-bottom">24</property>
+                    <property name="margin-start">24</property>
+                    <property name="margin-end">24</property>
+                    <property name="vexpand">true</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="valign">center</property>
+                        <property name="spacing">2</property>
+                        <child>
+                          <object class="AdwClamp">
+                            <property name="maximum-size">260</property>
+                            <property name="margin-top">10</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="valign">center</property>
+                                <style>
+                                  <class name="linked"/>
+                                </style>
+                                <!-- TODO: This should be AdwActionRows or sth. like that -->
+                                <child>
+                                  <object class="GtkLabel" id="lbl_played_games"/>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="lbl_won_games"/>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="lbl_lost_games"/>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="lbl_resigned_games"/>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Conquer</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
+

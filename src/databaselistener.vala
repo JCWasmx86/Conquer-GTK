@@ -40,7 +40,30 @@ public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
         } catch (Error e) {
             error ("%s", e.message);
         }
+        info ("Already played %lld games", this.number_of_played_games ());
     }
+
+    public int64 number_of_played_games() {
+        return this.of_type (GameResult.PLAYER_LOST) + this.of_type (GameResult.RESIGNED) + this.of_type (GameResult.PLAYER_WON);
+    }
+
+    public int64 of_type (Conquer.GameResult res) {
+        Sqlite.Statement stmt;
+        var query = "SELECT count(*) from result WHERE result == %lu;".printf (res);
+        var ec = db.prepare_v2 (query, query.length, out stmt);
+        if (ec != Sqlite.OK) {
+            error ("Error %d: %s", db.errcode (), db.errmsg ());
+        }
+        int cols = stmt.column_count ();
+        assert (cols == 1);
+        while (stmt.step () == Sqlite.ROW) {
+            var n = stmt.column_int64 (0);
+            stmt.reset ();
+            return n;
+        }
+        assert_not_reached ();
+    }
+
     public void receive (Conquer.Message msg) {
         if (msg is Conquer.StartGameMessage) {
             var sgm = (Conquer.StartGameMessage)msg;
