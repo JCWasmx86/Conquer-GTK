@@ -64,6 +64,7 @@ namespace Conquer {
 
         private void on_preferences_action () {
             var window = new Adw.Window ();
+            window.modal = true;
             var bar = new Adw.HeaderBar ();
             bar.title_widget = new Adw.WindowTitle(_("Preferences"), "");
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);

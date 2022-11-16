@@ -94,6 +94,7 @@ namespace Conquer {
                     } else {
                         var is_attack = this.start_city.clan != end_city.clan;
                         var window = new Adw.Window ();
+                        window.modal = true;
                         var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
                         var bar = new Adw.HeaderBar ();
                         bar.centering_policy = Adw.CenteringPolicy.STRICT;

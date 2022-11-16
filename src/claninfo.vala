@@ -125,6 +125,7 @@ namespace Conquer {
 
         private void upgrade (bool attack) {
             var window = new Adw.Window ();
+            window.modal = true;
             var bar = new Adw.HeaderBar ();
             var title = attack ? _("Upgrade Attack") : _("Upgrade Defense");
             bar.title_widget = new Adw.WindowTitle (title, "");

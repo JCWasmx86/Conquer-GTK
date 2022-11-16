@@ -38,6 +38,7 @@ namespace Conquer {
                 this.total_power.update ();
                 this.economic_power.update ();
                 this.economic_power.update ();
+                this.check_result ();
             });
             this.total_power.title.label = _("Total Power");
             this.economic_power.title.label = _("Economic Power");
@@ -122,6 +123,42 @@ namespace Conquer {
                 if (c.player)
                     this.coins.label = _("Coins: %llu").printf (c.coins);
             }
+        }
+
+        private void check_result () {
+            Clan? player_clan = null;
+            foreach (var c in this.game_state.clans)
+                if (c.player) {
+                    player_clan = c;
+                    break;
+                }
+            assert (player_clan != null);
+            var cities = this.game_state.cities.cities_of_clan (player_clan);
+            if (cities.length == 0) {
+                this.show_end_of_game_dialog (true);
+            } else if (cities.length == this.game_state.city_list.length) {
+                this.show_end_of_game_dialog (false);
+            }
+        }
+
+        void show_end_of_game_dialog (bool lost) {
+            var window = new Adw.Window ();
+            var bar = new Adw.HeaderBar ();
+            bar.title_widget = new Adw.WindowTitle (lost ? _("You lost") : _("You won"), "");
+            var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+            child.append (bar);
+            var clamp = new Adw.Clamp ();
+            clamp.maximum_size = 360;
+            clamp.child = child;
+            window.content = clamp;
+            window.resizable = false;
+            window.present ();
+            window.modal = true;
+            window.close_request.connect (() => {
+                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, lost ? Conquer.GameResult.PLAYER_LOST : Conquer.GameResult.PLAYER_WON));
+                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
+                return false;
+            });
         }
 
         public void receive (Conquer.Message msg) {

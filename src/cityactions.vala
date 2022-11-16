@@ -109,6 +109,7 @@ public class Conquer.CityActionScreen : Gtk.Box {
     private void upgrade_defense () {
         assert (city != null);
         var window = new Adw.Window ();
+        window.modal = true;
         var bar = new Adw.HeaderBar ();
         bar.title_widget = new Adw.WindowTitle (_("Upgrade defense"), "");
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
@@ -155,6 +156,7 @@ public class Conquer.CityActionScreen : Gtk.Box {
     private void change_soldiers (bool recruit) {
         assert (city != null);
         var window = new Adw.Window ();
+        window.modal = true;
         var bar = new Adw.HeaderBar ();
         bar.title_widget = new Adw.WindowTitle (recruit ? _("Recruit soldiers") : _("Disband soldiers"), "");
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
