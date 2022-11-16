@@ -58,7 +58,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libpeas.git"
+                    "url" : "https://gitlab.gnome.org/GNOME/libpeas.git",
+                    "tag" : "libpeas-1.34.0"
                 }
             ]
         },
