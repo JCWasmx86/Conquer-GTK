@@ -79,7 +79,7 @@ namespace Conquer.Default {
                     }
                 }
             } else if (msg is Conquer.ConfigurationLoadedMessage) {
-                var cfgs = ((ConfigurationLoadedMessage)msg).config;
+                var cfgs = ((ConfigurationLoadedMessage) msg).config;
                 foreach (var c in cfgs) {
                     if (c.id != "sound")
                         continue;
@@ -90,6 +90,15 @@ namespace Conquer.Default {
                             this.volume = ((Conquer.IntegerConfigurationItem) ci).value / 100.0;
                         }
                     }
+                }
+            } else if (msg is Conquer.EndGameMessage) {
+                if (this.loop != null) {
+                    this.loop.get_context ().invoke (() => {
+                        if (this.music_element != null)
+                            this.music_element.set_state (Gst.State.NULL);
+                        this.loop.quit ();
+                        return Source.REMOVE;
+                    }, Priority.HIGH);
                 }
             }
             // TODO: Handle attack messages where the player

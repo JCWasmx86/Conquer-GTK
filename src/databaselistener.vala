@@ -45,6 +45,14 @@ public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
         if (msg is Conquer.StartGameMessage) {
             var sgm = (Conquer.StartGameMessage)msg;
             var state = sgm.state;
+        } else if (msg is Conquer.EndGameMessage) {
+            var egm = (Conquer.EndGameMessage)msg;
+            var sql = "INSERT INTO result (rounds, result) VALUES (%lu, %lu);".printf (egm.state.round, egm.result);
+            string errmsg;
+            var ec = this.db.exec (sql, null, out errmsg);
+            if (ec != Sqlite.OK) {
+                critical ("Error: %s", errmsg);
+            }
         }
     }
 }

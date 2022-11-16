@@ -27,6 +27,10 @@ namespace Conquer {
             this.install_action ("conquer.save-game", null, (w, a) => {
 
             });
+            this.install_action ("conquer.resign", null, (w, a) => {
+                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
+                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
+            });
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();
