@@ -21,6 +21,11 @@
 namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/window.ui")]
     public class Window : Adw.ApplicationWindow {
+        construct {
+            Conquer.MessageQueue.init ();
+            this.listener = new DatabaseListener ();
+            Conquer.QUEUE.listen (this.listener);
+        }
         [GtkChild]
         private unowned Gtk.Stack main_stack;
         [GtkChild]
@@ -30,6 +35,7 @@ namespace Conquer {
         [GtkChild]
         private unowned Conquer.Screen conquer_screen;
         internal Context context;
+        internal DatabaseListener listener;
 
         public Window (Gtk.Application app) {
             Object (application: app);

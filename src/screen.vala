@@ -22,11 +22,11 @@ namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
     public class Screen : Gtk.Box, Conquer.MessageReceiver {
         construct {
+            Conquer.MessageQueue.init ();
+            Conquer.QUEUE.listen (this);
             this.install_action ("conquer.save-game", null, (w, a) => {
 
             });
-            Conquer.MessageQueue.init ();
-            Conquer.QUEUE.listen (this);
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();

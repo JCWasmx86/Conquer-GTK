@@ -32,6 +32,7 @@ conquer_sources = [
     'diagram.vala',
     'claninfo.vala',
     'config.vala',
+    'databaselistener.vala',
 ]
 
 conquer_lib_deps = [
@@ -58,6 +59,7 @@ conquer_deps = [
     dependency('gio-2.0'),
     dependency('libpeas-1.0'),
     dependency('gstreamer-1.0'),
+    dependency('sqlite3'),
     meson.get_compiler('c').find_library('m', required: false),
 ]
 
