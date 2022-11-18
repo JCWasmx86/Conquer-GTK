@@ -47,6 +47,8 @@ public class Conquer.Default.GrowthLimiter : GLib.Object, Conquer.MessageReceive
                     while (c.growth < 1.0) {
                         c.growth *= 1.01;
                     }
+                } else if (c.people < 100) {
+                    c.people++;
                 }
             }
         } else if (msg is Conquer.StartGameMessage) {
