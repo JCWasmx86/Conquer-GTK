@@ -1,7 +1,7 @@
 [
     {
         "growth": 1.001,
-        "icon": "architecture-and-city.png",
+        "icon": "Samolacrima.png",
         "name": "Samolacrima",
         "clan_id": 0,
         "people": 3000,
@@ -19,7 +19,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "castle.png",
+        "icon": "Onmadispera.png",
         "name": "Onmadispera",
         "clan_id": 0,
         "people": 10276,
@@ -37,7 +37,7 @@
     },
     {
         "growth": 1.003,
-        "icon": "castle(1).png",
+        "icon": "Onmamorta.png",
         "name": "Onmamorta",
         "clan_id": 0,
         "people": 230,
@@ -55,7 +55,7 @@
     },
     {
         "growth": 1.003,
-        "icon": "castle(2).png",
+        "icon": "Deinitia.png",
         "name": "Deinitia",
         "clan_id": 0,
         "people": 12000,
@@ -73,7 +73,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "castle(3).png",
+        "icon": "Sanmaga.png",
         "name": "Sanmaga",
         "clan_id": 1,
         "people": 1200,

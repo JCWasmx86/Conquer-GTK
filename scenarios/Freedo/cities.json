@@ -1,7 +1,7 @@
 [
     {
         "growth": 1.03,
-        "icon": "architecture-and-city.png",
+        "icon": "Rhomortina.png",
         "name": "Rhomortina",
         "clan_id": 0,
         "people": 230000,
@@ -19,7 +19,7 @@
     },
     {
         "growth": 1.07,
-        "icon": "fortress.png",
+        "icon": "Nisentara.png",
         "name": "Nisentara",
         "clan_id": 0,
         "people": 14000,
@@ -37,7 +37,7 @@
     },
     {
         "growth": 1.05,
-        "icon": "medieval.png",
+        "icon": "Epsi.png",
         "name": "Epsi",
         "clan_id": 1,
         "people": 55000,
@@ -55,7 +55,7 @@
     },
     {
         "growth": 1.08,
-        "icon": "stadt1.png",
+        "icon": "Lamda.png",
         "name": "Lamda",
         "clan_id": 1,
         "people": 23000,
@@ -73,7 +73,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "medieval(1).png",
+        "icon": "Medianes.png",
         "name": "Medianes",
         "clan_id": 2,
         "people": 2000,
@@ -91,7 +91,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "stadt2.png",
+        "icon": "Initia.png",
         "name": "Initia",
         "clan_id": 3,
         "people": 25000,
@@ -109,7 +109,7 @@
     },
     {
         "growth": 1.03,
-        "icon": "fortress(1).png",
+        "icon": "Finitia.png",
         "name": "Finitia",
         "clan_id": 3,
         "people": 45000,
@@ -127,7 +127,7 @@
     },
     {
         "growth": 1.05,
-        "icon": "fortress(2).png",
+        "icon": "Alexandrjna.png",
         "name": "Alexandrjna",
         "clan_id": 3,
         "people": 12500,
@@ -145,7 +145,7 @@
     },
     {
         "growth": 1.01,
-        "icon": "stadt3.png",
+        "icon": "Terre.png",
         "name": "Terre",
         "clan_id": 1,
         "people": 240000,
@@ -163,7 +163,7 @@
     },
     {
         "growth": 1.03,
-        "icon": "stadt4.png",
+        "icon": "Den.png",
         "name": "Den",
         "clan_id": 4,
         "people": 125000,
@@ -181,7 +181,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "stadt5.png",
+        "icon": "Aurora.png",
         "name": "Aurora",
         "clan_id": 1,
         "people": 12000,
@@ -199,7 +199,7 @@
     },
     {
         "growth": 1.03,
-        "icon": "fortress(1).png",
+        "icon": "Argo.png",
         "name": "Argo",
         "clan_id": 4,
         "people": 62500,

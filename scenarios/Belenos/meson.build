@@ -3,6 +3,7 @@ files = [
     'metadata.json',
     'players.json',
     'cities.json',
+    'background.png',
     'map.png',
     'Astandor.png',
     'Deinitia.png',
