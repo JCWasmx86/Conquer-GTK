@@ -121,6 +121,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 c.growth = obj.get_double_member ("growth");
                 c.name = obj.get_string_member ("name");
                 var data = this.contents[obj.get_string_member ("icon")];
+                assert (data != null);
                 c.icon_data = new GLib.Bytes.from_bytes (data, 0, data.length);
                 c.clan = clans[obj.get_int_member ("clan_id")];
                 c.people = obj.get_int_member ("people");

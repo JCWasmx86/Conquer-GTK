@@ -76,3 +76,11 @@ executable(
     c_args: '-DGETTEXT_PACKAGE="conquer"',
     install: true,
 )
+
+executable(
+    'conquer-test',
+    'test/test.vala',
+    dependencies: conquer_lib_deps + meson.get_compiler('c').find_library('m', required: false),
+    link_with: conquer_lib,
+    install: true
+)
