@@ -1,0 +1,7 @@
+[Plugin]
+Module=growthlimiter
+Name=Growthlimiter
+Description=Ensures no city reaches unlimited number of people.
+Authors=JCWasmx86 <JCWasmx86@t-online.de>
+Copyright=Copyright © 2022 JCWasmx86
+Loader=C
