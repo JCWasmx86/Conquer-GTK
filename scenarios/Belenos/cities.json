@@ -91,7 +91,7 @@
     },
     {
         "growth": 1.003,
-        "icon": "cultures.png",
+        "icon": "Valosepulca.png",
         "name": "Valosepulca",
         "clan_id": 1,
         "people": 11000,
@@ -109,7 +109,7 @@
     },
     {
         "growth": 1.1,
-        "icon": "fortress.png",
+        "icon": "La uria.png",
         "name": "La uria",
         "clan_id": 1,
         "people": 1240,
@@ -127,7 +127,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "fortress(1).png",
+        "icon": "Insamoria.png",
         "name": "Insamoria",
         "clan_id": 2,
         "people": 30000,
@@ -145,7 +145,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "fortress(2).png",
+        "icon": "Invaria.png",
         "name": "Invaria",
         "clan_id": 3,
         "people": 25000,
@@ -163,7 +163,7 @@
     },
     {
         "growth": 1.03,
-        "icon": "medieval.png",
+        "icon": "Astandor.png",
         "name": "Astandor",
         "clan_id": 3,
         "people": 1200,
@@ -181,7 +181,7 @@
     },
     {
         "growth": 1.021,
-        "icon": "medieval(1).png",
+        "icon": "Insamoria.png",
         "name": "Insamoria",
         "clan_id": 3,
         "people": 2300,
