@@ -30,6 +30,7 @@ public class Conquer.City : GLib.Object {
     public double defense_bonus { get; set; }
     public uint64 defense_level { get; set; default = 1; }
     public ResourceUpgrade[] upgrades;
+    public uint64 index { get; set; }
 
     public City () {
         this.upgrades = new ResourceUpgrade[Resource.num ()];

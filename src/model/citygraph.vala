@@ -43,17 +43,7 @@ public class Conquer.CityGraph : GLib.Object {
     }
 
     public double distance (City? from, City? to) requires (from != null) requires (to != null) requires (from != to) {
-        var idx0 = -1;
-        var idx1 = -1;
-        for (var i = 0; i < cities.length; i++) {
-            if (from == cities[i])
-                idx0 = i;
-            if (to == cities[i])
-                idx1 = i;
-        }
-        assert (idx0 != -1);
-        assert (idx1 != -1);
-        return this.weights[idx0, idx1];
+        return this.weights[from.index, to.index];
     }
 
     public double get_weight (uint from, uint to) requires (from < this.cities.length) requires (to < this.cities.length) {

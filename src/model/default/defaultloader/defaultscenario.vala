@@ -107,6 +107,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
             error ("Whoops: %s", e.message);
         }
         var cities = new City[0];
+        var idx = 0;
         try {
             var parser = new Json.Parser ();
             parser.load_from_data ((string) this.contents["cities.json"].get_data (),
@@ -136,7 +137,9 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                     var val = resources.get_double_member (r);
                     c.upgrades[(uint)Resource.from_string (r)].production = val;
                 }
+                c.index = idx;
                 cities += c;
+                idx++;
             }
         } catch (Error e) {
             error ("Whoops: %s", e.message);
