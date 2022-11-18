@@ -1,7 +1,7 @@
 [
     {
         "growth": 1.001,
-        "icon": "medieval(1).png",
+        "icon": "San morir.png",
         "name": "San morir",
         "clan_id": 0,
         "people": 25000,
@@ -19,7 +19,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "monument.png",
+        "icon": "Onmaalpha.png",
         "name": "Onmaalpha",
         "clan_id": 0,
         "people": 2100,
@@ -37,7 +37,7 @@
     },
     {
         "growth": 1.023,
-        "icon": "moscow.png",
+        "icon": "Holamorta.png",
         "name": "Holamorta",
         "clan_id": 1,
         "people": 2300,
@@ -55,7 +55,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "medieval.png",
+        "icon": "Initia de aqa.png",
         "name": "Initia de aqa",
         "clan_id": 1,
         "people": 15000,
@@ -73,7 +73,7 @@
     },
     {
         "growth": 1.01,
-        "icon": "stadt1.png",
+        "icon": "Alpha.png",
         "name": "Alpha",
         "clan_id": 2,
         "people": 55000,
@@ -91,7 +91,7 @@
     },
     {
         "growth": 1.02,
-        "icon": "stadt2.png",
+        "icon": "Andron.png",
         "name": "Andron",
         "clan_id": 2,
         "people": 1240,
@@ -109,7 +109,7 @@
     },
     {
         "growth": 0.9,
-        "icon": "stadt3.png",
+        "icon": "Deomega.png",
         "name": "Deomega",
         "clan_id": 3,
         "people": 2500,
@@ -127,7 +127,7 @@
     },
     {
         "growth": 0.8,
-        "icon": "stadt4.png",
+        "icon": "Sol.png",
         "name": "Sol",
         "clan_id": 3,
         "people": 450,
@@ -145,7 +145,7 @@
     },
     {
         "growth": 0.98,
-        "icon": "stadt5.png",
+        "icon": "Lua.png",
         "name": "Lua",
         "clan_id": 3,
         "people": 540,
