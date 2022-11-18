@@ -1,0 +1,4 @@
+- Implement aggressive algorithm
+- Implement saving/restoring the game state
+- Implement random events
+- Implement growth limiter
