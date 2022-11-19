@@ -1,4 +1,3 @@
-- Implement aggressive algorithm
 - Implement saving/restoring the game state
 - Implement random events
 - UI: Get the real names for the resources
