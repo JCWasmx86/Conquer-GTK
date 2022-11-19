@@ -89,6 +89,7 @@ public class Conquer.GameState : Object {
         if (difference > 0) {
             if (difference > to.defense) {
                 // We got the city
+                difference -= to.defense;
                 to.soldiers = (uint64) (difference / from.clan.attack_strength);
                 to.clan = from.clan;
                 info ("City got conquered");
