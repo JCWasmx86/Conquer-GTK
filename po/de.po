@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: conquer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-20 16:10+0100\n"
+"POT-Creation-Date: 2022-11-20 16:18+0100\n"
 "PO-Revision-Date: 2022-11-09 09:14+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -305,4 +305,20 @@ msgstr ""
 #: src/screen.vala:182
 #, c-format
 msgid "[Move] %s moves troops from %s to %s\n"
+msgstr ""
+
+#: src/shared.vala:24
+msgid "Wood"
+msgstr ""
+
+#: src/shared.vala:26
+msgid "Food"
+msgstr ""
+
+#: src/shared.vala:28
+msgid "Iron"
+msgstr ""
+
+#: src/shared.vala:30
+msgid "Stone"
 msgstr ""

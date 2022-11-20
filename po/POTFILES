@@ -13,3 +13,4 @@ src/cityinfo.vala
 src/claninfo.vala
 src/map.vala
 src/screen.vala
+src/shared.vala

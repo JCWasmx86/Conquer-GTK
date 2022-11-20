@@ -36,6 +36,7 @@ conquer_sources = [
     'config.vala',
     'databaselistener.vala',
     'statistics.vala',
+    'shared.vala',
 ]
 
 conquer_lib_deps = [

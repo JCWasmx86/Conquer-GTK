@@ -111,7 +111,7 @@ namespace Conquer {
             this.model.@set (iter, 0, _("Defense Bonus"), 1, "%.2lf".printf (clan.defense_strength * 100 - 100), -1);
             for (var i = 0; i < production.length; i++) {
                 this.model.append (out iter);
-                this.model.@set (iter, 0, ((Resource) i).to_string (), 1, this.colorify ("%.2lf".printf (production[i])), -1);
+                this.model.@set (iter, 0, Shared.from_resource(((Resource)i)), 1, this.colorify ("%.2lf".printf (production[i])), -1);
             }
             this.clan_info_list.set_model (this.model);
         }
