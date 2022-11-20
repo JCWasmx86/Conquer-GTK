@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: conquer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-18 10:08+0100\n"
+"POT-Creation-Date: 2022-11-20 16:10+0100\n"
 "PO-Revision-Date: 2022-11-09 09:14+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -191,7 +191,7 @@ msgid "This city uses more resources than it produces"
 msgstr ""
 
 #: src/claninfo.vala:97
-msgid "This city uses produces resources than it uses"
+msgid "This city produces resources than it uses"
 msgstr ""
 
 #: src/claninfo.vala:103

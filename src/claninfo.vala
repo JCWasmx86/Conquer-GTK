@@ -94,7 +94,7 @@ namespace Conquer {
                 if (is_negative) {
                     pic.tooltip_text = _("This city uses more resources than it produces");
                 } else {
-                    pic.tooltip_text = _("This city uses produces resources than it uses");
+                    pic.tooltip_text = _("This city produces resources than it uses");
                 }
                 row.add_suffix (pic);
                 this.right_side.append (row);
