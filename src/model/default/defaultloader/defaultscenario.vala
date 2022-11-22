@@ -81,6 +81,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
             var node = parser.get_root ();
             assert (node.get_node_type () == Json.NodeType.ARRAY);
             var array = node.get_array ();
+            var idx = 0;
             foreach (var n in array.get_elements ()) {
                 assert (n.get_node_type () == Json.NodeType.OBJECT);
                 var obj = n.get_object ();
@@ -101,6 +102,8 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 }
                 if (c.strategy == null)
                     info ("No strategy with UUID %s found for %s", c.name, expected_uuid);
+                c.index = idx;
+                idx++;
                 clans += c;
             }
         } catch (Error e) {

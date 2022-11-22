@@ -25,11 +25,12 @@ public class Conquer.Clan : GLib.Object {
     public bool player { get; set; }
     public Strategy? strategy { get; set; }
     public GLib.HashTable<Conquer.Resource, double?> resources { get; set; }
-    protected double[] uses;
+    public double[] uses;
     public double defense_strength { get; set; default = 1; }
     public double attack_strength { get; set; default = 1; }
     public uint64 defense_level { get; set; default = 1; }
     public uint64 attack_level { get; set; default = 1; }
+    public uint64 index { get; set; }
 
     construct {
         this.resources = new GLib.HashTable<Conquer.Resource, double?>(Conquer.Resource.hash_func, null);

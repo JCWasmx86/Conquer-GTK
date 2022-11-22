@@ -25,5 +25,5 @@ public interface Conquer.Saver : GLib.Object {
 
 public interface Conquer.Serializer : GLib.Object {
     public abstract GLib.Bytes serialize (Conquer.GameState state);
-    public abstract void supports_uuid (string uuid);
+    public abstract bool supports_uuid (string uuid);
 }
