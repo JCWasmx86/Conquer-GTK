@@ -40,6 +40,9 @@ namespace Conquer {
                 this.economic_power.update ();
                 this.check_result ();
             });
+            this.quit.clicked.connect (() => {
+                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
+            });
             this.total_power.title.label = _("Total Power");
             this.economic_power.title.label = _("Economic Power");
             this.military_power.title.label = _("Military Power");
@@ -93,7 +96,11 @@ namespace Conquer {
         [GtkChild]
         private unowned Gtk.Button next_round;
         [GtkChild]
+        private unowned Gtk.Button quit;
+        [GtkChild]
         private unowned Gtk.Label coins;
+        [GtkChild]
+        private unowned Gtk.Label status;
         // TODO: Let this be a listbox/listview?
         [GtkChild]
         private unowned Gtk.TextView event_view;
@@ -108,6 +115,10 @@ namespace Conquer {
 
         internal void update (Conquer.GameState g) {
             this.game_state = g;
+            this.quit.visible = false;
+            this.status.visible = false;
+            this.next_round.visible = true;
+            this.coins.visible = true;
             this.total_power.init (g);
             this.military_power.init (g);
             this.economic_power.init (g);
@@ -135,30 +146,20 @@ namespace Conquer {
             assert (player_clan != null);
             var cities = this.game_state.cities.cities_of_clan (player_clan);
             if (cities.length == 0) {
-                this.show_end_of_game_dialog (true);
+                this.quit.visible = true;
+                this.status.visible = true;
+                this.status.label = _("You lost!");
+                this.next_round.visible = false;
+                this.coins.visible = false;
+                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_LOST));
             } else if (cities.length == this.game_state.city_list.length) {
-                this.show_end_of_game_dialog (false);
+                this.quit.visible = true;
+                this.status.visible = true;
+                this.status.label = _("You won!");
+                this.next_round.visible = false;
+                this.coins.visible = false;
+                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_WON));
             }
-        }
-
-        void show_end_of_game_dialog (bool lost) {
-            var window = new Adw.Window ();
-            var bar = new Adw.HeaderBar ();
-            bar.title_widget = new Adw.WindowTitle (lost ? _("You lost") : _("You won"), "");
-            var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-            child.append (bar);
-            var clamp = new Adw.Clamp ();
-            clamp.maximum_size = 360;
-            clamp.child = child;
-            window.content = clamp;
-            window.resizable = false;
-            window.present ();
-            window.modal = true;
-            window.close_request.connect (() => {
-                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, lost ? Conquer.GameResult.PLAYER_LOST : Conquer.GameResult.PLAYER_WON));
-                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
-                return false;
-            });
         }
 
         public void receive (Conquer.Message msg) {

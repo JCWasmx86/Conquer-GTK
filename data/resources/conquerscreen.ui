@@ -20,11 +20,26 @@
               </object>
             </child>
             <child type="end">
+              <object class="GtkButton" id="quit">
+                <property name="label" translatable="true">Back to Mainscreen</property>
+                <property name="visible">False</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+            <child type="end">
               <object class="GtkButton" id="next_round">
                 <property name="label" translatable="true">Next Round</property>
                 <style>
                   <class name="suggested-action"/>
                 </style>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkLabel" id="status">
+                <property name="label"></property>
+                <property name="visible">False</property>
               </object>
             </child>
             <child type="end">
