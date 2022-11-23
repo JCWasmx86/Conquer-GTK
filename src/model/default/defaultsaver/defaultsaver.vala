@@ -46,6 +46,7 @@ public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
             dos.put_string (state.name);
             dos.put_string (state.guid);
             dos.put_string (state.uuid);
+            dos.put_int32 (state.background_image_data.length);
             dos.write_bytes (state.background_image_data);
             dos.put_uint32 (state.round);
             var n_cities = state.city_list.length;
@@ -58,6 +59,7 @@ public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
             foreach (var c in state.city_list) {
                 this.write_double (dos, c.growth);
                 dos.put_string (c.name);
+                dos.put_int32 (c.icon_data.length);
                 dos.write_bytes (c.icon_data);
                 dos.put_uint64 (c.clan.index);
                 dos.put_uint64 (c.people);
