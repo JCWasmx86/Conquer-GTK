@@ -94,10 +94,13 @@ public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
                 dos.put_uint64 (c.attack_level);
                 dos.put_uint64 (c.index);
             }
+            mos.close ();
+            dos.close ();
         } catch (Error e) {
+            // Shouldn't happen
             error ("%s", e.message);
         }
-        return null;
+        return mos.steal_as_bytes ();
     }
 
     private void write_double (DataOutputStream dos, double d) throws IOError {
