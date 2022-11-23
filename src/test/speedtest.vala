@@ -24,7 +24,8 @@ namespace Conquer.Test {
         var ctx = new Conquer.Context (new Conquer.DefaultConfigLoader ());
         ctx.init ();
         var strategies = ctx.find_strategies ();
-        for (var i = 0; i < 250; i++) {
+        var N = 250;
+        for (var i = 0; i < N; i++) {
             var scenarios = ctx.find_scenarios ();
             foreach (var s in scenarios) {
                 var s1 = s.load (strategies);
@@ -49,3 +50,4 @@ namespace Conquer.Test {
         }
     }
 }
+
