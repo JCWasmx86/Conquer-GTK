@@ -1,2 +1,3 @@
 - Implement saving/restoring the game state
 - Implement random events
+- Search for new name

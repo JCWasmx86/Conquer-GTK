@@ -1,5 +1,7 @@
 # Conquer
 
+## New name is needed!
+
 Conquer is a round-based strategy game. Conquer all the cities on the map.
 
 This is a reimplementation of my game [Conquer](https://github.com/JCWasmx86/Conquer) in Vala for the GNOME desktop.
