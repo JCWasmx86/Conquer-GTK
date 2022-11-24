@@ -31,6 +31,27 @@ namespace Conquer {
                 Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
                 ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
             });
+            this.install_action ("conquer.quit-or-resign", null, (w, a) => {
+                var active_window = (Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window);
+                var dialog = new Adw.MessageDialog (active_window, _("Quit"), _("Do you really want to quit?"));
+                dialog.add_response ("save", _("Save"));
+                dialog.add_response ("quit", _("Quit"));
+                dialog.add_response ("cancel", _("Cancel"));
+                dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
+                dialog.set_response_appearance ("quit", Adw.ResponseAppearance.DESTRUCTIVE);
+                dialog.response.connect(r => {
+                    if (r == "quit") {
+                        Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
+                        active_window.show_main ();
+                    } else if (r == "cancel") {
+                        // Do nothing
+                    } else if (r == "save") {
+                        Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
+                        active_window.show_main ();
+                    }
+                });
+                dialog.present ();
+            });
             this.next_round.clicked.connect (() => {
                 this.game_state.one_round ();
                 this.map.one_round ();

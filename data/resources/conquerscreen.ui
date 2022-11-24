@@ -141,6 +141,10 @@
         <attribute name="action">conquer.resign</attribute>
       </item>
       <item>
+        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="action">conquer.quit-or-resign</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
         <attribute name="action">app.preferences</attribute>
       </item>
