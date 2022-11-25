@@ -1,3 +1,10 @@
 - Implement saving/restoring the game state
-- Implement random events
+  - Restore: List all saved games
+  - Restore: Allow deleting saved games
+  - Restore: Restore UI after restoring game
+  - Save: Remove saved game, if the game ended
+- Add error handling.
+  - Add devel-plugins that only throw errors in order to test the UI
 - Search for new name
+- Port Slaine scenario
+- Play Defeat/Victory music on "Back to Mainscreen"
