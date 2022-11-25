@@ -45,7 +45,6 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 pathname = pathname.substring (3);
             var parts = pathname.split ("/");
             var component = parts.length == 0 ? pathname : parts[parts.length - 1];
-            info ("Entry %s size %lld", component, size);
             var data = new uint8[size];
             var n = archive.read_data (data);
             if (size != n) {
