@@ -29,6 +29,55 @@ public class Conquer.Default.SaverConfig : GLib.Object, Conquer.Configuration {
     }
 }
 
+internal class Conquer.Default.SaverMetadata : GLib.Object {
+    public string name { get; set; }
+    public string uuid { get; set; }
+    public int64 time { get; set; }
+}
+
+public class Conquer.Default.Saver : GLib.Object, Conquer.Saver {
+    // TODO: i18n
+    public string name { get; protected set; default = "Disk"; }
+
+    public bool name_is_available (string name) {
+        var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
+        var filename = "%x%x.save".printf(GLib.str_hash (name), GLib.str_hash (name + name));
+        return File.new_build_filename (base_dir, filename).query_exists ();
+    }
+
+    public void save (string name, GLib.Bytes data) {
+        var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
+        var filename = "%x%x.save".printf(GLib.str_hash (name), GLib.str_hash (name + name));
+        var dir = File.new_build_filename (base_dir);
+        var file = File.new_build_filename (base_dir, filename);
+        var metadata_file = File.new_build_filename (base_dir, filename.replace (".save", ".metadata"));
+        try {
+            dir.make_directory_with_parents ();
+        } catch (Error e) {
+            info ("%s", e.message);
+        }
+        try {
+            var ios = file.open_readwrite ();
+            ios.output_stream.write_bytes (data);
+        } catch (Error e) {
+            critical ("%s", e.message);
+        }
+        var md = new SaverMetadata () {
+            name = name,
+            uuid = "",
+            time = new GLib.DateTime.now ().to_unix ()
+        };
+        size_t len;
+        var s = Json.gobject_to_data (md, out len);
+        try {
+            var ios = metadata_file.open_readwrite ();
+            ios.output_stream.write (s.data);
+        } catch (Error e) {
+            critical ("%s", e.message);
+        }
+    }
+}
+
 public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
     public GLib.Bytes serialize (Conquer.GameState state) {
         var mos = new GLib.MemoryOutputStream (null);
