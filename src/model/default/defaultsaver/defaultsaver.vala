@@ -42,7 +42,7 @@ public class Conquer.Default.Saver : GLib.Object, Conquer.Saver {
     public bool name_is_available (string name) {
         var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
         var filename = "%x%x.save".printf(GLib.str_hash (name), GLib.str_hash (name + name));
-        return File.new_build_filename (base_dir, filename).query_exists ();
+        return !File.new_build_filename (base_dir, filename).query_exists ();
     }
 
     public void save (string name, GLib.Bytes data) {
@@ -57,8 +57,13 @@ public class Conquer.Default.Saver : GLib.Object, Conquer.Saver {
             info ("%s", e.message);
         }
         try {
-            var ios = file.open_readwrite ();
-            ios.output_stream.write_bytes (data);
+            if (!file.query_exists ()) {
+                var os = file.create (FileCreateFlags.NONE);
+                os.write_bytes (data);
+            } else {
+                var ios = file.open_readwrite ();
+                ios.output_stream.write_bytes (data);
+            }
         } catch (Error e) {
             critical ("%s", e.message);
         }
@@ -70,8 +75,13 @@ public class Conquer.Default.Saver : GLib.Object, Conquer.Saver {
         size_t len;
         var s = Json.gobject_to_data (md, out len);
         try {
-            var ios = metadata_file.open_readwrite ();
-            ios.output_stream.write (s.data);
+            if (!metadata_file.query_exists ()) {
+                var os = metadata_file.create (FileCreateFlags.NONE);
+                os.write (s.data);
+            } else {
+                var ios = metadata_file.open_readwrite ();
+                ios.output_stream.write (s.data);
+            }
         } catch (Error e) {
             critical ("%s", e.message);
         }
@@ -145,7 +155,6 @@ public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
                 dos.put_uint64 (c.attack_level);
                 dos.put_uint64 (c.index);
             }
-            mos.close ();
             dos.close ();
         } catch (Error e) {
             // Shouldn't happen
@@ -168,4 +177,6 @@ public class Conquer.Default.Serializer : GLib.Object, Conquer.Serializer {
 public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
     obj.register_extension_type (typeof (Conquer.Configuration), typeof (Conquer.Default.SaverConfig));
+    obj.register_extension_type (typeof (Conquer.Saver), typeof (Conquer.Default.Saver));
+    obj.register_extension_type (typeof (Conquer.Serializer), typeof (Conquer.Default.Serializer));
 }

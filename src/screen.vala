@@ -25,7 +25,8 @@ namespace Conquer {
             Conquer.MessageQueue.init ();
             Conquer.QUEUE.listen (this);
             this.install_action ("conquer.save-game", null, (w, a) => {
-
+                var self = (Conquer.Screen)w;
+                self.save ();
             });
             this.install_action ("conquer.resign", null, (w, a) => {
                 Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
@@ -46,8 +47,16 @@ namespace Conquer {
                     } else if (r == "cancel") {
                         // Do nothing
                     } else if (r == "save") {
-                        Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
-                        active_window.show_main ();
+                        var window = ((Conquer.Screen)w).save ();
+                        if (window != null) {
+                            ((Gtk.Widget)window).destroy.connect (() => {
+                                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
+                                active_window.show_main ();
+                            });
+                        } else {
+                            Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
+                            active_window.show_main ();
+                        }
                     }
                 });
                 dialog.present ();
@@ -112,6 +121,8 @@ namespace Conquer {
             });
         }
         private Conquer.GameState game_state;
+        private string? save_name;
+        private Conquer.Saver? saver;
         [GtkChild]
         private new unowned Conquer.Map map;
         [GtkChild]
@@ -155,6 +166,8 @@ namespace Conquer {
                 if (c.player)
                     this.coins.label = _("Coins: %llu").printf (c.coins);
             }
+            this.save_name = null;
+            this.saver = null;
         }
 
         private void check_result () {
@@ -181,6 +194,62 @@ namespace Conquer {
                 this.coins.visible = false;
                 Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_WON));
             }
+        }
+
+        private Adw.Window? save () {
+            if (this.save_name != null) {
+                var ctx = ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).context;
+                ctx.save (this.game_state, this.save_name, this.saver);
+                return null;
+            }
+            var window = new Adw.Window ();
+            window.modal = true;
+            var bar = new Adw.HeaderBar ();
+            bar.title_widget = new Adw.WindowTitle (_("Save game"), "");
+            var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+            child.append (bar);
+            var ctx = ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).context;
+            var savers = ctx.find_savers ();
+            var savers_row = new Adw.ActionRow ();
+            savers_row.title = _("Location");
+            savers_row.subtitle = _("Where to save the game");
+            var cbt = new Gtk.ComboBoxText ();
+            for (var i = 0; i < savers.length; i++) {
+                cbt.append ("%d".printf (i), savers[i].name);
+            }
+            cbt.active = 0;
+            savers_row.add_suffix (cbt);
+            var save_btn = new Gtk.Button.with_label (_("Save"));
+            save_btn.get_style_context ().add_class ("suggested-action");
+            var entry_row = new Adw.EntryRow ();
+            entry_row.title = _("Name");
+            entry_row.changed.connect (() => {
+                var t = entry_row.text;
+                var s = savers[cbt.active];
+                if (s.name_is_available (t.strip ())) {
+                    entry_row.get_style_context ().remove_class ("error");
+                    save_btn.sensitive = true;
+                } else {
+                    entry_row.get_style_context ().add_class ("error");
+                    save_btn.sensitive = false;
+                }
+            });
+            child.append (entry_row);
+            child.append (savers_row);
+            child.append (save_btn);
+            save_btn.clicked.connect (() => {
+                this.save_name = entry_row.text.strip ();
+                this.saver = savers[cbt.active];
+                ctx.save (this.game_state, entry_row.text.strip (), savers[cbt.active]);
+                window.destroy ();
+            });
+            var clamp = new Adw.Clamp ();
+            clamp.maximum_size = 360;
+            clamp.child = child;
+            window.content = clamp;
+            window.resizable = false;
+            window.show ();
+            return window;
         }
 
         public void receive (Conquer.Message msg) {

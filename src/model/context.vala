@@ -24,6 +24,8 @@ namespace Conquer {
         private Peas.Engine engine;
         private Peas.ExtensionSet scenario_loaders;
         private Peas.ExtensionSet strategies;
+        private Peas.ExtensionSet savers;
+        private Peas.ExtensionSet serializers;
         private Peas.ExtensionSet configs;
 
         public Context (Conquer.ConfigLoader loader) {
@@ -31,6 +33,8 @@ namespace Conquer {
             this.scenario_loaders = new Peas.ExtensionSet (this.engine, typeof (Conquer.ScenarioLoader));
             this.strategies = new Peas.ExtensionSet (this.engine, typeof (Conquer.Strategy));
             this.configs = new Peas.ExtensionSet (this.engine, typeof (Conquer.Configuration));
+            this.savers = new Peas.ExtensionSet (this.engine, typeof (Conquer.Saver));
+            this.serializers = new Peas.ExtensionSet (this.engine, typeof (Conquer.Serializer));
             this.engine.enable_loader ("python3");
             this.add_search_path (Environment.get_user_data_dir () + "/conquer/plugins");
             this.add_search_path (Environment.get_home_dir () + "/.local/share/conquer/plugins");
@@ -77,6 +81,24 @@ namespace Conquer {
             return ret;
         }
 
+        public Saver[] find_savers () {
+            var ret = new Saver[0];
+            savers.@foreach ((s, info, exten) => {
+                ret += (Saver) exten;
+            });
+            info ("Found %u savers", ret.length);
+            return ret;
+        }
+
+        public Serializer[] find_serializers () {
+            var ret = new Serializer[0];
+            serializers.@foreach ((s, info, exten) => {
+                ret += (Serializer) exten;
+            });
+            info ("Found %u serializers", ret.length);
+            return ret;
+        }
+
         public Configuration[] find_configs () {
             var ret = new Configuration[0];
             this.restored_configs = this.config_loader.load ();
@@ -116,6 +138,17 @@ namespace Conquer {
                         break;
                     }
                 this.config_loader.get_saver ().save (this.restored_configs);
+            }
+        }
+
+        public void save (Conquer.GameState state, string name, Conquer.Saver saver) {
+            foreach (var ser in this.find_serializers ()) {
+                if (ser.supports_uuid (state.guid)) {
+                    var data = ser.serialize (state);
+                    info ("Used serializer %s to serialize gamestate (%d bytes)", ser.get_type ().name (), data.length);
+                    saver.save (name, data);
+                    return;
+                }
             }
         }
     }
