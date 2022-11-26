@@ -157,6 +157,24 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
             error ("%s", e.message);
         }
     }
+
+    public void delete_data () {
+        var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
+        var filename = "%x%x.save".printf (GLib.str_hash (this.name), GLib.str_hash (this.name + this.name));
+        var metadata = "%x%x.metadata".printf (GLib.str_hash (this.name), GLib.str_hash (this.name + this.name));
+        var f = File.new_build_filename (base_dir, filename);
+        var f1 = File.new_build_filename (base_dir, metadata);
+        try {
+            f.@delete ();
+        } catch (Error e) {
+            info ("%s", e.message);
+        }
+        try {
+            f1.@delete ();
+        } catch (Error e) {
+            info ("%s", e.message);
+        }
+    }
     public Conquer.Saver pair () {
         return new Conquer.Default.Saver ();
     }

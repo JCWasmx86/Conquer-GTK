@@ -45,6 +45,13 @@ namespace Conquer {
             this.model.remove_all ();
             foreach (var s in games)
                 this.model.append (s);
+            for (var i = 0; i < model.n_items; i++) {
+                var row = this.saves_list.get_row_at_index (i);
+                if (row == null)
+                    continue; // Should never happen
+                var e = (SaveGameEntry) row;
+                e.model = model;
+            }
         }
 
         private static Gtk.Widget mapping_func (Object item) {
@@ -58,6 +65,7 @@ namespace Conquer {
     }
 
     public class SaveGameEntry : Adw.ActionRow {
+        internal GLib.ListStore model;
         public SaveGameEntry (SavedGame s) {
             this.title = s.name;
             this.subtitle = s.time.format ("%x %X");
@@ -66,6 +74,19 @@ namespace Conquer {
                 var app = (Conquer.Application)GLib.Application.get_default ();
                 app.restore_game_real (s);
             });
+            var btn = new Gtk.Button.from_icon_name ("user-trash-symbolic");
+            btn.get_style_context ().add_class ("destructive-action");
+            btn.get_style_context ().add_class ("flat");
+            btn.valign = Gtk.Align.CENTER;
+            btn.halign = Gtk.Align.CENTER;
+            btn.tooltip_text = _("Delete this saved game");
+            btn.clicked.connect (() => {
+                s.delete_data ();
+                uint idx = 0;
+                this.model.find (s, out idx);
+                this.model.remove (idx);
+            });
+            this.add_suffix (btn);
         }
     }
 }
