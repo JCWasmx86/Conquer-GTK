@@ -23,18 +23,22 @@ namespace Conquer {
         private Configuration[] ? restored_configs;
         private Peas.Engine engine;
         private Peas.ExtensionSet scenario_loaders;
+        private Peas.ExtensionSet save_loaders;
         private Peas.ExtensionSet strategies;
         private Peas.ExtensionSet savers;
         private Peas.ExtensionSet serializers;
+        private Peas.ExtensionSet deserializers;
         private Peas.ExtensionSet configs;
 
         public Context (Conquer.ConfigLoader loader) {
             this.engine = Peas.Engine.get_default ();
             this.scenario_loaders = new Peas.ExtensionSet (this.engine, typeof (Conquer.ScenarioLoader));
+            this.save_loaders = new Peas.ExtensionSet (this.engine, typeof (Conquer.SaveLoader));
             this.strategies = new Peas.ExtensionSet (this.engine, typeof (Conquer.Strategy));
             this.configs = new Peas.ExtensionSet (this.engine, typeof (Conquer.Configuration));
             this.savers = new Peas.ExtensionSet (this.engine, typeof (Conquer.Saver));
             this.serializers = new Peas.ExtensionSet (this.engine, typeof (Conquer.Serializer));
+            this.deserializers = new Peas.ExtensionSet (this.engine, typeof (Conquer.Deserializer));
             this.engine.enable_loader ("python3");
             this.add_search_path (Environment.get_user_data_dir () + "/conquer/plugins");
             this.add_search_path (Environment.get_home_dir () + "/.local/share/conquer/plugins");
@@ -72,6 +76,17 @@ namespace Conquer {
             return ret;
         }
 
+        public SavedGame[] find_saved_games () {
+            var ret = new SavedGame[0];
+            save_loaders.@foreach ((s, info, exten) => {
+                var found = ((Conquer.SaveLoader) exten).enumerate ();
+                foreach (var sc in found)
+                    ret += sc;
+            });
+            info ("Found %u saved games", ret.length);
+            return ret;
+        }
+
         public Strategy[] find_strategies () {
             var ret = new Strategy[0];
             strategies.@foreach ((s, info, exten) => {
@@ -96,6 +111,15 @@ namespace Conquer {
                 ret += (Serializer) exten;
             });
             info ("Found %u serializers", ret.length);
+            return ret;
+        }
+
+        public Deserializer[] find_deserializers () {
+            var ret = new Deserializer[0];
+            deserializers.@foreach ((s, info, exten) => {
+                ret += (Deserializer) exten;
+            });
+            info ("Found %u deserializers", ret.length);
             return ret;
         }
 
@@ -146,7 +170,7 @@ namespace Conquer {
                 if (ser.supports_uuid (state.guid)) {
                     var data = ser.serialize (state);
                     info ("Used serializer %s to serialize gamestate (%d bytes)", ser.get_type ().name (), data.length);
-                    saver.save (name, data);
+                    saver.save (name, state.guid, data);
                     return;
                 }
             }

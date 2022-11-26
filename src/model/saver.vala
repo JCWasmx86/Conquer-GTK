@@ -20,10 +20,26 @@
 public interface Conquer.Saver : GLib.Object {
     public abstract string name { get; protected set; }
     public abstract bool name_is_available (string name);
-    public abstract void save (string name, GLib.Bytes data);
+    public abstract void save (string name, string uuid, GLib.Bytes data);
 }
 
 public interface Conquer.Serializer : GLib.Object {
     public abstract GLib.Bytes serialize (Conquer.GameState state);
     public abstract bool supports_uuid (string uuid);
+}
+
+public interface Conquer.Deserializer : GLib.Object {
+    public abstract Conquer.GameState deserialize (GLib.Bytes state, Conquer.Strategy[] strategies);
+    public abstract bool supports_uuid (string uuid);
+}
+
+public interface Conquer.SaveLoader : GLib.Object {
+    public abstract Conquer.SavedGame[] enumerate ();
+}
+
+public interface Conquer.SavedGame : GLib.Object {
+    public abstract string name { get; set; }
+    public abstract DateTime time { get; set; }
+    public abstract string guid { get; set; }
+    public abstract GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies);
 }

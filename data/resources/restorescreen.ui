@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="ConquerRestoreScreen" parent="GtkBox">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkHeaderBar">
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title">Conquer</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton" id="back_button">
+                <property name="action-name">app.show-main</property>
+                <property name="visible" bind-source="back_button" bind-property="sensitive" bind-flags="sync-create"/>
+                <property name="icon-name">go-previous-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="propagate-natural-height">True</property>
+            <property name="vexpand">true</property>
+            <property name="hexpand">true</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="AdwClamp">
+                    <property name="maximum-size">440</property>
+                    <property name="tightening-threshold">340</property>
+                    <property name="margin-top">0</property>
+                    <property name="margin-bottom">24</property>
+                    <property name="margin-start">24</property>
+                    <property name="margin-end">24</property>
+                    <property name="vexpand">true</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="valign">center</property>
+                        <property name="spacing">24</property>
+                        <property name="vexpand">True</property>
+                        <child>
+                          <object class="GtkSearchEntry" id="search_bar">
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBox" id="saves_list">
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

@@ -30,6 +30,7 @@ namespace Conquer {
                 { "preferences", this.on_preferences_action },
                 { "quit", this.quit },
                 { "start-game", this.start_game },
+                { "load-game", this.restore_game },
                 { "show-main", this.show_main },
                 { "statistics", this.show_statistics },
             };
@@ -107,11 +108,18 @@ namespace Conquer {
             ((Conquer.Window) this.active_window).start_game ();
         }
 
+        private void restore_game () {
+            ((Conquer.Window) this.active_window).restore_game ();
+        }
+
         private void show_main () {
             ((Conquer.Window) this.active_window).show_main ();
         }
         internal void start_game_real (Conquer.Scenario s) {
             ((Conquer.Window) this.active_window).start_game_real (s);
+        }
+        internal void restore_game_real (Conquer.SavedGame s) {
+            ((Conquer.Window) this.active_window).restore_game_real (s);
         }
     }
 }

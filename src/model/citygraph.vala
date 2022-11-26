@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public class Conquer.CityGraph : GLib.Object {
-    private City[] cities;
+    public City[] cities;
     public double[, ] weights;
 
     public CityGraph (City[] cities) {

@@ -46,6 +46,9 @@
               <object class="ConquerNewSelectionScreen" id="selection_screen"/>
             </child>
             <child>
+              <object class="ConquerRestoreScreen" id="restore_screen"/>
+            </child>
+            <child>
               <object class="ConquerScreen" id="conquer_screen"/>
             </child>
             <child>

@@ -33,6 +33,8 @@ namespace Conquer {
         [GtkChild]
         private unowned Conquer.NewSelectionScreen selection_screen;
         [GtkChild]
+        private unowned Conquer.RestoreScreen restore_screen;
+        [GtkChild]
         private unowned Conquer.Screen conquer_screen;
         [GtkChild]
         private unowned Conquer.Statistics statistics;
@@ -53,6 +55,12 @@ namespace Conquer {
             this.selection_screen.update (scenarios);
         }
 
+        internal void restore_game () {
+            var games = this.context.find_saved_games ();
+            this.main_stack.visible_child = this.restore_screen;
+            this.restore_screen.update (games);
+        }
+
         internal void show_main () {
             if (this.main_stack.visible_child == this.selection_screen)
                 this.selection_screen.clear ();
@@ -62,6 +70,15 @@ namespace Conquer {
         internal void show_statistics () {
             this.main_stack.visible_child = this.statistics;
             this.statistics.update (this.listener);
+        }
+
+        internal void restore_game_real (Conquer.SavedGame s) {
+            var g = s.load (this.context.find_deserializers (), this.context.find_strategies ());
+            assert (g != null);
+            this.restore_screen.clear ();
+            Conquer.QUEUE.emit (new StartGameMessage (g));
+            this.main_stack.visible_child = this.conquer_screen;
+            this.conquer_screen.update (g);
         }
 
         internal void start_game_real (Conquer.Scenario s) {
