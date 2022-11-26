@@ -1,4 +1,4 @@
-/* speedtest.vala
+/* savetest.vala
  *
  * Copyright 2022 JCWasmx86 <JCWasmx86@t-online.de>
  *
@@ -24,7 +24,9 @@ namespace Conquer.Test {
         var ctx = new Conquer.Context (new Conquer.DefaultConfigLoader ());
         ctx.init ();
         var strategies = ctx.find_strategies ();
-        var N = 250;
+        var N = 50;
+        var savers = ctx.find_savers ();
+        var deser = ctx.find_deserializers ();
         for (var i = 0; i < N; i++) {
             var scenarios = ctx.find_scenarios ();
             foreach (var s in scenarios) {
@@ -41,7 +43,15 @@ namespace Conquer.Test {
                     }
                     if (s1.round % 10000 == 0)
                         print ("Round %llu\n", s1.round);
-                    if (all_of_one || s1.round == 10000) {
+                    ctx.save (s1, "temp____________", savers[0]);
+                    var saved_games = ctx.find_saved_games ();
+                    foreach (var sv in saved_games) {
+                        if (sv.name == "temp____________") {
+                            s1 = sv.load (deser, strategies);
+                            break;
+                        }
+                    }
+                    if (all_of_one || s1.round == 1000) {
                         break;
                     }
                 }
@@ -50,4 +60,3 @@ namespace Conquer.Test {
         }
     }
 }
-
