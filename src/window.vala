@@ -79,6 +79,8 @@ namespace Conquer {
             Conquer.QUEUE.emit (new StartGameMessage (g));
             this.main_stack.visible_child = this.conquer_screen;
             this.conquer_screen.update (g);
+            this.conquer_screen.save_name = s.name;
+            this.conquer_screen.saver = s.pair ();
         }
 
         internal void start_game_real (Conquer.Scenario s) {

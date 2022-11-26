@@ -42,4 +42,5 @@ public interface Conquer.SavedGame : GLib.Object {
     public abstract DateTime time { get; set; }
     public abstract string guid { get; set; }
     public abstract GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies);
+    public abstract Conquer.Saver pair ();
 }

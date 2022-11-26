@@ -121,8 +121,8 @@ namespace Conquer {
             });
         }
         private Conquer.GameState game_state;
-        private string? save_name;
-        private Conquer.Saver? saver;
+        internal string? save_name;
+        internal Conquer.Saver? saver;
         [GtkChild]
         private new unowned Conquer.Map map;
         [GtkChild]
@@ -241,6 +241,7 @@ namespace Conquer {
                 this.save_name = entry_row.text.strip ();
                 this.saver = savers[cbt.active];
                 ctx.save (this.game_state, entry_row.text.strip (), savers[cbt.active]);
+                ((Gtk.Widget)window).destroy ();
                 window.destroy ();
             });
             var clamp = new Adw.Clamp ();

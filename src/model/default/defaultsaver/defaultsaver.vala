@@ -157,6 +157,9 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
             error ("%s", e.message);
         }
     }
+    public Conquer.Saver pair () {
+        return new Conquer.Default.Saver ();
+    }
 }
 
 public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
