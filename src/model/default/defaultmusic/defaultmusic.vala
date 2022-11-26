@@ -24,6 +24,7 @@ namespace Conquer.Default {
         private MainLoop? loop;
         private dynamic Gst.Element? music_element;
         private double volume;
+        private bool eog;
 
         public MusicListener () {
             this.play = true;
@@ -34,6 +35,7 @@ namespace Conquer.Default {
         public void receive (Conquer.Message msg) {
             if (msg is Conquer.StartGameMessage) {
                 this.state = ((Conquer.StartGameMessage) msg).state;
+                this.eog = false;
                 if (this.play) {
                     this.play = true;
                     new Thread<void> ("music", this.play_music);
@@ -48,7 +50,8 @@ namespace Conquer.Default {
                                 if (val) {
                                     if (this.state != null) {
                                         this.play = true;
-                                        new Thread<void> ("music", this.play_music);
+                                        if (!eog)
+                                            new Thread<void> ("music", this.play_music);
                                     }
                                 } else if (this.loop != null) {
                                     this.play = false;
@@ -92,6 +95,7 @@ namespace Conquer.Default {
                     }
                 }
             } else if (msg is Conquer.EndGameMessage) {
+                this.eog = true;
                 if (this.loop != null) {
                     this.loop.get_context ().invoke (() => {
                         if (this.music_element != null)

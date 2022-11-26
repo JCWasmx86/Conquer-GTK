@@ -22,6 +22,7 @@ namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/conquerscreen.ui")]
     public class Screen : Gtk.Box, Conquer.MessageReceiver {
         construct {
+            this.play_override = true;
             Conquer.MessageQueue.init ();
             Conquer.QUEUE.listen (this);
             this.install_action ("conquer.save-game", null, (w, a) => {
@@ -154,10 +155,10 @@ namespace Conquer {
         private MainLoop? loop;
         private dynamic Gst.Element? music_element;
         private double volume;
+        private bool play_override;
 
 
         internal void end () {
-            info ("HERE, %p", this.loop);
             if (this.loop != null) {
                 this.loop.get_context ().invoke (() => {
                     if (this.music_element != null)
@@ -182,6 +183,7 @@ namespace Conquer {
                 this.loop = new MainLoop ();
                 dynamic Gst.Element play = Gst.ElementFactory.make ("playbin", "play");
                 this.music_element = play;
+                play.volume = volume;
                 play.uri = this.uri;
                 info ("URI: %s", play.uri);
                 var bus = play.get_bus ();
@@ -200,6 +202,10 @@ namespace Conquer {
                     }
                     return true;
                 });
+                while (!play_override) {
+                    if (play_override)
+                        return;
+                }
                 play.set_state (Gst.State.PLAYING);
                 loop.run ();
                 play.set_state (Gst.State.NULL);
@@ -340,6 +346,62 @@ namespace Conquer {
                 Gtk.TextIter iter;
                 this.event_view.buffer.get_end_iter (out iter);
                 this.event_view.buffer.insert_interactive (ref iter, _("[Move] %s moves troops from %s to %s\n").printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
+            } else if (msg is Conquer.ConfigurationLoadedMessage) {
+                var cfgs = ((ConfigurationLoadedMessage) msg).config;
+                foreach (var c in cfgs) {
+                    if (c.id != "sound")
+                        continue;
+                    foreach (var ci in c.configs) {
+                        if (ci.id == "play.music") {
+                            this.play_override = ((Conquer.BoolConfigurationItem) ci).value;
+                            assert (this.loop == null);
+                        } else if (ci.id == "play.music.volume") {
+                            this.volume = ((Conquer.IntegerConfigurationItem) ci).value / 100.0;
+                        }
+                    }
+                }
+            } else if (msg is Conquer.ConfigurationUpdatedMessage) {
+                var cc = ((Conquer.ConfigurationUpdatedMessage) msg).config;
+                if (cc.id == "sound") {
+                    foreach (var ci in cc.configs) {
+                        if (ci.id == "play.music") {
+                            var val = ((Conquer.BoolConfigurationItem) ci).value;
+                            if (val != this.play_override) {
+                                if (val) {
+                                    this.play_override = true;
+                                    if (this.uri != null) {
+                                        this.play = true;
+                                        new Thread<void> ("music", this.play_music);
+                                    }
+                                } else if (this.loop != null) {
+                                    this.play_override = false;
+                                    this.play = false;
+                                    this.loop.get_context ().invoke (() => {
+                                        if (this.music_element != null)
+                                            this.music_element.set_state (Gst.State.NULL);
+                                        this.loop.quit ();
+                                        return Source.REMOVE;
+                                    }, Priority.HIGH);
+                                } else {
+                                    this.play_override = false;
+                                }
+                            }
+                        } else if (ci.id == "play.music.volume") {
+                            var amount = ((Conquer.IntegerConfigurationItem) ci).value;
+                            this.volume = amount / 100.0;
+                            if (this.loop != null) {
+                                this.loop.get_context ().invoke (() => {
+                                    if (this.music_element != null)
+                                        this.music_element.volume = this.volume;
+                                    return Source.REMOVE;
+                                }, Priority.HIGH);
+                            } else {
+                                if (this.music_element != null)
+                                    this.music_element.volume = this.volume;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

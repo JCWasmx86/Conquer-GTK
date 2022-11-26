@@ -82,7 +82,7 @@ namespace Conquer {
             this.conquer_screen.update (g);
             this.conquer_screen.save_name = s.name;
             this.conquer_screen.saver = s.pair ();
-            this.conquer_screen.check_result (false);
+            this.conquer_screen.check_result (true);
         }
 
         internal void start_game_real (Conquer.Scenario s) {
