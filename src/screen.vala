@@ -170,7 +170,7 @@ namespace Conquer {
             this.saver = null;
         }
 
-        private void check_result () {
+        internal void check_result (bool emit = true) {
             Clan? player_clan = null;
             foreach (var c in this.game_state.clans)
                 if (c.player) {
@@ -185,14 +185,16 @@ namespace Conquer {
                 this.status.label = _("You lost!");
                 this.next_round.visible = false;
                 this.coins.visible = false;
-                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_LOST));
+                if (emit)
+                    Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_LOST));
             } else if (cities.length == this.game_state.city_list.length) {
                 this.quit.visible = true;
                 this.status.visible = true;
                 this.status.label = _("You won!");
                 this.next_round.visible = false;
                 this.coins.visible = false;
-                Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_WON));
+                if (emit)
+                    Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_WON));
             }
         }
 
