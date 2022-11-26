@@ -82,15 +82,21 @@ executable(
 executable(
     'conquer-speed-test',
     'test/speedtest.vala',
-    dependencies: conquer_lib_deps + meson.get_compiler('c').find_library('m', required: false),
+    dependencies: conquer_lib_deps + meson.get_compiler('c').find_library(
+        'm',
+        required: false,
+    ),
     link_with: conquer_lib,
-    install: true
+    install: true,
 )
 
 executable(
     'conquer-save-test',
     'test/savetest.vala',
-    dependencies: conquer_lib_deps + meson.get_compiler('c').find_library('m', required: false),
+    dependencies: conquer_lib_deps + meson.get_compiler('c').find_library(
+        'm',
+        required: false,
+    ),
     link_with: conquer_lib,
-    install: true
+    install: true,
 )
