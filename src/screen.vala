@@ -30,6 +30,7 @@ namespace Conquer {
             });
             this.install_action ("conquer.resign", null, (w, a) => {
                 Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
+                ((Conquer.Screen)w).end ();
                 ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
             });
             this.install_action ("conquer.quit-or-resign", null, (w, a) => {
@@ -43,6 +44,7 @@ namespace Conquer {
                 dialog.response.connect(r => {
                     if (r == "quit") {
                         Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
+                        ((Conquer.Screen)w).end ();
                         active_window.show_main ();
                     } else if (r == "cancel") {
                         // Do nothing
@@ -51,10 +53,12 @@ namespace Conquer {
                         if (window != null) {
                             ((Gtk.Widget)window).destroy.connect (() => {
                                 Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
+                                ((Conquer.Screen)w).end ();
                                 active_window.show_main ();
                             });
                         } else {
                             Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
+                            ((Conquer.Screen)w).end ();
                             active_window.show_main ();
                         }
                     }
@@ -71,6 +75,7 @@ namespace Conquer {
                 this.check_result ();
             });
             this.quit.clicked.connect (() => {
+                this.end ();
                 ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
             });
             this.total_power.title.label = _("Total Power");
@@ -144,6 +149,64 @@ namespace Conquer {
         private unowned Conquer.Diagram military_power;
         [GtkChild]
         private unowned Conquer.ClanInfo clan_view;
+        private string? uri;
+        private bool play;
+        private MainLoop? loop;
+        private dynamic Gst.Element? music_element;
+        private double volume;
+
+
+        internal void end () {
+            info ("HERE, %p", this.loop);
+            if (this.loop != null) {
+                this.loop.get_context ().invoke (() => {
+                    if (this.music_element != null)
+                        this.music_element.set_state (Gst.State.NULL);
+                    this.loop.quit ();
+                    return Source.REMOVE;
+                }, Priority.HIGH);
+                this.loop.quit ();
+                this.loop = null;
+            }
+            this.play = false;
+        }
+
+        void begin_music (bool victory) {
+            this.uri = victory ? "file:///app/share/conquer/music/Victory.ogg" : "file:///app/share/conquer/music/Defeated.ogg";
+            this.play = true;
+            new Thread<void> ("music", this.play_music);
+        }
+
+        private void play_music () {
+            while (this.play) {
+                this.loop = new MainLoop ();
+                dynamic Gst.Element play = Gst.ElementFactory.make ("playbin", "play");
+                this.music_element = play;
+                play.uri = this.uri;
+                info ("URI: %s", play.uri);
+                var bus = play.get_bus ();
+                bus.add_watch (0, (b, m) => {
+                    if (m.type == Gst.MessageType.ERROR) {
+                        GLib.Error err;
+                        string debug;
+                        m.parse_error (out err, out debug);
+                        critical ("%s: %s", err.message, debug);
+                        loop.quit ();
+                    } else if (!this.play) {
+                        play.set_state (Gst.State.PAUSED);
+                        loop.quit ();
+                    } else if (m.type == Gst.MessageType.EOS) {
+                        loop.quit ();
+                    }
+                    return true;
+                });
+                play.set_state (Gst.State.PLAYING);
+                loop.run ();
+                play.set_state (Gst.State.NULL);
+                this.loop = null;
+                this.music_element = null;
+            }
+        }
 
         internal void update (Conquer.GameState g) {
             this.game_state = g;
@@ -168,6 +231,7 @@ namespace Conquer {
             }
             this.save_name = null;
             this.saver = null;
+            this.end ();
         }
 
         internal void check_result (bool emit = true) {
@@ -187,6 +251,7 @@ namespace Conquer {
                 this.coins.visible = false;
                 if (emit)
                     Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_LOST));
+                this.begin_music (false);
             } else if (cities.length == this.game_state.city_list.length) {
                 this.quit.visible = true;
                 this.status.visible = true;
@@ -195,6 +260,7 @@ namespace Conquer {
                 this.coins.visible = false;
                 if (emit)
                     Conquer.QUEUE.emit (new Conquer.EndGameMessage (this.game_state, Conquer.GameResult.PLAYER_WON));
+                this.begin_music (true);
             }
         }
 

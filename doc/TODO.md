@@ -2,4 +2,3 @@
   - Add devel-plugins that only throw errors in order to test the UI
 - Search for new name
 - Port Slaine scenario
-- Play Defeat/Victory music on "Back to Mainscreen"

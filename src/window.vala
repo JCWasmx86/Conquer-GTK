@@ -64,6 +64,7 @@ namespace Conquer {
         internal void show_main () {
             if (this.main_stack.visible_child == this.selection_screen)
                 this.selection_screen.clear ();
+            this.conquer_screen.end ();
             this.main_stack.visible_child = this.main_screen;
         }
 
