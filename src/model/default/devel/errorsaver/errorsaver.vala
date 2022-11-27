@@ -27,7 +27,7 @@ public class Conquer.Default.Devel.ErrorSavedGame : GLib.Object, Conquer.SavedGa
     public string name { get; set; default = "ErrorSavedGame"; }
     public DateTime time { get; set; default = new DateTime.now (); }
     public string guid { get; set; default = "<<foo>>"; }
-    public GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) throws Conquer.SaveError {
+    public GLib.Bytes load() throws Conquer.SaveError {
         throw new Conquer.SaveError.GENERIC ("[ErrorSavedGame] Unable to restore");
     }
     public Conquer.Saver pair () {

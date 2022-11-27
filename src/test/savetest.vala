@@ -47,7 +47,16 @@ namespace Conquer.Test {
                     var saved_games = ctx.find_saved_games ();
                     foreach (var sv in saved_games) {
                         if (sv.name == "temp____________") {
-                            s1 = sv.load (deser, strategies);
+                            Conquer.Deserializer? des = null;
+                            foreach (var d in deser) {
+                                if (d.supports_uuid (sv.guid)) {
+                                    des = d;
+                                    break;
+                                }
+                            }
+                            assert (des != null);
+                            var bytes = sv.load ();
+                            s1 = des.deserialize (bytes, strategies);
                             break;
                         }
                     }

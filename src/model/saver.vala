@@ -29,7 +29,7 @@ public interface Conquer.Serializer : GLib.Object {
 }
 
 public interface Conquer.Deserializer : GLib.Object {
-    public abstract Conquer.GameState deserialize (GLib.Bytes state, Conquer.Strategy[] strategies);
+    public abstract Conquer.GameState deserialize (GLib.Bytes state, Conquer.Strategy[] strategies) throws Conquer.SaveError;
     public abstract bool supports_uuid (string uuid);
 }
 
@@ -45,7 +45,7 @@ public interface Conquer.SavedGame : GLib.Object {
     public abstract string name { get; set; }
     public abstract DateTime time { get; set; }
     public abstract string guid { get; set; }
-    public abstract GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) throws Conquer.SaveError;
+    public abstract GLib.Bytes load() throws Conquer.SaveError;
     public abstract Conquer.Saver pair ();
     public abstract void delete_data ();
 }

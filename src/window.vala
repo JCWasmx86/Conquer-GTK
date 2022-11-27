@@ -80,8 +80,26 @@ namespace Conquer {
         }
 
         internal void restore_game_real (Conquer.SavedGame s) {
+            GLib.Bytes? bytes = null;
             try {
-                var g = s.load (this.context.find_deserializers (), this.context.find_strategies ());
+                bytes = s.load ();
+            } catch (Conquer.SaveError e) {
+                this.restore_screen.show_save_error (e);
+                return;
+            }
+            var deserializers = this.context.find_deserializers ();
+            Conquer.Deserializer? des = null;
+            foreach (var d in deserializers) {
+                if (d.supports_uuid (s.guid)) {
+                    des = d;
+                    break;
+                }
+            }
+            if (des == null) {
+                this.restore_screen.show_save_error (new Conquer.SaveError.GENERIC (_("Unable to find deserializer")));
+            }
+            try {
+                var g = des.deserialize (bytes, this.context.find_strategies ());
                 assert (g != null);
                 this.restore_screen.clear ();
                 Conquer.QUEUE.emit (new StartGameMessage (g));

@@ -130,7 +130,7 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
     public DateTime time { get; set; }
     public string guid { get; set; }
 
-    public GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) throws Conquer.SaveError {
+    public GLib.Bytes load() throws Conquer.SaveError {
         var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
         var filename = "%x%x.save".printf (GLib.str_hash (this.name), GLib.str_hash (this.name + this.name));
         info ("%s", filename);
@@ -144,17 +144,7 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
             var avail = len;
             var bytes = dis.read_bytes (avail);
             info ("Loading %llu bytes from %s", avail, f.get_path ());
-            Conquer.Deserializer? des = null;
-            foreach (var d in deserializers) {
-                if (d.supports_uuid (guid)) {
-                    des = d;
-                    break;
-                }
-            }
-            if (des == null) {
-                throw new Conquer.SaveError.GENERIC ("Unable to find deserializer");
-            }
-            return des.deserialize (bytes, strategies);
+            return bytes;
         } catch (Error e) {
             throw new Conquer.SaveError.GENERIC (e.message);
         }
@@ -190,17 +180,17 @@ public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
         var dis = new DataInputStream (mis);
         try {
             if (dis.read_byte () != 0xCC)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0xAA)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0xFF)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0xFF)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0xEE)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0x1)
-                return null;
+                throw new Conquer.SaveError.GENERIC ("Bad version");
             g.round = (uint)dis.read_uint64 ();
             g.name = this.read_string (dis);
             g.guid = this.read_string (dis);
