@@ -130,7 +130,7 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
     public DateTime time { get; set; }
     public string guid { get; set; }
 
-    public GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) {
+    public GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) throws Conquer.SaveError {
         var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
         var filename = "%x%x.save".printf (GLib.str_hash (this.name), GLib.str_hash (this.name + this.name));
         info ("%s", filename);
@@ -151,10 +151,12 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
                     break;
                 }
             }
-            assert (des != null);
+            if (des == null) {
+                throw new Conquer.SaveError.GENERIC ("Unable to find deserializer");
+            }
             return des.deserialize (bytes, strategies);
         } catch (Error e) {
-            error ("%s", e.message);
+            throw new Conquer.SaveError.GENERIC (e.message);
         }
     }
 

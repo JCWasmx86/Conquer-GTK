@@ -80,15 +80,19 @@ namespace Conquer {
         }
 
         internal void restore_game_real (Conquer.SavedGame s) {
-            var g = s.load (this.context.find_deserializers (), this.context.find_strategies ());
-            assert (g != null);
-            this.restore_screen.clear ();
-            Conquer.QUEUE.emit (new StartGameMessage (g));
-            this.main_stack.visible_child = this.conquer_screen;
-            this.conquer_screen.update (g);
-            this.conquer_screen.save_name = s.name;
-            this.conquer_screen.saver = s.pair ();
-            this.conquer_screen.check_result (true);
+            try {
+                var g = s.load (this.context.find_deserializers (), this.context.find_strategies ());
+                assert (g != null);
+                this.restore_screen.clear ();
+                Conquer.QUEUE.emit (new StartGameMessage (g));
+                this.main_stack.visible_child = this.conquer_screen;
+                this.conquer_screen.update (g);
+                this.conquer_screen.save_name = s.name;
+                this.conquer_screen.saver = s.pair ();
+                this.conquer_screen.check_result (true);
+            } catch (Conquer.SaveError e) {
+                this.restore_screen.show_save_error (e);
+            }
         }
 
         internal void start_game_real (Conquer.Scenario s) {

@@ -45,7 +45,11 @@ public interface Conquer.SavedGame : GLib.Object {
     public abstract string name { get; set; }
     public abstract DateTime time { get; set; }
     public abstract string guid { get; set; }
-    public abstract GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies);
+    public abstract GameState load(Conquer.Deserializer[] deserializers, Conquer.Strategy[] strategies) throws Conquer.SaveError;
     public abstract Conquer.Saver pair ();
     public abstract void delete_data ();
+}
+
+public errordomain Conquer.SaveError {
+    IO_ERROR, NETWORK_ERROR, INVALID_FORMAT, GENERIC
 }

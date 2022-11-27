@@ -25,6 +25,6 @@ namespace Conquer {
     }
 
     public errordomain ScenarioError {
-        IO_ERROR, CONNECTION_ERROR, INVALID_FORMAT_ERROR, GENERIC
+        IO_ERROR, CONNECTION_ERROR, INVALID_FORMAT, GENERIC
     }
 }

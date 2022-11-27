@@ -68,6 +68,10 @@ namespace Conquer {
         internal void show_save_loader_error (Conquer.SaveLoaderError e) {
             this.toast_overlay.add_toast (new Adw.Toast (e.message));
         }
+
+        internal void show_save_error (Conquer.SaveError e) {
+            this.toast_overlay.add_toast (new Adw.Toast (e.message));
+        }
     }
 
     public class SaveGameEntry : Adw.ActionRow {
