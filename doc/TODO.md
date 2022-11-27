@@ -1,2 +1,4 @@
 - Search for new name
 - Port Slaine scenario
+- (Maybe) port dialogs to use Adw.MessageDialog
+- Improve custom icons
