@@ -69,7 +69,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         return true;
     }
 
-    public GameState load (Conquer.Strategy[] strategies) {
+    public GameState load (Conquer.Strategy[] strategies) throws ScenarioError {
         var ret = new Conquer.GameState ();
         ret.name = this.name;
         var clans = new Clan[0];

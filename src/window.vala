@@ -89,11 +89,15 @@ namespace Conquer {
         }
 
         internal void start_game_real (Conquer.Scenario s) {
-            var g = s.load (this.context.find_strategies ());
-            this.selection_screen.clear ();
-            Conquer.QUEUE.emit (new StartGameMessage (g));
-            this.main_stack.visible_child = this.conquer_screen;
-            this.conquer_screen.update (g);
+            try {
+                var g = s.load (this.context.find_strategies ());
+                this.selection_screen.clear ();
+                Conquer.QUEUE.emit (new StartGameMessage (g));
+                this.main_stack.visible_child = this.conquer_screen;
+                this.conquer_screen.update (g);
+            } catch (Conquer.ScenarioError e) {
+                this.selection_screen.show_scenario_error (e);
+            }
         }
     }
 }

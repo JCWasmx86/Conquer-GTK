@@ -21,6 +21,10 @@ namespace Conquer {
     public interface Scenario : Object {
         public abstract string name { get; set; }
         public abstract Icon? icon { get; set; default = null; }
-        public abstract GameState load(Conquer.Strategy[] strategies);
+        public abstract GameState load(Conquer.Strategy[] strategies) throws ScenarioError;
+    }
+
+    public errordomain ScenarioError {
+        IO_ERROR, CONNECTION_ERROR, INVALID_FORMAT_ERROR, GENERIC
     }
 }

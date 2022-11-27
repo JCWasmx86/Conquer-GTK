@@ -61,6 +61,10 @@ namespace Conquer {
         internal void show_scenario_loader_error (Conquer.ScenarioLoaderError e) {
             this.toast_overlay.add_toast (new Adw.Toast (e.message));
         }
+
+        internal void show_scenario_error (Conquer.ScenarioError e) {
+            this.toast_overlay.add_toast (new Adw.Toast (e.message));
+        }
     }
 
     public class ScenarioEntry : Adw.ActionRow {
