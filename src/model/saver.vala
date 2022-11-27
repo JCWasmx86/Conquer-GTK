@@ -34,7 +34,11 @@ public interface Conquer.Deserializer : GLib.Object {
 }
 
 public interface Conquer.SaveLoader : GLib.Object {
-    public abstract Conquer.SavedGame[] enumerate ();
+    public abstract Conquer.SavedGame[] enumerate () throws Conquer.SaveLoaderError;
+}
+
+public errordomain Conquer.SaveLoaderError {
+    IO_ERROR, NETWORK_ERROR, GENERIC
 }
 
 public interface Conquer.SavedGame : GLib.Object {

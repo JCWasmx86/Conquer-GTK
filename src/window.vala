@@ -50,6 +50,9 @@ namespace Conquer {
             this.context.emit_scenario_loader_error.connect (e => {
                 this.selection_screen.show_scenario_loader_error (e);
             });
+            this.context.emit_save_loader_error.connect (e => {
+                this.restore_screen.show_save_loader_error (e);
+            });
         }
 
         internal void start_game () {

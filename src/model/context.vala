@@ -83,9 +83,13 @@ namespace Conquer {
         public SavedGame[] find_saved_games () {
             var ret = new SavedGame[0];
             save_loaders.@foreach ((s, info, exten) => {
-                var found = ((Conquer.SaveLoader) exten).enumerate ();
-                foreach (var sc in found)
-                    ret += sc;
+                try {
+                    var found = ((Conquer.SaveLoader) exten).enumerate ();
+                    foreach (var sc in found)
+                        ret += sc;
+                } catch (SaveLoaderError e) {
+                    this.emit_save_loader_error (e);
+                }
             });
             info ("Found %u saved games", ret.length);
             return ret;
@@ -181,5 +185,6 @@ namespace Conquer {
         }
 
         public signal void emit_scenario_loader_error (Conquer.ScenarioLoaderError e);
+        public signal void emit_save_loader_error (Conquer.SaveLoaderError e);
     }
 }

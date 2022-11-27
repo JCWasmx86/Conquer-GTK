@@ -40,6 +40,8 @@ namespace Conquer {
         private unowned Gtk.SearchEntry search_bar;
         [GtkChild]
         private unowned Gtk.ListBox saves_list;
+        [GtkChild]
+        private unowned Adw.ToastOverlay toast_overlay;
 
         internal void update(SavedGame[] games) {
             this.model.remove_all ();
@@ -61,6 +63,10 @@ namespace Conquer {
 
         internal void clear () {
             this.search_bar.text = "";
+        }
+
+        internal void show_save_loader_error (Conquer.SaveLoaderError e) {
+            this.toast_overlay.add_toast (new Adw.Toast (e.message));
         }
     }
 
