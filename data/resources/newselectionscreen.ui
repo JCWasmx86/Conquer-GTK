@@ -55,6 +55,10 @@
                             </style>
                           </object>
                         </child>
+                        <child>
+                          <object class="AdwToastOverlay" id="toast_overlay">
+                          </object>
+                        </child>
                       </object>
                     </property>
                   </object>

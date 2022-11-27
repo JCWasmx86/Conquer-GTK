@@ -1,0 +1,7 @@
+[Plugin]
+Module=errorloader
+Name=Errorloader for scenarios
+Description=Will only throw errors
+Authors=JCWasmx86 <JCWasmx86@t-online.de>
+Copyright=Copyright © 2009 JCWasmx86
+Loader=C

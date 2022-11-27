@@ -47,6 +47,9 @@ namespace Conquer {
             this.context = new Context (new Conquer.DefaultConfigLoader ());
             this.context.init ();
             this.maximize ();
+            this.context.emit_scenario_loader_error.connect (e => {
+                this.selection_screen.show_scenario_loader_error (e);
+            });
         }
 
         internal void start_game () {

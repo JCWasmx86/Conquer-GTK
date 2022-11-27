@@ -19,7 +19,7 @@
  */
 
 public class Conquer.Default.ScenarioLoader : GLib.Object, Conquer.ScenarioLoader {
-    public Scenario[] enumerate() {
+    public Scenario[] enumerate() throws Conquer.ScenarioLoaderError {
         var directories = new string[] {
             Environment.get_user_data_dir() + "/conquer/scenarios",
         };

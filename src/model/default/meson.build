@@ -7,3 +7,6 @@ subdir('defensivealgorithm')
 subdir('growthlimiter')
 subdir('nullalgorithm')
 subdir('offensivealgorithm')
+
+# Plugins that only exist to throw errors
+subdir('devel')

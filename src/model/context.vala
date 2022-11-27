@@ -68,9 +68,13 @@ namespace Conquer {
         public Scenario[] find_scenarios () {
             var ret = new Scenario[0];
             scenario_loaders.@foreach ((s, info, exten) => {
-                var found = ((Conquer.ScenarioLoader) exten).enumerate ();
-                foreach (var sc in found)
-                    ret += sc;
+                try {
+                    var found = ((Conquer.ScenarioLoader) exten).enumerate ();
+                    foreach (var sc in found)
+                        ret += sc;
+                } catch (ScenarioLoaderError e) {
+                    this.emit_scenario_loader_error (e);
+                }
             });
             info ("Found %u scenarios", ret.length);
             return ret;
@@ -175,5 +179,7 @@ namespace Conquer {
                 }
             }
         }
+
+        public signal void emit_scenario_loader_error (Conquer.ScenarioLoaderError e);
     }
 }
