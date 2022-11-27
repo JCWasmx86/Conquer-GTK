@@ -1,4 +1,2 @@
-- Add error handling.
-  - Add devel-plugins that only throw errors in order to test the UI
 - Search for new name
 - Port Slaine scenario
