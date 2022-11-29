@@ -17,6 +17,9 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
+// Sound ideas:
+// https://freesound.org/people/jobro/sounds/60445/
+// https://freesound.org/people/Leszek_Szary/sounds/173958/
 namespace Conquer.Default {
     public class MusicListener : GLib.Object, Conquer.MessageReceiver {
         private GameState? state;
