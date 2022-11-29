@@ -292,6 +292,8 @@ namespace Conquer {
                 cbt.append ("%d".printf (i), savers[i].name);
             }
             cbt.active = 0;
+            cbt.valign = Gtk.Align.CENTER;
+            cbt.halign = Gtk.Align.CENTER;
             savers_row.add_suffix (cbt);
             var save_btn = new Gtk.Button.with_label (_("Save"));
             save_btn.get_style_context ().add_class ("suggested-action");
