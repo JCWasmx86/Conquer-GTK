@@ -2,7 +2,8 @@
 
 ## New name is needed!
 
-Conquer is a round-based strategy game. Conquer all the cities on the map.
+Conquer is a single player round-based strategy game. Can you conquer the entire world?
+Play Conquer to test your strategic abilities and see how creative you can get thanks to the extensible and open architecture.
 
 This is a reimplementation of my game [Conquer](https://github.com/JCWasmx86/Conquer) in Vala for the GNOME desktop.
 
