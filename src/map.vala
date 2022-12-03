@@ -170,6 +170,7 @@ namespace Conquer {
                 this.map_drawing_area.queue_draw ();
                 return Source.REMOVE;
             }, Priority.HIGH);
+            this.updated ();
         }
 
         private City ? find_city (double x, double y) {
