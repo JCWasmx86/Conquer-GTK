@@ -3,5 +3,5 @@ Module=errorsaver
 Name=Errorsaver
 Description=Will only throw errors during restoration of a saved game
 Authors=JCWasmx86 <JCWasmx86@t-online.de>
-Copyright=Copyright © 2009 JCWasmx86
+Copyright=Copyright © 2022 JCWasmx86
 Loader=C
