@@ -29,4 +29,4 @@ public class Conquer.AttackMessage : Conquer.Message {
         this.num = n;
         this.result = result;
     }
-} 
+}

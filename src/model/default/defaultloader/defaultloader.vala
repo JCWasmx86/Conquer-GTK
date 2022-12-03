@@ -31,14 +31,14 @@ public class Conquer.Default.ScenarioLoader : GLib.Object, Conquer.ScenarioLoade
             try {
                 dir = Dir.open(path, 0);
             } catch (FileError e) {
-                info ("%s", e.message);
+                info("%s", e.message);
                 continue;
             }
             info("Searching for scenarios in %s", path);
             string? name = null;
-            while ((name = dir.read_name ()) != null) {
-			    var filepath = Path.build_filename (path, name);
-			    if (!FileUtils.test (filepath, FileTest.IS_REGULAR) || !name.has_suffix(".scenario")) {
+            while ((name = dir.read_name()) != null) {
+                var filepath = Path.build_filename(path, name);
+                if (!FileUtils.test(filepath, FileTest.IS_REGULAR) || !name.has_suffix(".scenario")) {
                     continue;
                 }
                 var ds = new DefaultScenario(filepath);

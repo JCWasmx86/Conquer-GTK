@@ -45,7 +45,7 @@ public interface Conquer.SavedGame : GLib.Object {
     public abstract string name { get; set; }
     public abstract DateTime time { get; set; }
     public abstract string guid { get; set; }
-    public abstract GLib.Bytes load() throws Conquer.SaveError;
+    public abstract GLib.Bytes load () throws Conquer.SaveError;
     public abstract Conquer.Saver pair ();
     public abstract void delete_data ();
 }

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
-  */
+ */
 
 public class Conquer.Clan : GLib.Object {
     public uint64 coins { get; set; }
@@ -33,7 +33,7 @@ public class Conquer.Clan : GLib.Object {
     public uint64 index { get; set; }
 
     construct {
-        this.resources = new GLib.HashTable<Conquer.Resource, double?>(Conquer.Resource.hash_func, null);
+        this.resources = new GLib.HashTable<Conquer.Resource, double?> (Conquer.Resource.hash_func, null);
         for (var i = 0; i < Resource.num (); i++) {
             this.resources[i] = 0;
         }
@@ -90,6 +90,7 @@ public class Conquer.Clan : GLib.Object {
         }
         this.uses = new double[Resource.num ()];
     }
+
     public virtual uint64 costs_for_attack_upgrade () {
         return (uint64) (Math.pow (this.attack_level + 1, 2.5) + 1500 + (1500 * this.attack_level + 1));
     }

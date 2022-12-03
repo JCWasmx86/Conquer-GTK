@@ -43,14 +43,14 @@ namespace Conquer {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay;
 
-        internal void update(Scenario[] scenarios) {
+        internal void update (Scenario[] scenarios) {
             this.model.remove_all ();
             foreach (var s in scenarios)
                 this.model.append (s);
         }
 
         private static Gtk.Widget mapping_func (Object item) {
-            var s = (Scenario)item;
+            var s = (Scenario) item;
             return new ScenarioEntry (s);
         }
 
@@ -72,7 +72,7 @@ namespace Conquer {
             this.title = s.name;
             this.activatable = true;
             this.activated.connect (() => {
-                var app = (Conquer.Application)GLib.Application.get_default ();
+                var app = (Conquer.Application) GLib.Application.get_default ();
                 app.start_game_real (s);
             });
         }

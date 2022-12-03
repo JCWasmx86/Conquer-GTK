@@ -26,40 +26,40 @@ namespace Conquer {
             Conquer.MessageQueue.init ();
             Conquer.QUEUE.listen (this);
             this.install_action ("conquer.save-game", null, (w, a) => {
-                var self = (Conquer.Screen)w;
+                var self = (Conquer.Screen) w;
                 self.save ();
             });
             this.install_action ("conquer.resign", null, (w, a) => {
-                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
-                ((Conquer.Screen)w).end ();
-                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
+                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen) w).game_state, Conquer.GameResult.RESIGNED));
+                ((Conquer.Screen) w).end ();
+                ((Conquer.Window) (((Adw.Application) GLib.Application.get_default ()).active_window)).show_main ();
             });
             this.install_action ("conquer.quit-or-resign", null, (w, a) => {
-                var active_window = (Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window);
-                var dialog = new Adw.MessageDialog (active_window, _("Quit"), _("Do you really want to quit?"));
-                dialog.add_response ("save", _("Save"));
-                dialog.add_response ("quit", _("Quit"));
-                dialog.add_response ("cancel", _("Cancel"));
+                var active_window = (Conquer.Window) (((Adw.Application) GLib.Application.get_default ()).active_window);
+                var dialog = new Adw.MessageDialog (active_window, _ ("Quit"), _ ("Do you really want to quit?"));
+                dialog.add_response ("save", _ ("Save"));
+                dialog.add_response ("quit", _ ("Quit"));
+                dialog.add_response ("cancel", _ ("Cancel"));
                 dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
                 dialog.set_response_appearance ("quit", Adw.ResponseAppearance.DESTRUCTIVE);
-                dialog.response.connect(r => {
+                dialog.response.connect (r => {
                     if (r == "quit") {
-                        Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.RESIGNED));
-                        ((Conquer.Screen)w).end ();
+                        Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen) w).game_state, Conquer.GameResult.RESIGNED));
+                        ((Conquer.Screen) w).end ();
                         active_window.show_main ();
                     } else if (r == "cancel") {
                         // Do nothing
                     } else if (r == "save") {
-                        var window = ((Conquer.Screen)w).save ();
+                        var window = ((Conquer.Screen) w).save ();
                         if (window != null) {
-                            ((Gtk.Widget)window).destroy.connect (() => {
-                                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
-                                ((Conquer.Screen)w).end ();
+                            ((Gtk.Widget) window).destroy.connect (() => {
+                                Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen) w).game_state, Conquer.GameResult.SAVED));
+                                ((Conquer.Screen) w).end ();
                                 active_window.show_main ();
                             });
                         } else {
-                            Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen)w).game_state, Conquer.GameResult.SAVED));
-                            ((Conquer.Screen)w).end ();
+                            Conquer.QUEUE.emit (new Conquer.EndGameMessage (((Conquer.Screen) w).game_state, Conquer.GameResult.SAVED));
+                            ((Conquer.Screen) w).end ();
                             active_window.show_main ();
                         }
                     }
@@ -77,11 +77,11 @@ namespace Conquer {
             });
             this.quit.clicked.connect (() => {
                 this.end ();
-                ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).show_main ();
+                ((Conquer.Window) (((Adw.Application) GLib.Application.get_default ()).active_window)).show_main ();
             });
-            this.total_power.title.label = _("Total Power");
-            this.economic_power.title.label = _("Economic Power");
-            this.military_power.title.label = _("Military Power");
+            this.total_power.title.label = _ ("Total Power");
+            this.economic_power.title.label = _ ("Economic Power");
+            this.military_power.title.label = _ ("Military Power");
             this.economic_power.calc = (g, c) => {
                 var cities = g.cities.cities_of_clan (c);
                 var d = 0.0;
@@ -112,7 +112,7 @@ namespace Conquer {
                 this.clan_view.update (this.game_state);
                 foreach (var c in this.game_state.clans) {
                     if (c.player)
-                        this.coins.label = _("Coins: %llu").printf (c.coins);
+                        this.coins.label = _ ("Coins: %llu").printf (c.coins);
                 }
             });
             this.clan_view.update_state.connect (() => {
@@ -122,7 +122,7 @@ namespace Conquer {
                 this.clan_view.update (this.game_state);
                 foreach (var c in this.game_state.clans) {
                     if (c.player)
-                        this.coins.label = _("Coins: %llu").printf (c.coins);
+                        this.coins.label = _ ("Coins: %llu").printf (c.coins);
                 }
             });
         }
@@ -233,7 +233,7 @@ namespace Conquer {
             this.clan_view.update (g);
             foreach (var c in g.clans) {
                 if (c.player)
-                    this.coins.label = _("Coins: %llu").printf (c.coins);
+                    this.coins.label = _ ("Coins: %llu").printf (c.coins);
             }
             this.save_name = null;
             this.saver = null;
@@ -252,7 +252,7 @@ namespace Conquer {
             if (cities.length == 0) {
                 this.quit.visible = true;
                 this.status.visible = true;
-                this.status.label = _("You lost!");
+                this.status.label = _ ("You lost!");
                 this.next_round.visible = false;
                 this.coins.visible = false;
                 if (emit)
@@ -261,7 +261,7 @@ namespace Conquer {
             } else if (cities.length == this.game_state.city_list.length) {
                 this.quit.visible = true;
                 this.status.visible = true;
-                this.status.label = _("You won!");
+                this.status.label = _ ("You won!");
                 this.next_round.visible = false;
                 this.coins.visible = false;
                 if (emit)
@@ -272,21 +272,21 @@ namespace Conquer {
 
         private Adw.Window? save () {
             if (this.save_name != null) {
-                var ctx = ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).context;
+                var ctx = ((Conquer.Window) (((Adw.Application) GLib.Application.get_default ()).active_window)).context;
                 ctx.save (this.game_state, this.save_name, this.saver);
                 return null;
             }
             var window = new Adw.Window ();
             window.modal = true;
             var bar = new Adw.HeaderBar ();
-            bar.title_widget = new Adw.WindowTitle (_("Save game"), "");
+            bar.title_widget = new Adw.WindowTitle (_ ("Save game"), "");
             var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
             child.append (bar);
-            var ctx = ((Conquer.Window)(((Adw.Application)GLib.Application.get_default ()).active_window)).context;
+            var ctx = ((Conquer.Window) (((Adw.Application) GLib.Application.get_default ()).active_window)).context;
             var savers = ctx.find_savers ();
             var savers_row = new Adw.ActionRow ();
-            savers_row.title = _("Location");
-            savers_row.subtitle = _("Where to save the game");
+            savers_row.title = _ ("Location");
+            savers_row.subtitle = _ ("Where to save the game");
             var cbt = new Gtk.ComboBoxText ();
             for (var i = 0; i < savers.length; i++) {
                 cbt.append ("%d".printf (i), savers[i].name);
@@ -295,10 +295,10 @@ namespace Conquer {
             cbt.valign = Gtk.Align.CENTER;
             cbt.halign = Gtk.Align.CENTER;
             savers_row.add_suffix (cbt);
-            var save_btn = new Gtk.Button.with_label (_("Save"));
+            var save_btn = new Gtk.Button.with_label (_ ("Save"));
             save_btn.get_style_context ().add_class ("suggested-action");
             var entry_row = new Adw.EntryRow ();
-            entry_row.title = _("Name");
+            entry_row.title = _ ("Name");
             entry_row.changed.connect (() => {
                 var t = entry_row.text;
                 var s = savers[cbt.active];
@@ -317,7 +317,7 @@ namespace Conquer {
                 this.save_name = entry_row.text.strip ();
                 this.saver = savers[cbt.active];
                 ctx.save (this.game_state, entry_row.text.strip (), savers[cbt.active]);
-                ((Gtk.Widget)window).destroy ();
+                ((Gtk.Widget) window).destroy ();
                 window.destroy ();
             });
             var clamp = new Adw.Clamp ();
@@ -334,20 +334,20 @@ namespace Conquer {
             if (msg is Conquer.InitMessage) {
                 this.event_view.buffer.text = "";
             } else if (msg is Conquer.AttackMessage) {
-                var am = (Conquer.AttackMessage)msg;
+                var am = (Conquer.AttackMessage) msg;
                 Gtk.TextIter iter;
                 this.event_view.buffer.get_end_iter (out iter);
                 var msgstr = "";
                 if (am.result == AttackResult.FAIL)
-                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and failed.\n");
+                    msgstr = _ ("[Attack] %s (%s) attackes %s (%s) and failed.\n");
                 else
-                    msgstr = _("[Attack] %s (%s) attackes %s (%s) and conquered it.\n");
+                    msgstr = _ ("[Attack] %s (%s) attackes %s (%s) and conquered it.\n");
                 this.event_view.buffer.insert_interactive (ref iter, msgstr.printf (am.from.name, am.from.clan.name, am.to.name, am.to.clan.name), -1, true);
             } else if (msg is Conquer.MoveMessage) {
-                var mm = (Conquer.MoveMessage)msg;
+                var mm = (Conquer.MoveMessage) msg;
                 Gtk.TextIter iter;
                 this.event_view.buffer.get_end_iter (out iter);
-                this.event_view.buffer.insert_interactive (ref iter, _("[Move] %s moves troops from %s to %s\n").printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
+                this.event_view.buffer.insert_interactive (ref iter, _ ("[Move] %s moves troops from %s to %s\n").printf (mm.from.clan.name, mm.from.name, mm.to.name), -1, true);
             } else if (msg is Conquer.ConfigurationLoadedMessage) {
                 var cfgs = ((ConfigurationLoadedMessage) msg).config;
                 foreach (var c in cfgs) {

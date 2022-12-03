@@ -28,7 +28,7 @@ public class Conquer.Default.OffensiveStrategy : GLib.Object, Conquer.Strategy {
                     var n = state.maximum_number_of_soliders_to_move (ic, bc);
                     if (n != 0) {
                         state.move (ic, bc, n);
-                        info("[Aggressive] Moving %llu troops from %s to %s", n, ic.name, bc.name);
+                        info ("[Aggressive] Moving %llu troops from %s to %s", n, ic.name, bc.name);
                     }
                 }
                 if (ic.soldiers == 0)
@@ -39,7 +39,7 @@ public class Conquer.Default.OffensiveStrategy : GLib.Object, Conquer.Strategy {
         }
         if (border_cities.length != 0) {
             var random = border_cities[Random.next_int () % border_cities.length];
-            var cities = state.cities.reachable_enemy_cities (clan, new City[1]{random});
+            var cities = state.cities.reachable_enemy_cities (clan, new City[1] { random });
             if (cities.length != 0) {
                 var next_city = cities[Random.next_int () % cities.length];
                 info ("[Aggressive] First attacked city from %s is %s", random.name, next_city.name);
@@ -55,13 +55,13 @@ public class Conquer.Default.OffensiveStrategy : GLib.Object, Conquer.Strategy {
                         break;
                     }
                     random = next_city;
-                    cities = state.cities.reachable_enemy_cities (clan, new City[1]{random});
+                    cities = state.cities.reachable_enemy_cities (clan, new City[1] { random });
                     if (cities.length == 0) {
                         info ("[Aggressive] Stopping due to no enemy cities left");
                         break;
                     }
                     next_city = cities[Random.next_int () % cities.length];
-                    info("[Aggressive] Next city to attack is %s", next_city.name);
+                    info ("[Aggressive] Next city to attack is %s", next_city.name);
                 }
             }
         }
@@ -78,7 +78,7 @@ public class Conquer.Default.OffensiveStrategy : GLib.Object, Conquer.Strategy {
         return "0b41ca43-3872-421c-9b14-95b16260b9aa";
     }
 }
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
-    obj.register_extension_type(typeof (Conquer.Strategy), typeof (Conquer.Default.OffensiveStrategy));
+    obj.register_extension_type (typeof (Conquer.Strategy), typeof (Conquer.Default.OffensiveStrategy));
 }

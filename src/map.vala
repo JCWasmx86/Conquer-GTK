@@ -85,8 +85,8 @@ namespace Conquer {
                     info ("Drag from %s to %s", this.start_city.name, end_city.name);
                     var has_direct_connection = this.game_state.cities.direct_connection (this.start_city, end_city);
                     if (!has_direct_connection) {
-                        var dia = new Adw.MessageDialog (((Adw.Application)GLib.Application.get_default ()).active_window, _("Error"), _("Can't move troops between non-adjacent cities"));
-                        dia.add_response ("ok", _("_Ok"));
+                        var dia = new Adw.MessageDialog (((Adw.Application) GLib.Application.get_default ()).active_window, _ ("Error"), _ ("Can't move troops between non-adjacent cities"));
+                        dia.add_response ("ok", _ ("_Ok"));
                         dia.response.connect (r => {
                             dia.destroy ();
                         });
@@ -98,7 +98,7 @@ namespace Conquer {
                         var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
                         var bar = new Adw.HeaderBar ();
                         bar.centering_policy = Adw.CenteringPolicy.STRICT;
-                        bar.title_widget = new Adw.WindowTitle (is_attack ? _("Attack city") : _("Move soldiers"), _("From %s").printf (this.start_city.name));
+                        bar.title_widget = new Adw.WindowTitle (is_attack ? _ ("Attack city") : _ ("Move soldiers"), _ ("From %s").printf (this.start_city.name));
                         bar.show_end_title_buttons = true;
                         content.append (bar);
                         var clamp = new Adw.Clamp ();
@@ -107,11 +107,11 @@ namespace Conquer {
                         var scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, max == 0 ? 1 : max, 1);
                         scale.sensitive = max != 0;
                         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
-                        var suggested = new Gtk.Button.with_label (is_attack ? _("Attack") : _("Move"));
+                        var suggested = new Gtk.Button.with_label (is_attack ? _ ("Attack") : _ ("Move"));
                         suggested.hexpand = true;
                         suggested.sensitive = false;
                         suggested.get_style_context ().add_class ("suggested-action");
-                        var abort = new Gtk.Button.with_label (_("Cancel"));
+                        var abort = new Gtk.Button.with_label (_ ("Cancel"));
                         abort.hexpand = true;
                         scale.value_changed.connect (() => {
                             suggested.sensitive = scale.get_value () != 0;
@@ -128,29 +128,29 @@ namespace Conquer {
                         clamp.child = box;
                         content.append (clamp);
                         abort.clicked.connect (() => {
-                           window.destroy ();
+                            window.destroy ();
                         });
                         var sc = this.start_city;
                         suggested.clicked.connect (() => {
                             if (is_attack) {
-                                var result = this.game_state.attack (sc, end_city, (uint64)scale.get_value ());
+                                var result = this.game_state.attack (sc, end_city, (uint64) scale.get_value ());
                                 var new_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-                                ((Adw.WindowTitle)bar.title_widget).title = _("Result");
-                                ((Adw.WindowTitle)bar.title_widget).subtitle = "";
-                                new_box.append (new Gtk.Label (result == Conquer.AttackResult.SUCCESS ? _("You conquered %s").printf (end_city.name) : _("Your attack failed")));
+                                ((Adw.WindowTitle) bar.title_widget).title = _ ("Result");
+                                ((Adw.WindowTitle) bar.title_widget).subtitle = "";
+                                new_box.append (new Gtk.Label (result == Conquer.AttackResult.SUCCESS ? _ ("You conquered %s").printf (end_city.name) : _ ("Your attack failed")));
                                 if (result == Conquer.AttackResult.SUCCESS) {
-                                    new_box.append (new Gtk.Label (_("%llu soldiers survived").printf (end_city.soldiers)));
+                                    new_box.append (new Gtk.Label (_ ("%llu soldiers survived").printf (end_city.soldiers)));
                                 }
-                                var btn = new Gtk.Button.with_label (_("Close"));
+                                var btn = new Gtk.Button.with_label (_ ("Close"));
                                 btn.get_style_context ().add_class ("suggested-action");
                                 btn.hexpand = true;
                                 new_box.append (btn);
                                 btn.clicked.connect (() => {
-                                   window.destroy ();
+                                    window.destroy ();
                                 });
                                 clamp.child = new_box;
                             } else {
-                                this.game_state.move (sc, end_city, (uint64)scale.get_value ());
+                                this.game_state.move (sc, end_city, (uint64) scale.get_value ());
                                 window.destroy ();
                             }
                             this.update_visible ();
@@ -275,6 +275,7 @@ namespace Conquer {
             this.city_actions.update (this.game_state, this.selected_city);
             this.updated ();
         }
+
         internal signal void updated ();
     }
 

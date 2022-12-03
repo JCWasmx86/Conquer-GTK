@@ -43,7 +43,7 @@ namespace Conquer {
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay;
 
-        internal void update(SavedGame[] games) {
+        internal void update (SavedGame[] games) {
             this.model.remove_all ();
             foreach (var s in games)
                 this.model.append (s);
@@ -57,7 +57,7 @@ namespace Conquer {
         }
 
         private static Gtk.Widget mapping_func (Object item) {
-            var s = (SavedGame)item;
+            var s = (SavedGame) item;
             return new SaveGameEntry (s);
         }
 
@@ -81,7 +81,7 @@ namespace Conquer {
             this.subtitle = s.time.format ("%x %X");
             this.activatable = true;
             this.activated.connect (() => {
-                var app = (Conquer.Application)GLib.Application.get_default ();
+                var app = (Conquer.Application) GLib.Application.get_default ();
                 app.restore_game_real (s);
             });
             var btn = new Gtk.Button.from_icon_name ("user-trash-symbolic");
@@ -89,7 +89,7 @@ namespace Conquer {
             btn.get_style_context ().add_class ("flat");
             btn.valign = Gtk.Align.CENTER;
             btn.halign = Gtk.Align.CENTER;
-            btn.tooltip_text = _("Delete this saved game");
+            btn.tooltip_text = _ ("Delete this saved game");
             btn.clicked.connect (() => {
                 s.delete_data ();
                 uint idx = 0;

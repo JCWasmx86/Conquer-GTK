@@ -76,7 +76,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         try {
             var parser = new Json.Parser ();
             parser.load_from_data ((string) this.contents["players.json"].get_data (),
-                                                   this.contents["players.json"].length);
+                                   this.contents["players.json"].length);
             var node = parser.get_root ();
             assert (node.get_node_type () == Json.NodeType.ARRAY);
             var array = node.get_array ();
@@ -96,7 +96,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                         var t = s.get_type ();
                         info ("Strategy for %s is a %s", c.name, t.name ());
                         var new_strategy = GLib.Object.new (t, null);
-                        c.strategy = (Conquer.Strategy)new_strategy;
+                        c.strategy = (Conquer.Strategy) new_strategy;
                     }
                 }
                 if (c.strategy == null)
@@ -113,7 +113,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         try {
             var parser = new Json.Parser ();
             parser.load_from_data ((string) this.contents["cities.json"].get_data (),
-                                                   this.contents["cities.json"].length);
+                                   this.contents["cities.json"].length);
             var node = parser.get_root ();
             assert (node.get_node_type () == Json.NodeType.ARRAY);
             var array = node.get_array ();
@@ -137,7 +137,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 var resources = obj.get_object_member ("resources");
                 foreach (var r in resources.get_members ()) {
                     var val = resources.get_double_member (r);
-                    c.upgrades[(uint)Resource.from_string (r)].production = val;
+                    c.upgrades[(uint) Resource.from_string (r)].production = val;
                 }
                 c.index = idx;
                 cities += c;
@@ -152,7 +152,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
         try {
             var parser = new Json.Parser ();
             parser.load_from_data ((string) this.contents["map.json"].get_data (),
-                                                   this.contents["map.json"].length);
+                                   this.contents["map.json"].length);
             var node = parser.get_root ();
             assert (node.get_node_type () == Json.NodeType.ARRAY);
             var array = node.get_array ();
@@ -162,7 +162,7 @@ public class Conquer.DefaultScenario : Object, Conquer.Scenario {
                 var from = obj.get_int_member ("from");
                 var to = obj.get_int_member ("to");
                 var distance = obj.get_double_member ("distance");
-                graph.add_connection ((uint)from, (uint)to, distance);
+                graph.add_connection ((uint) from, (uint) to, distance);
             }
         } catch (Error e) {
             error ("Whoops: %s", e.message);

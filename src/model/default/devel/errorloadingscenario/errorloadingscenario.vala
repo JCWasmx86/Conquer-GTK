@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public class Conquer.Default.Devel.WorkingScenarioLoader : GLib.Object, Conquer.ScenarioLoader {
-    public Scenario[] enumerate() throws Conquer.ScenarioLoaderError {
+    public Scenario[] enumerate () throws Conquer.ScenarioLoaderError {
         return new Scenario[1] { new ErrorScenario () };
     }
 }
@@ -27,12 +27,12 @@ public class Conquer.Default.Devel.ErrorScenario : GLib.Object, Conquer.Scenario
     public string name { get; set; default = "ErrorScenario"; }
     public Icon? icon { get; set; default = null; }
 
-    public GameState load(Conquer.Strategy[] strategies) throws ScenarioError {
+    public GameState load (Conquer.Strategy[] strategies) throws ScenarioError {
         throw new Conquer.ScenarioError.GENERIC ("[ErrorScenario] Failed to load scenario");
     }
 }
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
     if (Environment.get_variable ("CONQUER_DEVEL_ERRORSCENARIO") != null)
-        obj.register_extension_type(typeof (Conquer.ScenarioLoader), typeof (Conquer.Default.Devel.WorkingScenarioLoader));
+        obj.register_extension_type (typeof (Conquer.ScenarioLoader), typeof (Conquer.Default.Devel.WorkingScenarioLoader));
 }

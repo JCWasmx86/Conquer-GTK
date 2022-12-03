@@ -68,7 +68,7 @@ namespace Conquer {
             var window = new Adw.Window ();
             window.modal = true;
             var bar = new Adw.HeaderBar ();
-            bar.title_widget = new Adw.WindowTitle(_("Preferences"), "");
+            bar.title_widget = new Adw.WindowTitle (_ ("Preferences"), "");
             var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
             box.append (bar);
             var main = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
@@ -87,7 +87,7 @@ namespace Conquer {
                     var widget = new Conquer.ConfigWidget (c, ((Conquer.Window) this.active_window).context);
                     stack.add_titled (widget, c.id, name);
                 } else {
-                    ((Conquer.ConfigWidget)w).register (c);
+                    ((Conquer.ConfigWidget) w).register (c);
                 }
             }
             main.append (sidebar);
@@ -115,9 +115,11 @@ namespace Conquer {
         private void show_main () {
             ((Conquer.Window) this.active_window).show_main ();
         }
+
         internal void start_game_real (Conquer.Scenario s) {
             ((Conquer.Window) this.active_window).start_game_real (s);
         }
+
         internal void restore_game_real (Conquer.SavedGame s) {
             ((Conquer.Window) this.active_window).restore_game_real (s);
         }

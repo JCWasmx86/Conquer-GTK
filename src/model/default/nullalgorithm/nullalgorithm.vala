@@ -26,7 +26,7 @@ public class Conquer.Default.NullStrategy : GLib.Object, Conquer.Strategy {
         return "00000000-0000-0000-0000-000000000000";
     }
 }
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
-    obj.register_extension_type(typeof (Conquer.Strategy), typeof (Conquer.Default.NullStrategy));
+    obj.register_extension_type (typeof (Conquer.Strategy), typeof (Conquer.Default.NullStrategy));
 }

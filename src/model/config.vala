@@ -45,7 +45,7 @@ public class Conquer.IntegerConfigurationItem : Conquer.ConfigurationItem {
 
     public override void assign (Conquer.ConfigurationItem assign) {
         if (assign is IntegerConfigurationItem) {
-            var ici = (IntegerConfigurationItem)assign;
+            var ici = (IntegerConfigurationItem) assign;
             this.value = ici.value;
             this.min = ici.min;
             this.max = ici.max;
@@ -67,7 +67,7 @@ public class Conquer.StringConfigurationItem : Conquer.ConfigurationItem {
 
     public override void assign (Conquer.ConfigurationItem assign) {
         if (assign is StringConfigurationItem) {
-            var sci = (StringConfigurationItem)assign;
+            var sci = (StringConfigurationItem) assign;
             this.value = sci.value;
         } else {
             critical ("Can't reassign %s", this.id);
@@ -87,7 +87,7 @@ public class Conquer.BoolConfigurationItem : Conquer.ConfigurationItem {
 
     public override void assign (Conquer.ConfigurationItem assign) {
         if (assign is BoolConfigurationItem) {
-            var bci = (BoolConfigurationItem)assign;
+            var bci = (BoolConfigurationItem) assign;
             this.value = bci.value;
         } else {
             critical ("Can't reassign %s", this.id);

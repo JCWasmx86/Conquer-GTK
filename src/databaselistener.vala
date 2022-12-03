@@ -19,7 +19,7 @@
  */
 public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
     private Sqlite.Database db;
-    public DatabaseListener() {
+    public DatabaseListener () {
         var dir = Environment.get_user_data_dir () + "/conquer";
         try {
             File.new_for_path (dir).make_directory_with_parents ();
@@ -33,7 +33,7 @@ public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
         try {
             var init_script = GLib.resources_lookup_data ("/io/github/jcwasmx86/Conquer/init_db.sql", GLib.ResourceLookupFlags.NONE);
             string errmsg;
-            ec = this.db.exec ((string)init_script.get_data (), null, out errmsg);
+            ec = this.db.exec ((string) init_script.get_data (), null, out errmsg);
             if (ec != Sqlite.OK) {
                 error ("Error: %s", errmsg);
             }
@@ -43,7 +43,7 @@ public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
         info ("Already played %lld games", this.number_of_played_games ());
     }
 
-    public int64 number_of_played_games() {
+    public int64 number_of_played_games () {
         return this.of_type (GameResult.PLAYER_LOST) + this.of_type (GameResult.RESIGNED) + this.of_type (GameResult.PLAYER_WON);
     }
 
@@ -66,10 +66,10 @@ public class Conquer.DatabaseListener : GLib.Object, Conquer.MessageReceiver {
 
     public void receive (Conquer.Message msg) {
         if (msg is Conquer.StartGameMessage) {
-            var sgm = (Conquer.StartGameMessage)msg;
+            var sgm = (Conquer.StartGameMessage) msg;
             var state = sgm.state;
         } else if (msg is Conquer.EndGameMessage) {
-            var egm = (Conquer.EndGameMessage)msg;
+            var egm = (Conquer.EndGameMessage) msg;
             var sql = "INSERT INTO result (rounds, result) VALUES (%lu, %lu);".printf (egm.state.round, egm.result);
             string errmsg;
             var ec = this.db.exec (sql, null, out errmsg);

@@ -22,6 +22,5 @@
 namespace Conquer {
     [GtkTemplate (ui = "/io/github/jcwasmx86/Conquer/mainscreen.ui")]
     public class MainScreen : Gtk.Box {
-
     }
 }

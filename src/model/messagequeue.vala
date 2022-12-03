@@ -30,7 +30,7 @@ namespace Conquer {
         public MessageQueue () {
         }
 
-         public void listen (MessageReceiver receiver) {
+        public void listen (MessageReceiver receiver) {
             this.listeners.append (receiver);
         }
 

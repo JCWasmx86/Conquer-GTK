@@ -20,14 +20,14 @@
 public class Conquer.Shared {
     public static string from_resource (Conquer.Resource r) {
         switch (r) {
-            case Conquer.Resource.WOOD:
-                return _("Wood");
-            case Conquer.Resource.FOOD:
-                return _("Food");
-            case Conquer.Resource.IRON:
-                return _("Iron");
-            case Conquer.Resource.STONE:
-                return _("Stone");
+        case Conquer.Resource.WOOD:
+            return _ ("Wood");
+        case Conquer.Resource.FOOD:
+            return _ ("Food");
+        case Conquer.Resource.IRON:
+            return _ ("Iron");
+        case Conquer.Resource.STONE:
+            return _ ("Stone");
         }
         assert_not_reached ();
     }

@@ -21,4 +21,4 @@ public class Conquer.InitMessage : Conquer.Message {
     public InitMessage () {
         base ();
     }
-} 
+}

@@ -22,14 +22,14 @@ public enum Conquer.Resource {
 
     public static Conquer.Resource from_string (string str) {
         switch (str) {
-            case "wood":
-                return Resource.WOOD;
-            case "food":
-                return Resource.FOOD;
-            case "iron":
-                return Resource.IRON;
-            case "stone":
-                return Resource.STONE;
+        case "wood":
+            return Resource.WOOD;
+        case "food":
+            return Resource.FOOD;
+        case "iron":
+            return Resource.IRON;
+        case "stone":
+            return Resource.STONE;
         }
         return 0;
     }
@@ -39,6 +39,6 @@ public enum Conquer.Resource {
     }
 
     public static uint hash_func (Resource r) {
-        return (uint)r;
+        return (uint) r;
     }
 }

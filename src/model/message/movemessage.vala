@@ -28,4 +28,4 @@ public class Conquer.MoveMessage : Conquer.Message {
         this.to = to;
         this.num = n;
     }
-} 
+}

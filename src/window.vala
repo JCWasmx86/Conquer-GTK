@@ -96,7 +96,7 @@ namespace Conquer {
                 }
             }
             if (des == null) {
-                this.restore_screen.show_save_error (new Conquer.SaveError.GENERIC (_("Unable to find deserializer")));
+                this.restore_screen.show_save_error (new Conquer.SaveError.GENERIC (_ ("Unable to find deserializer")));
             }
             try {
                 var g = des.deserialize (bytes, this.context.find_strategies ());

@@ -19,7 +19,7 @@
  */
 namespace Conquer.Test {
     public static void main (string[] args) {
-        typeof(Conquer.StartGameMessage).ensure ();
+        typeof (Conquer.StartGameMessage).ensure ();
         Conquer.QUEUE = new Conquer.MessageQueue ();
         var ctx = new Conquer.Context (new Conquer.DefaultConfigLoader ());
         ctx.init ();
@@ -50,4 +50,3 @@ namespace Conquer.Test {
         }
     }
 }
-

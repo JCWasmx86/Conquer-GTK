@@ -29,9 +29,9 @@ public class Conquer.Statistics : Gtk.Box {
     private unowned Gtk.Label lbl_resigned_games;
     internal void update (Conquer.DatabaseListener dl) {
         // TODO: This is ugly
-        this.lbl_played_games.label = _("Total games played: %lld").printf (dl.number_of_played_games ());
-        this.lbl_won_games.label = _("Games won: %lld").printf (dl.of_type (Conquer.GameResult.PLAYER_WON));
-        this.lbl_lost_games.label = _("Games lost: %lld").printf (dl.of_type (Conquer.GameResult.PLAYER_LOST));
-        this.lbl_resigned_games.label = _("Games resigned from: %lld").printf (dl.of_type (Conquer.GameResult.RESIGNED));
+        this.lbl_played_games.label = _ ("Total games played: %lld").printf (dl.number_of_played_games ());
+        this.lbl_won_games.label = _ ("Games won: %lld").printf (dl.of_type (Conquer.GameResult.PLAYER_WON));
+        this.lbl_lost_games.label = _ ("Games lost: %lld").printf (dl.of_type (Conquer.GameResult.PLAYER_LOST));
+        this.lbl_resigned_games.label = _ ("Games resigned from: %lld").printf (dl.of_type (Conquer.GameResult.RESIGNED));
     }
 }

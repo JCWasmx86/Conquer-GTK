@@ -18,13 +18,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 public class Conquer.Default.Devel.ErrorScenarioLoader : GLib.Object, Conquer.ScenarioLoader {
-    public Scenario[] enumerate() throws Conquer.ScenarioLoaderError {
+    public Scenario[] enumerate () throws Conquer.ScenarioLoaderError {
         throw new Conquer.ScenarioLoaderError.GENERIC ("[ErrorLoader] Error listing scenarios");
     }
 }
 
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
     if (Environment.get_variable ("CONQUER_DEVEL_ERRORLOADER") != null)
-        obj.register_extension_type(typeof (Conquer.ScenarioLoader), typeof (Conquer.Default.Devel.ErrorScenarioLoader));
+        obj.register_extension_type (typeof (Conquer.ScenarioLoader), typeof (Conquer.Default.Devel.ErrorScenarioLoader));
 }

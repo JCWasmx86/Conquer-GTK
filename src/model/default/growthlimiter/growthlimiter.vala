@@ -28,7 +28,7 @@ public class Conquer.Default.GrowthLimiter : GLib.Object, Conquer.MessageReceive
 
     public void receive (Conquer.Message msg) {
         if (msg is Conquer.NewRoundMessage) {
-            var state = ((Conquer.NewRoundMessage)msg).state;
+            var state = ((Conquer.NewRoundMessage) msg).state;
             foreach (var c in state.city_list) {
                 if (c.people > HARD_LIMIT) {
                     if (c.growth > 1) {

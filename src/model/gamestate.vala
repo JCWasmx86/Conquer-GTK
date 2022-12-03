@@ -51,7 +51,7 @@ public class Conquer.GameState : Object {
             city.clan.coins += city.people;
         }
         this.round++;
-        Conquer.QUEUE.emit (new NewRoundMessage(this));
+        Conquer.QUEUE.emit (new NewRoundMessage (this));
     }
 
     public virtual uint64 maximum_number_of_soliders_to_move (City from, City to) {

@@ -23,4 +23,4 @@ public class Conquer.StartGameMessage : Conquer.Message {
         base ();
         this.state = g;
     }
-} 
+}

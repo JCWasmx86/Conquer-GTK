@@ -19,7 +19,7 @@
  */
 public class Conquer.Default.Devel.WorkingSaveLister : GLib.Object, Conquer.SaveLoader {
     public Conquer.SavedGame[] enumerate () throws Conquer.SaveLoaderError {
-        return new Conquer.SavedGame[1] {new ErrorSavedGame () };
+        return new Conquer.SavedGame[1] { new ErrorSavedGame () };
     }
 }
 
@@ -27,19 +27,20 @@ public class Conquer.Default.Devel.ErrorSavedGame : GLib.Object, Conquer.SavedGa
     public string name { get; set; default = "ErrorSavedGame"; }
     public DateTime time { get; set; default = new DateTime.now (); }
     public string guid { get; set; default = "<<foo>>"; }
-    public GLib.Bytes load() throws Conquer.SaveError {
+    public GLib.Bytes load () throws Conquer.SaveError {
         throw new Conquer.SaveError.GENERIC ("[ErrorSavedGame] Unable to restore");
     }
-    public Conquer.Saver pair () {
-        return (Conquer.Saver)null;
-    }
-    public void delete_data () {
 
+    public Conquer.Saver pair () {
+        return (Conquer.Saver) null;
+    }
+
+    public void delete_data () {
     }
 }
 
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
     if (Environment.get_variable ("CONQUER_DEVEL_ERRORSAVER") != null)
-        obj.register_extension_type(typeof (Conquer.SaveLoader), typeof (Conquer.Default.Devel.WorkingSaveLister));
+        obj.register_extension_type (typeof (Conquer.SaveLoader), typeof (Conquer.Default.Devel.WorkingSaveLister));
 }

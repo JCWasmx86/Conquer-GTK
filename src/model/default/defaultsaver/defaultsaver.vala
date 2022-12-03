@@ -130,7 +130,7 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
     public DateTime time { get; set; }
     public string guid { get; set; }
 
-    public GLib.Bytes load() throws Conquer.SaveError {
+    public GLib.Bytes load () throws Conquer.SaveError {
         var base_dir = Environment.get_user_data_dir () + "/conquer/saves";
         var filename = "%x%x.save".printf (GLib.str_hash (this.name), GLib.str_hash (this.name + this.name));
         info ("%s", filename);
@@ -167,6 +167,7 @@ public class Conquer.Default.SavedGame : GLib.Object, Conquer.SavedGame {
             info ("%s", e.message);
         }
     }
+
     public Conquer.Saver pair () {
         return new Conquer.Default.Saver ();
     }
@@ -191,7 +192,7 @@ public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
                 throw new Conquer.SaveError.GENERIC ("Bad magic number");
             if (dis.read_byte () != 0x1)
                 throw new Conquer.SaveError.GENERIC ("Bad version");
-            g.round = (uint)dis.read_uint64 ();
+            g.round = (uint) dis.read_uint64 ();
             g.name = this.read_string (dis);
             g.guid = this.read_string (dis);
             g.uuid = this.read_string (dis);
@@ -203,7 +204,7 @@ public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
             g.city_list = cities;
             for (var i = 0; i < n_cities; i++) {
                 for (var j = 0; j < n_cities; j++) {
-                    graph.weights[i,j] = this.read_double (dis);
+                    graph.weights[i, j] = this.read_double (dis);
                 }
             }
             var clan_idxs = new uint64[n_cities];
@@ -264,7 +265,7 @@ public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
                         var t = s.get_type ();
                         info ("Strategy for %s is a %s", clans[i].name, t.name ());
                         var new_strategy = GLib.Object.new (t, null);
-                        clans[i].strategy = (Conquer.Strategy)new_strategy;
+                        clans[i].strategy = (Conquer.Strategy) new_strategy;
                         break;
                     }
                 }
@@ -283,15 +284,18 @@ public class Conquer.Default.Deserializer : GLib.Object, Conquer.Deserializer {
         dis.read_byte ();
         return ret;
     }
+
     private Bytes read_bytes (DataInputStream dis) throws Error {
         var n = dis.read_int32 ();
         return dis.read_bytes (n);
     }
+
     private double read_double (DataInputStream dis) throws IOError {
         uint64 n = dis.read_uint64 ();
-        double *d = ((double*)&n);
+        double* d = ((double*) &n);
         return *d;
     }
+
     public bool supports_uuid (string uuid) {
         return uuid == "84d37b4b-0d3c-4061-a0a5-468c37b125cd";
     }

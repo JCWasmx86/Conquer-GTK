@@ -22,8 +22,8 @@ public class Conquer.Default.Devel.ErrorSaveLister : GLib.Object, Conquer.SaveLo
         throw new Conquer.SaveLoaderError.GENERIC ("[ErrorSaveLister] Failed to list saved games");
     }
 }
-public void peas_register_types(TypeModule module) {
+public void peas_register_types (TypeModule module) {
     var obj = (Peas.ObjectModule) module;
     if (Environment.get_variable ("CONQUER_DEVEL_ERRORSAVELISTER") != null)
-        obj.register_extension_type(typeof (Conquer.SaveLoader), typeof (Conquer.Default.Devel.ErrorSaveLister));
+        obj.register_extension_type (typeof (Conquer.SaveLoader), typeof (Conquer.Default.Devel.ErrorSaveLister));
 }

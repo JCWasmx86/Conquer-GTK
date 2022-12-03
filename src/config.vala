@@ -68,6 +68,7 @@ public abstract class Conquer.ConfigurationRow : Adw.ActionRow {
     }
 
     public signal void updated ();
+
     public abstract Conquer.ConfigurationItem create ();
 }
 public class Conquer.BooleanConfigurationRow : Conquer.ConfigurationRow {

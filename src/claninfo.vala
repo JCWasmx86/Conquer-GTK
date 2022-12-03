@@ -73,7 +73,7 @@ namespace Conquer {
             assert (clan != null);
             Gtk.TreeIter iter;
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("Name"), 1, clan.name, -1);
+            this.model.@set (iter, 0, _ ("Name"), 1, clan.name, -1);
             var cities = g.cities.cities_of_clan (clan);
             uint64 n_soldiers = 0;
             uint64 n_people = 0;
@@ -92,26 +92,26 @@ namespace Conquer {
                 var pic = new Gtk.Label ("");
                 pic.set_markup ("<big>%s</big>".printf (is_negative ? "🔴" : "🟢"));
                 if (is_negative) {
-                    pic.tooltip_text = _("This city uses more resources than it produces");
+                    pic.tooltip_text = _ ("This city uses more resources than it produces");
                 } else {
-                    pic.tooltip_text = _("This city produces resources than it uses");
+                    pic.tooltip_text = _ ("This city produces resources than it uses");
                 }
                 row.add_suffix (pic);
                 this.right_side.append (row);
             }
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("Cities"), 1, "%u".printf (cities.length), -1);
+            this.model.@set (iter, 0, _ ("Cities"), 1, "%u".printf (cities.length), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("People"), 1, "%llu".printf (n_people), -1);
+            this.model.@set (iter, 0, _ ("People"), 1, "%llu".printf (n_people), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("Soldiers"), 1, "%llu".printf (n_soldiers), -1);
+            this.model.@set (iter, 0, _ ("Soldiers"), 1, "%llu".printf (n_soldiers), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("Attack Bonus"), 1, "%.2lf".printf (clan.attack_strength * 100 - 100), -1);
+            this.model.@set (iter, 0, _ ("Attack Bonus"), 1, "%.2lf".printf (clan.attack_strength * 100 - 100), -1);
             this.model.append (out iter);
-            this.model.@set (iter, 0, _("Defense Bonus"), 1, "%.2lf".printf (clan.defense_strength * 100 - 100), -1);
+            this.model.@set (iter, 0, _ ("Defense Bonus"), 1, "%.2lf".printf (clan.defense_strength * 100 - 100), -1);
             for (var i = 0; i < production.length; i++) {
                 this.model.append (out iter);
-                this.model.@set (iter, 0, Shared.from_resource(((Resource)i)), 1, this.colorify ("%.2lf".printf (production[i])), -1);
+                this.model.@set (iter, 0, Shared.from_resource (((Resource) i)), 1, this.colorify ("%.2lf".printf (production[i])), -1);
             }
             this.clan_info_list.set_model (this.model);
         }
@@ -127,30 +127,30 @@ namespace Conquer {
             var window = new Adw.Window ();
             window.modal = true;
             var bar = new Adw.HeaderBar ();
-            var title = attack ? _("Upgrade Attack") : _("Upgrade Defense");
+            var title = attack ? _ ("Upgrade Attack") : _ ("Upgrade Defense");
             bar.title_widget = new Adw.WindowTitle (title, "");
             var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
             child.append (bar);
             var coins = attack ? this.clan.costs_for_attack_upgrade () : this.clan.costs_for_defense_upgrade ();
-            var costs = new Gtk.Label (_("Costs: %llu coins").printf (coins));
+            var costs = new Gtk.Label (_ ("Costs: %llu coins").printf (coins));
             child.append (costs);
             var new_strength = attack ? this.clan.upgraded_attack_strength () : this.clan.upgraded_defense_strength ();
             var current = attack ? this.clan.attack_strength : this.clan.defense_strength;
             var content = "";
             if (attack)
-                content = _("New attack bonus: %.2lf%% (+%.2f%%)");
+                content = _ ("New attack bonus: %.2lf%% (+%.2f%%)");
             else
-                content = _("New defense bonus: %.2lf%% (+%.2f%%)");
+                content = _ ("New defense bonus: %.2lf%% (+%.2f%%)");
             var strength = new Gtk.Label (content.printf (new_strength * 100 - 100, (new_strength - current) * 100));
             child.append (strength);
-            var max = new Gtk.CheckButton.with_label (_("Upgrade as far as possible"));
+            var max = new Gtk.CheckButton.with_label (_ ("Upgrade as far as possible"));
             child.append (max);
             var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
-            var suggested = new Gtk.Button.with_label (_("Upgrade"));
+            var suggested = new Gtk.Button.with_label (_ ("Upgrade"));
             suggested.hexpand = true;
             suggested.sensitive = coins <= this.clan.coins;
             suggested.get_style_context ().add_class ("suggested-action");
-            var abort = new Gtk.Button.with_label (_("Cancel"));
+            var abort = new Gtk.Button.with_label (_ ("Cancel"));
             abort.hexpand = true;
             button_box.append (abort);
             button_box.append (suggested);
@@ -178,6 +178,7 @@ namespace Conquer {
                 window.destroy ();
             });
         }
+
         internal signal void update_state ();
     }
 }

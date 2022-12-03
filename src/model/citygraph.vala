@@ -29,11 +29,7 @@ public class Conquer.CityGraph : GLib.Object {
                 this.weights[i, j] = i == j ? -1 : 0;
     }
 
-    public void add_connection (uint from, uint to, double weight)
-                                requires (from != to)
-                                requires (weight >= 0)
-                                requires (from < this.cities.length)
-                                requires (to < this.cities.length) {
+    public void add_connection (uint from, uint to, double weight) requires (from != to) requires (weight >= 0) requires (from < this.cities.length) requires (to < this.cities.length) {
         this.weights[from, to] = weight;
         this.weights[to, from] = weight;
     }

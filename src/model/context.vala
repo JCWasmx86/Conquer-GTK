@@ -146,8 +146,8 @@ namespace Conquer {
                         if (r.id == c.id) {
                             for (var i = 0; i < r.configs.length; i++) {
                                 for (var j = 0; j < c.configs.length; j++) {
-                                    if (r.configs.index (i).id == c.configs.index(j).id) {
-                                        r.configs.index (i).assign (c.configs.index(j));
+                                    if (r.configs.index (i).id == c.configs.index (j).id) {
+                                        r.configs.index (i).assign (c.configs.index (j));
                                     }
                                 }
                             }

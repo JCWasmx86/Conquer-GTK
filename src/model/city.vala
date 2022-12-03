@@ -127,7 +127,7 @@ public class Conquer.City : GLib.Object {
         var costs = this.costs_for_upgrade (r);
         assert (costs <= this.clan.coins);
         var new_value = this.upgraded_production (r);
-        this.clan.coins -= (uint64)costs;
+        this.clan.coins -= (uint64) costs;
         u.level++;
         u.production = new_value;
     }
@@ -137,8 +137,8 @@ public class Conquer.City : GLib.Object {
     }
 
     public virtual uint64 upgraded_defense_strength () {
-        var factor = 1.01 + (Math.pow (Math.fabs (0.1 * Math.sin(this.defense_level + 1)), 1.2));
-        return (uint64)(this.defense * factor);
+        var factor = 1.01 + (Math.pow (Math.fabs (0.1 * Math.sin (this.defense_level + 1)), 1.2));
+        return (uint64) (this.defense * factor);
     }
 
     public virtual void upgrade_defense () {

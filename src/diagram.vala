@@ -58,6 +58,7 @@ namespace Conquer {
                 this.box.append (box);
             }
         }
+
         void draw_func (Gtk.DrawingArea area, Cairo.Context cr, int w, int h) {
             var clans = this.state.clans;
             var values = new double[clans.length];
