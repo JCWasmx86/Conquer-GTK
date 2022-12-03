@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: conquer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-20 16:18+0100\n"
+"POT-Creation-Date: 2022-12-03 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,10 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
+#: src/window.vala:99
+msgid "Unable to find deserializer"
+msgstr ""
+
 #: data/resources/claninfo.ui:15 src/claninfo.vala:130
 msgid "Upgrade Attack"
 msgstr ""
@@ -42,42 +46,50 @@ msgid "Upgrade Defense"
 msgstr ""
 
 #: data/resources/conquerscreen.ui:24
+msgid "Back to Mainscreen"
+msgstr ""
+
+#: data/resources/conquerscreen.ui:33
 msgid "Next Round"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:44
+#: data/resources/conquerscreen.ui:59
 msgid "Map"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:55
+#: data/resources/conquerscreen.ui:70
 msgid "Clan"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:66
+#: data/resources/conquerscreen.ui:81
 msgid "Events"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:83 data/resources/mainscreen.ui:84
+#: data/resources/conquerscreen.ui:98 data/resources/mainscreen.ui:84
 msgid "Statistics"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:121
+#: data/resources/conquerscreen.ui:136
 msgid "_Save"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:125
+#: data/resources/conquerscreen.ui:140
 msgid "_Resign"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:129 data/resources/mainscreen.ui:107
+#: data/resources/conquerscreen.ui:144
+msgid "_Quit"
+msgstr ""
+
+#: data/resources/conquerscreen.ui:148 data/resources/mainscreen.ui:107
 msgid "_Preferences"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:133 data/resources/mainscreen.ui:111
+#: data/resources/conquerscreen.ui:152 data/resources/mainscreen.ui:111
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: data/resources/conquerscreen.ui:137 data/resources/mainscreen.ui:115
+#: data/resources/conquerscreen.ui:156 data/resources/mainscreen.ui:115
 msgid "_About Conquer"
 msgstr ""
 
@@ -101,68 +113,73 @@ msgstr ""
 msgid "Select a city to show more information."
 msgstr ""
 
-#: src/cityactions.vala:70 src/cityactions.vala:118 src/cityactions.vala:194
-#: src/claninfo.vala:135
+#: src/cityactions.vala:66
+#, c-format
+msgid "Upgrade %s"
+msgstr ""
+
+#: src/cityactions.vala:71 src/cityactions.vala:117 src/cityactions.vala:189
+#: src/claninfo.vala:136
 #, c-format
 msgid "Costs: %llu coins"
 msgstr ""
 
-#: src/cityactions.vala:73
+#: src/cityactions.vala:74
 #, c-format
 msgid "New production: %.2lf (+%.2lf)"
 msgstr ""
 
-#: src/cityactions.vala:75 src/cityactions.vala:123 src/claninfo.vala:146
+#: src/cityactions.vala:76 src/cityactions.vala:122 src/claninfo.vala:147
 msgid "Upgrade as far as possible"
 msgstr ""
 
-#: src/cityactions.vala:78 src/cityactions.vala:126 src/claninfo.vala:149
+#: src/cityactions.vala:78 src/cityactions.vala:124 src/claninfo.vala:150
 msgid "Upgrade"
 msgstr ""
 
-#: src/cityactions.vala:82 src/cityactions.vala:130 src/cityactions.vala:182
-#: src/claninfo.vala:153 src/map.vala:114
+#: src/cityactions.vala:82 src/cityactions.vala:128 src/cityactions.vala:181
+#: src/claninfo.vala:154 src/map.vala:113 src/screen.vala:42
 msgid "Cancel"
 msgstr ""
 
-#: src/cityactions.vala:114
+#: src/cityactions.vala:112
 msgid "Upgrade defense"
 msgstr ""
 
-#: src/cityactions.vala:121
+#: src/cityactions.vala:120
 #, c-format
 msgid "New defense strength: %llu (+%llu)"
 msgstr ""
 
-#: src/cityactions.vala:161
+#: src/cityactions.vala:157
 msgid "Recruit soldiers"
 msgstr ""
 
-#: src/cityactions.vala:161
+#: src/cityactions.vala:157
 msgid "Disband soldiers"
 msgstr ""
 
-#: src/cityactions.vala:166
+#: src/cityactions.vala:163
 msgid "How many soliders do you want to recruit?"
 msgstr ""
 
-#: src/cityactions.vala:168
+#: src/cityactions.vala:165
 msgid "How many soldiers do you want to disband?"
 msgstr ""
 
-#: src/cityactions.vala:178
+#: src/cityactions.vala:177
 msgid "Recruit"
 msgstr ""
 
-#: src/cityactions.vala:178
+#: src/cityactions.vala:177
 msgid "Disband"
 msgstr ""
 
-#: src/cityactions.vala:192
+#: src/cityactions.vala:187
 msgid "Costs: 0 coins"
 msgstr ""
 
-#: src/cityinfo.vala:49 src/claninfo.vala:76
+#: src/cityinfo.vala:49 src/claninfo.vala:76 src/screen.vala:301
 msgid "Name"
 msgstr ""
 
@@ -202,12 +219,12 @@ msgstr ""
 msgid "Attack Bonus"
 msgstr ""
 
-#: src/claninfo.vala:141
+#: src/claninfo.vala:142
 #, c-format
 msgid "New attack bonus: %.2lf%% (+%.2f%%)"
 msgstr ""
 
-#: src/claninfo.vala:143
+#: src/claninfo.vala:144
 #, c-format
 msgid "New defense bonus: %.2lf%% (+%.2f%%)"
 msgstr ""
@@ -237,72 +254,92 @@ msgstr ""
 msgid "From %s"
 msgstr ""
 
-#: src/map.vala:110
+#: src/map.vala:109
 msgid "Attack"
 msgstr ""
 
-#: src/map.vala:110
+#: src/map.vala:109
 msgid "Move"
 msgstr ""
 
-#: src/map.vala:138
+#: src/map.vala:137
 msgid "Result"
 msgstr ""
 
 #: src/map.vala:140
 #, c-format
-msgid "You conquered %s"
+msgid "You conquered %s!"
 msgstr ""
 
 #: src/map.vala:140
-msgid "Your attack failed"
+msgid "Your attack failed!"
 msgstr ""
 
-#: src/map.vala:142
+#: src/map.vala:146
 #, c-format
 msgid "%llu soldiers survived"
 msgstr ""
 
-#: src/map.vala:144
-msgid "Close"
+#: src/screen.vala:39 src/screen.vala:41
+msgid "Quit"
 msgstr ""
 
-#: src/screen.vala:43
+#: src/screen.vala:39
+msgid "Do you really want to quit?"
+msgstr ""
+
+#: src/screen.vala:40 src/screen.vala:298
+msgid "Save"
+msgstr ""
+
+#: src/screen.vala:82
 msgid "Total Power"
 msgstr ""
 
-#: src/screen.vala:44
+#: src/screen.vala:83
 msgid "Economic Power"
 msgstr ""
 
-#: src/screen.vala:45
+#: src/screen.vala:84
 msgid "Military Power"
 msgstr ""
 
-#: src/screen.vala:76 src/screen.vala:86 src/screen.vala:124
+#: src/screen.vala:115 src/screen.vala:125 src/screen.vala:236
 #, c-format
 msgid "Coins: %llu"
 msgstr ""
 
-#: src/screen.vala:147
-msgid "You lost"
+#: src/screen.vala:255
+msgid "You lost!"
 msgstr ""
 
-#: src/screen.vala:147
-msgid "You won"
+#: src/screen.vala:264
+msgid "You won!"
 msgstr ""
 
-#: src/screen.vala:174
+#: src/screen.vala:282
+msgid "Save game"
+msgstr ""
+
+#: src/screen.vala:288
+msgid "Location"
+msgstr ""
+
+#: src/screen.vala:289
+msgid "Where to save the game"
+msgstr ""
+
+#: src/screen.vala:342
 #, c-format
 msgid "[Attack] %s (%s) attackes %s (%s) and failed.\n"
 msgstr ""
 
-#: src/screen.vala:176
+#: src/screen.vala:344
 #, c-format
 msgid "[Attack] %s (%s) attackes %s (%s) and conquered it.\n"
 msgstr ""
 
-#: src/screen.vala:182
+#: src/screen.vala:350
 #, c-format
 msgid "[Move] %s moves troops from %s to %s\n"
 msgstr ""
