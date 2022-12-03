@@ -99,14 +99,13 @@ namespace Conquer {
                         var bar = new Adw.HeaderBar ();
                         bar.centering_policy = Adw.CenteringPolicy.STRICT;
                         bar.title_widget = new Adw.WindowTitle (is_attack ? _ ("Attack city") : _ ("Move soldiers"), _ ("From %s").printf (this.start_city.name));
-                        bar.show_end_title_buttons = true;
+                        bar.show_end_title_buttons = false;
                         content.append (bar);
                         var clamp = new Adw.Clamp ();
                         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
                         var max = this.game_state.maximum_number_of_soliders_to_move (start_city, end_city);
                         var scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, max == 0 ? 1 : max, 1);
                         scale.sensitive = max != 0;
-                        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
                         var suggested = new Gtk.Button.with_label (is_attack ? _ ("Attack") : _ ("Move"));
                         suggested.hexpand = true;
                         suggested.sensitive = false;
@@ -116,17 +115,14 @@ namespace Conquer {
                         scale.value_changed.connect (() => {
                             suggested.sensitive = scale.get_value () != 0;
                         });
-                        abort.get_style_context ().add_class ("destructive-action");
-                        button_box.append (abort);
-                        button_box.append (suggested);
-                        button_box.hexpand = true;
                         scale.draw_value = true;
                         scale.digits = 0;
                         var sclamp = new Adw.Clamp ();
                         sclamp.child = scale;
                         sclamp.maximum_size = 330;
                         box.append (sclamp);
-                        box.append (button_box);
+                        bar.pack_end (suggested);
+                        bar.pack_start (abort);
                         clamp.maximum_size = 360;
                         clamp.child = box;
                         content.append (clamp);

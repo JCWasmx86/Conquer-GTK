@@ -128,6 +128,7 @@ namespace Conquer {
             window.modal = true;
             var bar = new Adw.HeaderBar ();
             var title = attack ? _ ("Upgrade Attack") : _ ("Upgrade Defense");
+            bar.show_end_title_buttons = false;
             bar.title_widget = new Adw.WindowTitle (title, "");
             var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
             child.append (bar);
@@ -152,10 +153,8 @@ namespace Conquer {
             suggested.get_style_context ().add_class ("suggested-action");
             var abort = new Gtk.Button.with_label (_ ("Cancel"));
             abort.hexpand = true;
-            button_box.append (abort);
-            button_box.append (suggested);
-            button_box.hexpand = true;
-            child.append (button_box);
+            bar.pack_start (abort);
+            bar.pack_end (suggested);
             var clamp = new Adw.Clamp ();
             clamp.maximum_size = 360;
             clamp.child = child;

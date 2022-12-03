@@ -63,7 +63,8 @@ public class Conquer.CityActionScreen : Gtk.Box {
         assert (city != null);
         var window = new Adw.Window ();
         var bar = new Adw.HeaderBar ();
-        bar.title_widget = new Adw.WindowTitle ("Upgrade %s".printf (r.to_string ()), "");
+        bar.title_widget = new Adw.WindowTitle (_ ("Upgrade %s").printf (Shared.from_resource (r)), "");
+        bar.show_end_title_buttons = false;
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
         var coins = this.city.costs_for_upgrade (r);
@@ -74,17 +75,14 @@ public class Conquer.CityActionScreen : Gtk.Box {
         child.append (prod);
         var max = new Gtk.CheckButton.with_label (_ ("Upgrade as far as possible"));
         child.append (max);
-        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
         var suggested = new Gtk.Button.with_label (_ ("Upgrade"));
         suggested.hexpand = true;
         suggested.sensitive = coins <= this.city.clan.coins;
         suggested.get_style_context ().add_class ("suggested-action");
         var abort = new Gtk.Button.with_label (_ ("Cancel"));
         abort.hexpand = true;
-        button_box.append (abort);
-        button_box.append (suggested);
-        button_box.hexpand = true;
-        child.append (button_box);
+        bar.pack_start (abort);
+        bar.pack_end (suggested);
         var clamp = new Adw.Clamp ();
         clamp.maximum_size = 360;
         clamp.child = child;
@@ -112,6 +110,7 @@ public class Conquer.CityActionScreen : Gtk.Box {
         window.modal = true;
         var bar = new Adw.HeaderBar ();
         bar.title_widget = new Adw.WindowTitle (_ ("Upgrade defense"), "");
+        bar.show_end_title_buttons = false;
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
         var coins = this.city.costs_for_defense_upgrade ();
@@ -122,17 +121,14 @@ public class Conquer.CityActionScreen : Gtk.Box {
         child.append (strength);
         var max = new Gtk.CheckButton.with_label (_ ("Upgrade as far as possible"));
         child.append (max);
-        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
         var suggested = new Gtk.Button.with_label (_ ("Upgrade"));
         suggested.hexpand = true;
         suggested.sensitive = coins <= this.city.clan.coins;
         suggested.get_style_context ().add_class ("suggested-action");
         var abort = new Gtk.Button.with_label (_ ("Cancel"));
         abort.hexpand = true;
-        button_box.append (abort);
-        button_box.append (suggested);
-        button_box.hexpand = true;
-        child.append (button_box);
+        bar.pack_start (abort);
+        bar.pack_end (suggested);
         var clamp = new Adw.Clamp ();
         clamp.maximum_size = 360;
         clamp.child = child;
@@ -159,6 +155,7 @@ public class Conquer.CityActionScreen : Gtk.Box {
         window.modal = true;
         var bar = new Adw.HeaderBar ();
         bar.title_widget = new Adw.WindowTitle (recruit ? _ ("Recruit soldiers") : _ ("Disband soldiers"), "");
+        bar.show_end_title_buttons = false;
         var child = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         child.append (bar);
         var str = "";
@@ -177,7 +174,6 @@ public class Conquer.CityActionScreen : Gtk.Box {
         sclamp.child = scale;
         sclamp.maximum_size = 330;
         child.append (sclamp);
-        var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
         var suggested = new Gtk.Button.with_label (recruit ? _ ("Recruit") : _ ("Disband"));
         suggested.hexpand = true;
         suggested.sensitive = false;
@@ -187,10 +183,6 @@ public class Conquer.CityActionScreen : Gtk.Box {
         scale.value_changed.connect (() => {
             suggested.sensitive = scale.get_value () != 0;
         });
-        abort.get_style_context ().add_class ("destructive-action");
-        button_box.append (abort);
-        button_box.append (suggested);
-        button_box.hexpand = true;
         if (recruit) {
             var lbl = new Gtk.Label (_ ("Costs: 0 coins"));
             scale.value_changed.connect (() => {
@@ -198,7 +190,8 @@ public class Conquer.CityActionScreen : Gtk.Box {
             });
             child.append (lbl);
         }
-        child.append (button_box);
+        bar.pack_start (abort);
+        bar.pack_end (suggested);
         var clamp = new Adw.Clamp ();
         clamp.maximum_size = 360;
         clamp.child = child;
