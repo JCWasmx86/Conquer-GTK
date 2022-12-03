@@ -122,7 +122,10 @@ namespace Conquer {
                         button_box.hexpand = true;
                         scale.draw_value = true;
                         scale.digits = 0;
-                        box.append (scale);
+                        var sclamp = new Adw.Clamp ();
+                        sclamp.child = scale;
+                        sclamp.maximum_size = 330;
+                        box.append (sclamp);
                         box.append (button_box);
                         clamp.maximum_size = 360;
                         clamp.child = box;

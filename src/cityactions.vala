@@ -173,7 +173,10 @@ public class Conquer.CityActionScreen : Gtk.Box {
         scale.sensitive = max != 0;
         scale.draw_value = true;
         scale.digits = 0;
-        child.append (scale);
+        var sclamp = new Adw.Clamp ();
+        sclamp.child = scale;
+        sclamp.maximum_size = 330;
+        child.append (sclamp);
         var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
         var suggested = new Gtk.Button.with_label (recruit ? _ ("Recruit") : _ ("Disband"));
         suggested.hexpand = true;
