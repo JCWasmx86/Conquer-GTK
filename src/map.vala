@@ -136,17 +136,15 @@ namespace Conquer {
                                 var new_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
                                 ((Adw.WindowTitle) bar.title_widget).title = _ ("Result");
                                 ((Adw.WindowTitle) bar.title_widget).subtitle = "";
-                                new_box.append (new Gtk.Label (result == Conquer.AttackResult.SUCCESS ? _ ("You conquered %s").printf (end_city.name) : _ ("Your attack failed")));
+                                var sp = new Adw.StatusPage ();
+                                sp.title = result == Conquer.AttackResult.SUCCESS ? _ ("You conquered %s!").printf (end_city.name) : _ ("Your attack failed!");
+                                new_box.append (sp);
+                                bar.remove (abort);
+                                bar.remove (suggested);
+                                bar.show_end_title_buttons = true;
                                 if (result == Conquer.AttackResult.SUCCESS) {
-                                    new_box.append (new Gtk.Label (_ ("%llu soldiers survived").printf (end_city.soldiers)));
+                                    sp.description = _ ("%llu soldiers survived").printf (end_city.soldiers);
                                 }
-                                var btn = new Gtk.Button.with_label (_ ("Close"));
-                                btn.get_style_context ().add_class ("suggested-action");
-                                btn.hexpand = true;
-                                new_box.append (btn);
-                                btn.clicked.connect (() => {
-                                    window.destroy ();
-                                });
                                 clamp.child = new_box;
                             } else {
                                 this.game_state.move (sc, end_city, (uint64) scale.get_value ());
