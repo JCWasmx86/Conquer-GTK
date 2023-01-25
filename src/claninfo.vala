@@ -146,7 +146,6 @@ namespace Conquer {
             child.append (strength);
             var max = new Gtk.CheckButton.with_label (_ ("Upgrade as far as possible"));
             child.append (max);
-            var button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 2);
             var suggested = new Gtk.Button.with_label (_ ("Upgrade"));
             suggested.hexpand = true;
             suggested.sensitive = coins <= this.clan.coins;
